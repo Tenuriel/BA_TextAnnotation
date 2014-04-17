@@ -68,18 +68,20 @@ public class DBpediaHandler {
 //    public AnchorHandler anchor;
     public DBpediaHandler() {
         try {
-            scan = new Scanner(Paths.get("cleaned_properties.nt"));
-            scan2 = new Scanner(Paths.get("cleaned_properties_neigborToEntity.nt"));
-            scan3 = new Scanner(Paths.get("anchors.nt"));
+            createAbstract_Index();
+//            scan = new Scanner(Paths.get("cleaned_properties.nt"));
+//            scan2 = new Scanner(Paths.get("cleaned_properties_neigborToEntity.nt"));
+//            scan3 = new Scanner(Paths.get("anchors.nt"));
 //            clear first line. contains no relevant data
 //            System.out.println(scan.nextLine());
 
-            analyzer = new StandardAnalyzer(Version.LUCENE_46);
-            dir = FSDirectory.open(new File("Graph2"));
-            IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_46, analyzer);
-            conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
-            writer = new IndexWriter(dir, conf);
-            parser = new QueryParser(Version.LUCENE_46, "entity", analyzer);
+//            analyzer = new StandardAnalyzer(Version.LUCENE_46);
+//            dir = FSDirectory.open(new File("Entity_Index"));
+//            IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_46, analyzer);
+//            conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+//            writer = new IndexWriter(dir, conf);
+//            parser = new QueryParser(Version.LUCENE_46, "entity", analyzer);
+//            createBlockIndex();
 //            createTF_CSV();
 //            createTF_IDF();
 //            cleanAbstracts();
@@ -93,11 +95,11 @@ public class DBpediaHandler {
 //            createENAN();
 //            String s;
 //            int x=0;
-            Scanner tmp = new Scanner(Paths.get("idf.csv"));
-            while (true) {
-
-                System.out.println(tmp.nextLine());
-            }
+//            Scanner tmp = new Scanner(Paths.get("idf.csv"));
+//            while (true) {
+//
+//                System.out.println(tmp.nextLine());
+//            }
 //            while (scan3.hasNext()) {
 //                System.out.println(tmp.nextLine());
 ////                 line=scan.nextLine().split("\\|");
@@ -116,8 +118,6 @@ public class DBpediaHandler {
 //                pw.print(lineCounter);
 //            createGraph();
 //            cleanGraph();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
         } catch (NoSuchElementException ex) {
             System.out.println("found end of file");
             running = false;
@@ -137,7 +137,36 @@ public class DBpediaHandler {
         }
         System.exit(0);
     }
-
+    /**
+     * creates an index for the abstracts. 
+     */
+    public void createAbstract_Index(){
+        try {
+            Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_46);
+            Directory dir = FSDirectory.open(new File("Abstract_Index"));
+            IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_46, analyzer);
+            conf.setSimilarity(new CustomSimilarity());
+            conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+            IndexWriter writer = new IndexWriter(dir, conf);
+            Scanner scan = new Scanner(Paths.get("abstract_clean"));
+            String[] line;
+            Document doc;
+            while(scan.hasNextLine()){
+                doc=new Document();
+                line=scan.nextLine().split("\\|");
+                doc.add(new Field("entity", line[0], TextField.TYPE_STORED));
+                doc.add(new Field("abstract", line[1], TextField.TYPE_STORED));
+                writer.addDocument(doc);
+                
+            }
+            writer.prepareCommit();
+            writer.commit();
+            writer.close();
+            scan.close();
+        } catch (IOException ex) {
+            System.out.println("Failed to creat Index for Abstracts:"+ex.getMessage());
+        }
+    }
     /**
      * creates a csv file from the files created ind createTF_IDF().
      * id;entity;word;tf*idf

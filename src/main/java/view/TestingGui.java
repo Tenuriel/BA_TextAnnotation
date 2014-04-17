@@ -28,7 +28,9 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexableField;
 import edu.stanford.nlp.io.IOUtils;
 import java.io.File;
+import java.sql.ResultSet;
 import model.DBpediaHandler;
+import model.DatabaseHandler;
 import model.NER_Handler;
 
 /**
@@ -175,14 +177,21 @@ public class TestingGui implements ActionListener{
 //                neighborOutput.setText(neighbors);
                 break;
             case "anotate":
+                float bTime=System.nanoTime();
                 ArrayList<String> words=ner.anotate(textInput.getText());
+                float time=System.nanoTime()-bTime;
+                System.out.println("Anotationtime :"+(time/(Math.pow(10,9))));
                 String newText="";
                 for(String s:words){
                     newText+=s+"\n";
                 }
-                float bTime=System.nanoTime();
-                words=graph.findMostPromisingURI( words);
-                float time=System.nanoTime()-bTime;
+                
+                DatabaseHandler db=DatabaseHandler.getInstance();
+                db.fillA(words);
+                bTime=System.nanoTime();
+                
+                ResultSet set=db.getUri();
+                time=System.nanoTime()-bTime;
                 entityOutput.setText(newText);
                 newText="";
                 for(String s:words){

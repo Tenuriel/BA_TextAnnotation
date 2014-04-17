@@ -1,7 +1,11 @@
 package main;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.AnchorHandler;
 import model.DBpediaHandler;
+import model.DatabaseHandler;
 import model.GraphHandler;
 import model.NER_Handler;
 import view.TestingGui;
@@ -16,14 +20,15 @@ public class App
     {
 //        new TestingStuff();
 //        AnchorHandler anchor=new AnchorHandler();
-//        GraphHandler graph=new GraphHandler();
+        GraphHandler graph=new GraphHandler();
 //        NER_Handler ner=new NER_Handler();
 //        new TestingGui(graph,ner);
-        new DBpediaHandler();
+//        new DBpediaHandler();
+//        DatabaseHandler db=DatabaseHandler.getInstance();
 //        try {
-//            anchor.iR.close();
-//        } catch (IOException ex) {
-//            System.out.println("Could not close writer");
+//            db.con.close();
+//        } catch (SQLException ex) {
+//            System.exit(-1);
 //        }
     }
 }

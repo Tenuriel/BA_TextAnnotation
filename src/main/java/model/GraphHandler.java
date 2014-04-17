@@ -38,6 +38,8 @@ import org.apache.lucene.search.join.JoinUtil;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.search.join.ToChildBlockJoinQuery;
 import org.apache.lucene.search.join.ToParentBlockJoinQuery;
+import org.apache.lucene.search.similarities.DefaultSimilarity;
+import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
@@ -52,22 +54,41 @@ public class GraphHandler {
     public IndexSearcher searcher;
     public IndexReader iR;
     public Query parentQuery;
-    public GraphHandler() {
 
+    public GraphHandler() {
 
         try {
             analyzer = new StandardAnalyzer(Version.LUCENE_46);
-            iR = DirectoryReader.open(FSDirectory.open(new File("Graph")));
+            iR = DirectoryReader.open(FSDirectory.open(new File("Abstract_Index")));
 
             searcher = new IndexSearcher(iR);
-            
+            searcher.setSimilarity(new CustomSimilarity());
 //            BooleanQuery q=new BooleanQuery();
-            parentQuery = new TermQuery(new Term("Type", "Parent"));
-            BooleanQuery mainq=new BooleanQuery();
-            Filter parentFilter=new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
-            
-            
-//            QueryParser parser = new QueryParser(Version.LUCENE_46, "entity", analyzer);
+//            parentQuery = new TermQuery(new Term("Type", "Parent"));
+//            BooleanQuery mainq=new BooleanQuery();
+//            Filter parentFilter=new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
+
+            QueryParser parser = new QueryParser(Version.LUCENE_46, "abstract", analyzer);
+            Query query = parser.parse("michelle obama");
+            System.out.println(query.toString());
+            float bTime = System.nanoTime();
+
+            TopDocs res = searcher.search(query, 40);
+            float time = System.nanoTime() - bTime;
+            System.out.println("Time: "+(time/(Math.pow(10,9))));
+            Document doc;
+//            System.out.println(searcher.explain(query, 443128));
+            for (int i = 0; i < 40; i++) {
+                if (i == res.totalHits) {
+                    break;
+                }
+                doc = searcher.doc(res.scoreDocs[i].doc);
+//                System.out.println(res.scoreDocs[i].doc);
+                System.out.println(doc.get("entity"));
+//                System.out.println(searcher.explain(query, res.scoreDocs[i].doc));
+//                break;
+            }
+
 //            TopDocs docs=searcher.search(parser.parse("anchor:\""+"white house\""), parentFilter, 20);
 //            for(int i=0;i<20;i++){
 ////                Document doc=searcher.doc(21);
@@ -102,9 +123,8 @@ public class GraphHandler {
 //                pw.println();
         } catch (IOException ex) {
             System.out.println("this should hopfluy never happen");
-        } 
-//        catch (ParseException e) {
-//        }
+        } catch (ParseException e) {
+        }
     }
 
     /**
@@ -148,8 +168,7 @@ public class GraphHandler {
     /**
      * returns all neighbors to the specified depth.
      *
-     * @param grade the depth to search ( e.g 2 means neighbors and neighbors of
-     * neighbors)
+     * @param grade the depth to search ( e.g 2 means neighbors and neighbors of neighbors)
      * @return all found neighbors
      */
     public ArrayList<Document> getNeighbors(int grade) {
@@ -190,32 +209,32 @@ public class GraphHandler {
         QueryParser parser = new QueryParser(Version.LUCENE_46, "anchorN", analyzer);
         try {
             //create the filter for the parent.
-            BooleanQuery mainq=new BooleanQuery();
+            BooleanQuery mainq = new BooleanQuery();
 //            BooleanQuery parent=new BooleanQuery();
 //            parent.add(parentQuery,BooleanClause.Occur.MUST);
 //            parent.add(parser.parse("anchor:\"" + entity + "\""),BooleanClause.Occur.MUST);
-            Filter parentFilter=new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
-            
+            Filter parentFilter = new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
+
 //            BooleanQuery childq=new BooleanQuery();
 //            for(String s:queryString){
 //                childq.add(parser.parse(s),BooleanClause.Occur.SHOULD);
 //            }
-            Query childq=parser.parse(queryString);
+            Query childq = parser.parse(queryString);
 //            Query childq=parser.parse("anchor:u*");
-            String s=childq.toString();
-            ToParentBlockJoinQuery pq=new ToParentBlockJoinQuery(childq, parentFilter, ScoreMode.Avg);
+            String s = childq.toString();
+            ToParentBlockJoinQuery pq = new ToParentBlockJoinQuery(childq, parentFilter, ScoreMode.Avg);
 //            ToChildBlockJoinQuery pq=new ToChildBlockJoinQuery(childq, parentFilter, false);
-            mainq.add(pq,BooleanClause.Occur.MUST);
-            Filter filter=new QueryWrapperFilter(parser.parse("anchor:\"" + entity + "\""));
+            mainq.add(pq, BooleanClause.Occur.MUST);
+            Filter filter = new QueryWrapperFilter(parser.parse("anchor:\"" + entity + "\""));
 //            mainq.add(parser.parse("anchor:\"" + entity + "\""),BooleanClause.Occur.MUST);
-            
-            TopDocs docs = searcher.search(mainq,filter, 10);
+
+            TopDocs docs = searcher.search(mainq, filter, 10);
 //            docs = searcher.search(pq, docs.totalHits);
-            if(docs.totalHits>0){
-            res=searcher.doc(docs.scoreDocs[0].doc).get("entity");
+            if (docs.totalHits > 0) {
+                res = searcher.doc(docs.scoreDocs[0].doc).get("entity");
             }
 //            Query nQuery;
-           
+
         } catch (IOException | ParseException ex) {
             System.out.println("Error while searching neighbors " + ex.getMessage());
         }
@@ -224,18 +243,16 @@ public class GraphHandler {
     }
 
     /**
-     * finds the most promising uri from a list of uri by comparing its
-     * neighbors
+     * finds the most promising uri from a list of uri by comparing its neighbors
      *
-     * @param anchorURIs A list of lists containing possible uris from the
-     * anchorindex
+     * @param anchorURIs A list of lists containing possible uris from the anchorindex
      * @return a list of the most promising uri for each entity
      */
     public ArrayList<String> findMostPromisingURI(ArrayList<String> entitys) {
 //        new QueryWrapperFilter()
         ArrayList<String> result = new ArrayList<>();
         String queryString = "( ";
-        
+
         for (String enti : entitys) {
             queryString += "anchorN:" + enti + " OR ";
         }
