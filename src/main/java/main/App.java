@@ -21,8 +21,8 @@ public class App
 //        new TestingStuff();
 //        AnchorHandler anchor=new AnchorHandler();
         GraphHandler graph=new GraphHandler();
-//        NER_Handler ner=new NER_Handler();
-//        new TestingGui(graph,ner);
+        NER_Handler ner=new NER_Handler();
+        new TestingGui(graph,ner);
 //        new DBpediaHandler();
 //        DatabaseHandler db=DatabaseHandler.getInstance();
 //        try {

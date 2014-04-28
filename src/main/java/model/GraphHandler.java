@@ -6,16 +6,9 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -26,7 +19,6 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.queryparser.flexible.standard.QueryParserUtil;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.CachingWrapperFilter;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -34,12 +26,8 @@ import org.apache.lucene.search.QueryWrapperFilter;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.join.FixedBitSetCachingWrapperFilter;
-import org.apache.lucene.search.join.JoinUtil;
 import org.apache.lucene.search.join.ScoreMode;
-import org.apache.lucene.search.join.ToChildBlockJoinQuery;
 import org.apache.lucene.search.join.ToParentBlockJoinQuery;
-import org.apache.lucene.search.similarities.DefaultSimilarity;
-import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
@@ -49,80 +37,60 @@ import org.apache.lucene.util.Version;
  */
 public class GraphHandler {
 
+    public static final float TF_IDF_ALPHA = 0.5f;
+    public static String DELIMETER = "lucenedeli";
     public AnchorHandler anchor;
     public StandardAnalyzer analyzer;
-    public IndexSearcher searcher;
-    public IndexReader iR;
+    public IndexSearcher entitySearcher;
+    public IndexSearcher abstractSearcher;
+    public IndexReader entityReader;
+    public IndexReader abstractReader;
     public Query parentQuery;
 
     public GraphHandler() {
 
         try {
             analyzer = new StandardAnalyzer(Version.LUCENE_46);
-            iR = DirectoryReader.open(FSDirectory.open(new File("Abstract_Index")));
+            entityReader = DirectoryReader.open(FSDirectory.open(new File("Entity_Index")));
+            abstractReader = DirectoryReader.open(FSDirectory.open(new File("Abstract_Index")));
 
-            searcher = new IndexSearcher(iR);
-            searcher.setSimilarity(new CustomSimilarity());
+            entitySearcher = new IndexSearcher(entityReader);
+            abstractSearcher = new IndexSearcher(abstractReader);
+            abstractSearcher.setSimilarity(new CustomSimilarity());
+            parentQuery = new TermQuery(new Term("type", "Parent"));
 //            BooleanQuery q=new BooleanQuery();
-//            parentQuery = new TermQuery(new Term("Type", "Parent"));
 //            BooleanQuery mainq=new BooleanQuery();
 //            Filter parentFilter=new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
 
             QueryParser parser = new QueryParser(Version.LUCENE_46, "abstract", analyzer);
-            Query query = parser.parse("michelle obama");
-            System.out.println(query.toString());
-            float bTime = System.nanoTime();
+            Query query = parser.parse("anchor:\"" + delimeterString("America") + "\"");
 
-            TopDocs res = searcher.search(query, 40);
-            float time = System.nanoTime() - bTime;
-            System.out.println("Time: "+(time/(Math.pow(10,9))));
+            BooleanQuery mainq = new BooleanQuery();
+            Filter parentFilter = new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
+
+            ToParentBlockJoinQuery pq = new ToParentBlockJoinQuery(query, parentFilter, ScoreMode.Avg);
+
+            mainq.add(pq, BooleanClause.Occur.MUST);
+
+//            float bTime = System.nanoTime();
+//
+            TopDocs res = entitySearcher.search(query, 10);
+//            ArrayList<String> idf=tf_idfCandidates("nsdap");
+////
             Document doc;
-//            System.out.println(searcher.explain(query, 443128));
-            for (int i = 0; i < 40; i++) {
+//            for(String s: idf){
+//                System.out.println(s);
+//            }
+            for (int i = 0; i < 140; i++) {
                 if (i == res.totalHits) {
                     break;
                 }
-                doc = searcher.doc(res.scoreDocs[i].doc);
-//                System.out.println(res.scoreDocs[i].doc);
+                doc = entitySearcher.doc(res.scoreDocs[i].doc);
                 System.out.println(doc.get("entity"));
-//                System.out.println(searcher.explain(query, res.scoreDocs[i].doc));
-//                break;
+                System.out.println(entitySearcher.explain(query, res.scoreDocs[i].doc));
             }
-
-//            TopDocs docs=searcher.search(parser.parse("anchor:\""+"white house\""), parentFilter, 20);
-//            for(int i=0;i<20;i++){
-////                Document doc=searcher.doc(21);
-//                System.out.println(searcher.doc(docs.scoreDocs[i].doc).get("entity"));
-//            }
-//            Document doc=searcher.doc(9352973);
-//            String[] tmp=doc.getValues("anchor");
-//            
-////            ArrayList<Document> docs = getDocs("united_states");
-//            for (String s : tmp) {
-//                System.out.println(s);
-//            }
-//            Scanner scan=new Scanner(Paths.get("entitys2.txt"));
-//            scan.nextLine();
-//            TreeSet<String> set=new TreeSet<>();
-//            
-//            while(scan.hasNextLine()){
-//                    set.add(scan.nextLine());
-//            }
-//            
-//            PrintWriter pw = new PrintWriter("entitys.txt", "UTF-8");
-//            int i = 0;
-//            for (String s : set) {
-//                if (i < 31140) {
-//                    i++;
-//                }else {
-//                    pw.println(s);
-//                }
-//            }
-//            pw.close();
-//                pw.print(lineCounter);
-//                pw.println();
         } catch (IOException ex) {
-            System.out.println("this should hopfluy never happen");
+//            System.out.println("this should hopfluy never happen");
         } catch (ParseException e) {
         }
     }
@@ -166,74 +134,133 @@ public class GraphHandler {
     }
 
     /**
-     * returns all neighbors to the specified depth.
+     * extracts the entity form a uri.
      *
-     * @param grade the depth to search ( e.g 2 means neighbors and neighbors of neighbors)
-     * @return all found neighbors
+     * @param uri
+     * @return
      */
-    public ArrayList<Document> getNeighbors(int grade) {
-        QueryParser parser = new QueryParser(Version.LUCENE_46, "entity", analyzer);
-        try {
-            long bTime = System.nanoTime();
-            Query query = parser.parse("jordan");
-            TopDocs res = searcher.search(query, 1);
-            res = searcher.search(query, res.totalHits);
-            long time = System.nanoTime() - bTime;
-            int a = 0;
-        } catch (IOException | ParseException ex) {
-            System.out.println("Error in neighbor retriving: " + ex.getMessage());
+    public static String getEntity(String uri) {
+        if (uri.isEmpty()) {
+            return uri;
         }
-        return null;
+        String[] tmp = uri.split("/");
+        //in case there is a structre like titel(a/b)
+        if (tmp.length >= 2 && tmp[tmp.length - 2].contains("(") && !tmp[tmp.length - 2].contains(")")) {
+            tmp[tmp.length - 1] = tmp[tmp.length - 2] + "/" + tmp[tmp.length - 1];
+        }
+        tmp = tmp[tmp.length - 1].split("_");
+        StringBuilder res = new StringBuilder();
+        for (String s : tmp) {
+            res.append(s);
+            res.append(" ");
+        }
+        String s = res.toString();
+        return s.substring(0, s.length() - 2);
     }
 
-    private float score(String entity, String queryString) {
-        QueryParser parser = new QueryParser(Version.LUCENE_46, "entity", analyzer);
-        float score = 0;
+    /**
+     * Returns a string enclosed in delimeters.
+     *
+     * @param s
+     * @return
+     */
+    public static String delimeterString(String s) {
+        return DELIMETER + " " + s + " " + DELIMETER;
+    }
+
+    /**
+     * returns the top 20 entitys for whom their abstract text contains the highest tf_idf-Scores.
+     *
+     * @param entity
+     * @return
+     */
+    public ArrayList<String> tf_idfCandidates(String entity) {
+        ArrayList<String> result = new ArrayList<>();
+        QueryParser parser = new QueryParser(Version.LUCENE_46, "abstract", analyzer);
         try {
             Query query = parser.parse(entity);
-            TopDocs docs = searcher.search(query, 1);
-            float hits = docs.totalHits;
-            query = parser.parse("entity:" + entity + " AND " + queryString);
-//            query=JoinUtil.
-            System.out.println(query.toString());
-            docs = searcher.search(query, 1);
-            score = 1 / hits * docs.totalHits;
+            TopDocs docs = abstractSearcher.search(query, 20);
+            for (int i = 0; i < 20; i++) {
+                if (i == docs.totalHits) {
+                    break;
+                }
+//                System.out.println(abstractSearcher.explain(query, docs.scoreDocs[i].doc));
+                result.add(abstractSearcher.doc(docs.scoreDocs[i].doc).get("entity"));
+            }
+
         } catch (IOException | ParseException ex) {
-            System.out.println("Error while searching neighbors");
+            System.out.println("Error while searching for tf_idfCandidates:" + ex.getMessage());
         }
-        return score;
+        return result;
     }
 
-    private String bestMatch(String entity, String queryString) {
+    private String bestMatch(ArrayList<String> posEntitys, String queryString) {
+        if (queryString.isEmpty()) {
+            return queryString;
+        }
+
         String res = "";
         QueryParser parser = new QueryParser(Version.LUCENE_46, "anchorN", analyzer);
         try {
+            StringBuilder efBuilder = new StringBuilder();
+            for (String s : posEntitys) {
+                efBuilder.append("title:\"");
+                efBuilder.append(delimeterString(getEntity(s)));
+                efBuilder.append("\" ");
+            }
             //create the filter for the parent.
             BooleanQuery mainq = new BooleanQuery();
-//            BooleanQuery parent=new BooleanQuery();
-//            parent.add(parentQuery,BooleanClause.Occur.MUST);
-//            parent.add(parser.parse("anchor:\"" + entity + "\""),BooleanClause.Occur.MUST);
             Filter parentFilter = new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
 
-//            BooleanQuery childq=new BooleanQuery();
-//            for(String s:queryString){
-//                childq.add(parser.parse(s),BooleanClause.Occur.SHOULD);
-//            }
             Query childq = parser.parse(queryString);
-//            Query childq=parser.parse("anchor:u*");
-            String s = childq.toString();
+            childq.setBoost(1 - TF_IDF_ALPHA);
             ToParentBlockJoinQuery pq = new ToParentBlockJoinQuery(childq, parentFilter, ScoreMode.Avg);
-//            ToChildBlockJoinQuery pq=new ToChildBlockJoinQuery(childq, parentFilter, false);
+
             mainq.add(pq, BooleanClause.Occur.MUST);
-            Filter filter = new QueryWrapperFilter(parser.parse("anchor:\"" + entity + "\""));
+            Query query = parser.parse(efBuilder.toString());
+            query.setBoost(TF_IDF_ALPHA);
+            mainq.add(query, BooleanClause.Occur.MUST);
 //            mainq.add(parser.parse("anchor:\"" + entity + "\""),BooleanClause.Occur.MUST);
 
-            TopDocs docs = searcher.search(mainq, filter, 10);
+            TopDocs docs = entitySearcher.search(mainq, 1);
 //            docs = searcher.search(pq, docs.totalHits);
             if (docs.totalHits > 0) {
-                res = searcher.doc(docs.scoreDocs[0].doc).get("entity");
+                res = entitySearcher.doc(docs.scoreDocs[0].doc).get("entity");
             }
-//            Query nQuery;
+
+        } catch (IOException | ParseException ex) {
+            System.out.println("Error while searching neighbors " + ex.getMessage());
+        }
+        return res;
+
+    }
+
+    private String bestMatch(String entity, String queryString) {
+        if (queryString.isEmpty()) {
+            return queryString;
+        }
+        String res = "";
+        QueryParser parser = new QueryParser(Version.LUCENE_46, "anchorN", analyzer);
+        try {
+
+            //create the filter for the parent.
+            BooleanQuery mainq = new BooleanQuery();
+            Filter parentFilter = new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
+
+            Query childq = parser.parse(queryString);
+            childq.setBoost(1 - TF_IDF_ALPHA);
+            ToParentBlockJoinQuery pq = new ToParentBlockJoinQuery(childq, parentFilter, ScoreMode.Avg);
+
+            mainq.add(pq, BooleanClause.Occur.SHOULD);
+            Query query = parser.parse("anchor:\"" + delimeterString(entity) + "\"");
+            query.setBoost(TF_IDF_ALPHA);
+            mainq.add(query, BooleanClause.Occur.MUST);
+//            mainq.add(parser.parse("anchor:\"" + entity + "\""),BooleanClause.Occur.MUST);
+
+            TopDocs docs = entitySearcher.search(mainq, 1);
+            if (docs.totalHits > 0) {
+                res = entitySearcher.doc(docs.scoreDocs[0].doc).get("entity");
+            }
 
         } catch (IOException | ParseException ex) {
             System.out.println("Error while searching neighbors " + ex.getMessage());
@@ -245,20 +272,83 @@ public class GraphHandler {
     /**
      * finds the most promising uri from a list of uri by comparing its neighbors
      *
-     * @param anchorURIs A list of lists containing possible uris from the anchorindex
+     * @param entitys A list of lists containing possible uris from the anchorindex
      * @return a list of the most promising uri for each entity
      */
-    public ArrayList<String> findMostPromisingURI(ArrayList<String> entitys) {
-//        new QueryWrapperFilter()
-        ArrayList<String> result = new ArrayList<>();
-        String queryString = "( ";
+    public HashMap<String, String> findMostPromisingURI(ArrayList<String> entitys) {
+        float btime;
+        float anchorTime = 0;
+        float tf_idf_Time = 0;
+        int tf_idf_counter = 0;
+        float entryTime;
 
-        for (String enti : entitys) {
-            queryString += "anchorN:" + enti + " OR ";
+        String queryString;
+
+        ArrayList<String> tf_idf_List;
+        String value;
+
+        btime = System.nanoTime();
+        HashMap<String, String> result = checkEntrie(entitys);
+        entryTime = System.nanoTime() - btime;
+        for (Map.Entry<String, String> entry : result.entrySet()) {
+            if (entry.getValue() == null) {
+                queryString = "( ";
+                for (String enti : entitys) {
+                    if (!entry.getKey().equals(enti)) {
+                        queryString += "anchorN:" + enti + " OR ";
+                    }
+                }
+                queryString = queryString.substring(0, queryString.length() - 3) + ")";
+
+                btime = System.nanoTime();
+                value = bestMatch(entry.getKey(), queryString);
+                anchorTime += System.nanoTime() - btime;
+                if (value.isEmpty()) {
+                    tf_idf_counter++;
+                    btime = System.nanoTime();
+                    tf_idf_List = (tf_idfCandidates(entry.getKey()));
+                    value = bestMatch(tf_idf_List, queryString);
+                    tf_idf_Time += System.nanoTime() - btime;
+                }
+                result.put(entry.getKey(), value);
+            }
         }
-        queryString = queryString.substring(0, queryString.length() - 3) + ")";
-        for (String entity : entitys) {
-            result.add(bestMatch(entity, queryString));
+
+//        for (String entity : entitys) {
+//            result.add(bestMatch(entity, queryString));
+//        }
+        System.out.println("Number of entitys:" + entitys.size() + "\n avg entryCheck:" + entryTime / (entitys.size() * (Math.pow(10, 6)))
+                + " entryCheck:" + entryTime / (Math.pow(10, 6))
+                + "\n avg anchorTime:" + anchorTime / (entitys.size() * (Math.pow(10, 6)))
+                + " anchorTime:" + anchorTime / (Math.pow(10, 6))
+                + "\n avg tf_idf_time:" + tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6)))
+                + " tf_idf_time:" + tf_idf_Time / (Math.pow(10, 6)));
+        return result;
+    }
+
+    /**
+     * Searches for an excat match for every enitity in the list.
+     *
+     * @param entitys
+     * @return a map with enititys as keys and uri/null as value depending if there is a match
+     */
+    public HashMap<String, String> checkEntrie(ArrayList<String> entitys) {
+        HashMap<String, String> result = new HashMap<>();
+        try {
+            QueryParser parser = new QueryParser(Version.LUCENE_46, "title", analyzer);
+            Query query;
+            TopDocs docs;
+            for (String entity : entitys) {
+                query = parser.parse("\"" + delimeterString(entity) + "\"");
+                docs = entitySearcher.search(query, 1);
+                if (docs.totalHits == 1) {
+                    result.put(entity, entitySearcher.doc(docs.scoreDocs[0].doc).get("entity"));
+                } else {
+                    result.put(entity, null);
+                }
+            }
+        } catch (IOException | ParseException ex) {
+            System.out.println("Error while checking entries for excat match:" + ex.getMessage());
         }
         return result;
     }

@@ -5,15 +5,9 @@
 package model;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +15,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -68,70 +60,19 @@ public class DBpediaHandler {
 //    public AnchorHandler anchor;
     public DBpediaHandler() {
         try {
-            createAbstract_Index();
-//            scan = new Scanner(Paths.get("cleaned_properties.nt"));
-//            scan2 = new Scanner(Paths.get("cleaned_properties_neigborToEntity.nt"));
-//            scan3 = new Scanner(Paths.get("anchors.nt"));
-//            clear first line. contains no relevant data
-//            System.out.println(scan.nextLine());
-
-//            analyzer = new StandardAnalyzer(Version.LUCENE_46);
-//            dir = FSDirectory.open(new File("Entity_Index"));
-//            IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_46, analyzer);
-//            conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
-//            writer = new IndexWriter(dir, conf);
-//            parser = new QueryParser(Version.LUCENE_46, "entity", analyzer);
-//            createBlockIndex();
-//            createTF_CSV();
-//            createTF_IDF();
-//            cleanAbstracts();
-//            ArrayList<Scanner> scanners = new ArrayList<>();
-//            scanners.add(new Scanner(Paths.get("entity_neighbor_anchorsN")));
-//            scanners.add(new Scanner(Paths.get("neighbor_entity_anchorsE")));
-//            createCSV();
-//            createBlockIndex();
-//            setIDs();
-//            merge2(scanners);
-//            createENAN();
-//            String s;
-//            int x=0;
-//            Scanner tmp = new Scanner(Paths.get("idf.csv"));
-//            while (true) {
-//
-//                System.out.println(tmp.nextLine());
-//            }
-//            while (scan3.hasNext()) {
-//                System.out.println(tmp.nextLine());
-////                 line=scan.nextLine().split("\\|");
-////                 if(line[0].toLowerCase().contains("white_house")){
-////                     System.out.println(line[0]+line[1]);
-////                 }
-////                 
-//            }
-//            mergeFiles();
-//             set=new TreeSet<>();
-//             scan.close();
-//             while(scan2.hasNext()){
-//                 set.add(scan2.nextLine());
-//             }
-//             scan2.close();
-//                pw.print(lineCounter);
-//            createGraph();
-//            cleanGraph();
+            
         } catch (NoSuchElementException ex) {
             System.out.println("found end of file");
             running = false;
         } finally {
             try {
                 if (writer != null) {
-//                    writer.addDocuments(docs, analyzer);
                     writer.prepareCommit();
                     writer.commit();
                     writer.close();
                 }
             } catch (IOException ex) {
                 System.out.println("This will happen if end of File is reached");
-
             }
 
         }
@@ -366,86 +307,6 @@ public class DBpediaHandler {
         }
     }
 
-    public void fillDatabase() {
-        String user = "Thargor";
-        String pwd = "Magic1";
-        String database = "anotator";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://" + "localhost" + ":"
-                    + "3306" + "/" + database + "?" + "user=" + user + "&"
-                    + "password=" + pwd);
-            String table1 = "create table mainData("
-                    + "id INTEGER not NULL,"
-                    + "uri VARCHAR(255),"
-                    + "aTexte VARCHAR(255),"
-                    + "tiefe INTEGER not NULL,"
-                    + "PRIMARY KEY (id))";
-            Statement st = con.createStatement();
-
-            st.executeUpdate(table1);
-
-            Scanner scan = new Scanner(Paths.get("combined"));
-            Scanner scan2 = new Scanner(Paths.get("entity_anchors"));
-            String[] line;//=scan.nextLine().split(" ");
-            Map<String, String> anchorMap = new HashMap<>();
-            StringBuilder builder = new StringBuilder();
-            int idCounter = 0;
-            String[] anchors;
-            //load anchors into ram
-            while (scan2.hasNext()) {
-                line = scan2.nextLine().split("\\|");
-                anchorMap.put(line[0], line[1]);
-            }
-            line = scan.nextLine().split("\\|");
-            String previous = line[0];
-            anchors = line[2].split(";");
-            for (String s : anchors) {
-                st.executeUpdate(createInsertString(idCounter, line[0], s, 1));
-                idCounter++;
-            }
-            while (scan.hasNext()) {
-                line = scan.nextLine().split("\\|");
-                if (line.length == 0) {
-                    System.out.println("found eof");
-                    anchors = anchorMap.get(line[0]).split(";");
-                    for (String s : anchors) {
-                        st.executeUpdate(createInsertString(idCounter, line[0], s, 0));
-                        idCounter++;
-                    }
-//                    st.executeUpdate(createInsertString(idCounter, line[0], anchorMap.get(line[0]), 0));
-                    break;
-                }
-                if (!line[0].equals(previous)) {
-                    anchors = anchorMap.get(line[0]).split(";");
-                    for (String s : anchors) {
-                        st.executeUpdate(createInsertString(idCounter, line[0], s, 0));
-                        idCounter++;
-                    }
-//                    st.executeUpdate(createInsertString(idCounter, line[0], anchorMap.get(line[0]), 0));
-                    idCounter++;
-                    previous = line[0];
-                }
-                anchors = line[2].split(";");
-                for (String s : anchors) {
-                    st.executeUpdate(createInsertString(idCounter, line[0], s, 1));
-                    idCounter++;
-                }
-            }
-
-            con.close();
-        } catch (Exception ex) {
-            System.out.println("databse error: " + ex.getMessage());
-        }
-
-    }
-
-    public String createInsertString(int id, String uri, String aTexte, int tiefe) {
-        String res = "INSERT INTO maindata "
-                + "VALUES (" + id + ",\"" + uri + "\",\"" + aTexte + "\"," + tiefe + "); ";
-        return res;
-    }
-
     /**
      * creates 2 files with entits;neighbor;anchor of neighbor. One with entity to neighbor and one
      * with neighbor to entity.
@@ -509,6 +370,7 @@ public class DBpediaHandler {
      */
     public void setIDs() throws IOException {
         Scanner entitys = new Scanner(Paths.get("entitys.txt"));
+        scan3 = new Scanner(Paths.get("anchors.nt"));
         ArrayList<String> anchors;
         StringBuilder builder;
         String[] anchor;
@@ -616,74 +478,97 @@ public class DBpediaHandler {
      *
      * @throws IOException
      */
-    public void createBlockIndex() throws IOException {
-        Scanner scan = new Scanner(Paths.get("combined"));
-        Scanner scan2 = new Scanner(Paths.get("entity_anchors"));
-        String[] line;//=scan.nextLine().split(" ");
-        ArrayList<Document> group = new ArrayList<>();
-        Map<String, String> anchorMap = new HashMap<>();
-        Document doc;
-
-        String[] anchors;
-        //load anchors into ram
-        while (scan2.hasNext()) {
-            line = scan2.nextLine().split("\\|");
-            anchorMap.put(line[0], line[1]);
-        }
-        line = scan.nextLine().split("\\|");
-        String previous = line[0];
-        anchors = line[2].split(";");
-        for (String s : anchors) {
-            doc = new Document();
-//            doc.add(new Field("entity", line[0], TextField.TYPE_STORED));
-            doc.add(new Field("anchorN", s, TextField.TYPE_STORED));
-            group.add(doc);
-        }
-        while (scan.hasNext()) {
+    public void createBlockIndex() {
+        try {
+            Scanner scan = new Scanner(Paths.get("combined"));
+            Scanner scan2 = new Scanner(Paths.get("entity_anchors"));
+            analyzer = new StandardAnalyzer(Version.LUCENE_46);
+            dir = FSDirectory.open(new File("Entity_Index"));
+            IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_46, analyzer);
+            conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+            conf.setSimilarity(new CustomSimilarity());
+            writer = new IndexWriter(dir, conf);
+            String[] line;//=scan.nextLine().split(" ");
+            ArrayList<Document> group = new ArrayList<>();
+            Map<String, String> anchorMap = new HashMap<>();
+            Document doc;
+            
+            String[] anchors;
+            //load anchors into ram
+            while (scan2.hasNext()) {
+                line = scan2.nextLine().split("\\|");
+                anchorMap.put(line[0], line[1]);
+            }
             line = scan.nextLine().split("\\|");
-            if (line.length == 0) {
-                System.out.println("found end");
-                doc = new Document();
-                doc.add(new Field("entity", line[0], TextField.TYPE_STORED));
-                doc.add(new Field("anchor", anchorMap.get(line[0]), TextField.TYPE_STORED));
-                //this is the marker for the parent field.
-                // it needs to be a stringfield so only an exact match will hit
-                // and does not need to be in the index since you dont search this field.
-                doc.add(new Field("Type", "Parent", StringField.TYPE_NOT_STORED));
-                group.add(doc);
-                writer.addDocuments(group);
-                group.clear();
-                break;
-            }
-            if (!line[0].equals(previous)) {
-                doc = new Document();
-                doc.add(new Field("entity", line[0], TextField.TYPE_STORED));
-                doc.add(new Field("anchor", anchorMap.get(line[0]), TextField.TYPE_STORED));
-                //this is the marker for the parent field.
-                // it needs to be a stringfield so only an exact match will hit
-                // and does not need to be in the index since you dont search this field.
-                doc.add(new Field("Type", "Parent", StringField.TYPE_NOT_STORED));
-                group.add(doc);
-                writer.addDocuments(group);
-                group.clear();
-                previous = line[0];
-            }
+            String previous = line[0];
             anchors = line[2].split(";");
             for (String s : anchors) {
                 doc = new Document();
                 doc.add(new Field("anchorN", s, TextField.TYPE_STORED));
                 group.add(doc);
             }
+            while (scan.hasNext()) {
+                line = scan.nextLine().split("\\|");
+                if (line.length == 0) {
+                    System.out.println("found end");
+                    doc = new Document();
+                    doc.add(new Field("entity", line[0], TextField.TYPE_STORED));
+                    doc.add(new Field("anchor", anchorDeli(anchorMap.get(line[0])), TextField.TYPE_STORED));
+                    doc.add(new Field("titel",GraphHandler.delimeterString(GraphHandler.getEntity(line[0])), TextField.TYPE_STORED));
+                    //this is the marker for the parent field.
+                    // it needs to be a stringfield so only an exact match will hit
+                    // and does not need to be in the index since you dont search this field.
+                    doc.add(new Field("type", "Parent", StringField.TYPE_NOT_STORED));
+                    group.add(doc);
+                    writer.addDocuments(group);
+                    group.clear();
+                    break;
+                }
+                if (!line[0].equals(previous)) {
+                    doc = new Document();
+                    doc.add(new Field("entity", line[0], TextField.TYPE_STORED));
+                    doc.add(new Field("anchor", anchorDeli(anchorMap.get(line[0])), TextField.TYPE_STORED));
+                    doc.add(new Field("title",GraphHandler.delimeterString(GraphHandler.getEntity(line[0])), TextField.TYPE_STORED));
+                    //this is the marker for the parent field.
+                    // it needs to be a stringfield so only an exact match will hit
+                    // and does not need to be in the index since you dont search this field.
+                    doc.add(new Field("type", "Parent", StringField.TYPE_NOT_STORED));
+                    group.add(doc);
+                    writer.addDocuments(group);
+                    group.clear();
+                    previous = line[0];
+                }
+                anchors = line[2].split(";");
+                for (String s : anchors) {
+                    doc = new Document();
+                    doc.add(new Field("anchorN", s, TextField.TYPE_STORED));
+                    group.add(doc);
+                }
+            }
+            writer.prepareCommit();
+            writer.commit();
+            writer.close();
+            System.exit(0);
+        } catch (IOException ex) {
+            System.out.println("Creating Blockindex failed :"+ex.getMessage());
         }
-//        ToParentBlockJoinQuery q=new ToParentBlockJoinQuery(q, null, ScoreMode.None)
-//        Filter f=new CachingWrapperFilter(f)
-//        BooleanClause.Occur.
-        writer.prepareCommit();
-        writer.commit();
-        writer.close();
-        System.exit(0);
     }
-
+    /**
+     * transforms a String from type a;b;c
+     * to delimeter a delimet;delimeter b delimeter;delimenter c deilemter
+     * @param anchors
+     * @return then anchors with the delimeters
+     */
+    public String anchorDeli(String anchors){
+        String[] tmp=anchors.split(";");
+        StringBuilder builder=new StringBuilder();
+        for(String s:tmp){
+            builder.append(GraphHandler.delimeterString(s));
+            builder.append(";");
+        }
+        String res=builder.toString();
+        return res.substring(0,res.length()-1);
+    }
     /**
      * cleans the index from entries with more than 1 occurance.
      */
@@ -703,9 +588,6 @@ public class DBpediaHandler {
         while (scan.hasNext()) {
             counter++;
             currUri = scan.nextLine().split("\\|");
-//            if (GraphHandler.formatString(currUri[0]).equals("White_House")) {
-//                System.out.println("");
-//            }
             if (currUri[0].equals(prevUri)) {
                 if (currUri[1].startsWith(":")) {
                     doc.add(new Field("anchor", currUri[1].substring(1, currUri[1].length()).trim(), TextField.TYPE_STORED));
@@ -732,12 +614,10 @@ public class DBpediaHandler {
         Document doc = new Document();
         doc.add(new Field("entity", line[0], TextField.TYPE_STORED));
         doc.add(new Field("neighbor", line[2], TextField.TYPE_STORED));
-//        docs.add(doc);
         writer.addDocument(doc);
         doc = new Document();
         doc.add(new Field("entity", line[2], TextField.TYPE_STORED));
         doc.add(new Field("neighbor", line[0], TextField.TYPE_STORED));
         writer.addDocument(doc);
-//        docs.add(doc);
     }
 }

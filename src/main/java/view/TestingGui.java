@@ -8,12 +8,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,15 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import model.AnchorHandler;
 import model.GraphHandler;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexableField;
 import edu.stanford.nlp.io.IOUtils;
 import java.io.File;
-import java.sql.ResultSet;
-import model.DBpediaHandler;
-import model.DatabaseHandler;
+import java.util.HashMap;
 import model.NER_Handler;
 
 /**
@@ -38,6 +31,7 @@ import model.NER_Handler;
  * @author Tim Pontzen
  */
 public class TestingGui implements ActionListener{
+    public static final int textAreaHeight=500;
     /**
      * label for the entityOutput field.
      */
@@ -62,6 +56,7 @@ public class TestingGui implements ActionListener{
      * foudn neighbors for the entity.
      */
     public JTextArea neighborOutput ;
+
     /**
      * area for the text to be tokenized.
      */
@@ -129,7 +124,7 @@ public class TestingGui implements ActionListener{
         textInput=new JTextArea(defaultText);
         textInput.setBorder(border);
         textInput.setLineWrap(true);
-        textInput.setPreferredSize(new Dimension(300,200));
+        textInput.setPreferredSize(new Dimension(300,textAreaHeight));
         c.gridx=0;
         c.gridy=2;   
         panel.add(textInput,c);
@@ -139,7 +134,7 @@ public class TestingGui implements ActionListener{
         border=BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK);
         entityOutput.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        entityOutput.setPreferredSize(new Dimension(300,200));
+        entityOutput.setPreferredSize(new Dimension(300,textAreaHeight));
         c.gridx=1;
         c.gridy=2;   
         panel.add(entityOutput,c);
@@ -149,7 +144,7 @@ public class TestingGui implements ActionListener{
         border=BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
         neighborOutput.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        neighborOutput.setPreferredSize(new Dimension(300,200));
+        neighborOutput.setPreferredSize(new Dimension(300,textAreaHeight));
         c.gridx=2;
         c.gridy=2;   
         panel.add(neighborOutput,c);
@@ -180,22 +175,23 @@ public class TestingGui implements ActionListener{
                 float bTime=System.nanoTime();
                 ArrayList<String> words=ner.anotate(textInput.getText());
                 float time=System.nanoTime()-bTime;
-                System.out.println("Anotationtime :"+(time/(Math.pow(10,9))));
+                System.out.println("Anotationtime :"+(time/(Math.pow(10,6))));
                 String newText="";
                 for(String s:words){
                     newText+=s+"\n";
                 }
                 
-                DatabaseHandler db=DatabaseHandler.getInstance();
-                db.fillA(words);
-                bTime=System.nanoTime();
+//                DatabaseHandler db=DatabaseHandler.getInstance();
+//                db.fillA(words);
                 
-                ResultSet set=db.getUri();
-                time=System.nanoTime()-bTime;
+//                ResultSet set=db.getUri();
                 entityOutput.setText(newText);
+                bTime=System.nanoTime();
+                HashMap<String,String> map=graph.findMostPromisingURI(words);
+                time=System.nanoTime()-bTime;
                 newText="";
                 for(String s:words){
-                    newText+=s+"\n";
+                    newText+=GraphHandler.getEntity(map.get(s))+"\n";
                 }
                 neighborOutput.setText(newText);
                 
