@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
@@ -36,19 +35,42 @@ import org.apache.lucene.util.Version;
  * @author Tim Pontzen
  */
 public class GraphHandler {
-
+    /**
+     * The multiplier for the tf_idf scoring.
+     * Formula :score= alpha*tf_idf_score + (1-alpha)*neighbor_score
+     */
     public static final float TF_IDF_ALPHA = 0.5f;
-    public static String DELIMETER = "lucenedeli";
-    public AnchorHandler anchor;
+    /**
+     * The delimeter for encapsulating words. Is needed for excat matching 
+     * in lucene.
+     */
+    public static final String DELIMETER = "lucenedeli";
+    /**
+     * Analyzer for query creation.
+     */
     public StandardAnalyzer analyzer;
+    /**
+     * The IndexSearcher for the Entity_Index.
+     */
     public IndexSearcher entitySearcher;
+    /**
+     * The IndexSearcher for the Abstract_Index.
+     */
     public IndexSearcher abstractSearcher;
+    /**
+     * The IndexReader for the Entity_Index.
+     */
     public IndexReader entityReader;
+    /**
+     * The IndexReader for the Abstract_Index.
+     */
     public IndexReader abstractReader;
+    /**
+     * The parentquery for identifying parent-documents.
+     */
     public Query parentQuery;
 
     public GraphHandler() {
-
         try {
             analyzer = new StandardAnalyzer(Version.LUCENE_46);
             entityReader = DirectoryReader.open(FSDirectory.open(new File("Entity_Index")));
@@ -58,46 +80,14 @@ public class GraphHandler {
             abstractSearcher = new IndexSearcher(abstractReader);
             abstractSearcher.setSimilarity(new CustomSimilarity());
             parentQuery = new TermQuery(new Term("type", "Parent"));
-//            BooleanQuery q=new BooleanQuery();
-//            BooleanQuery mainq=new BooleanQuery();
-//            Filter parentFilter=new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
-
-            QueryParser parser = new QueryParser(Version.LUCENE_46, "abstract", analyzer);
-            Query query = parser.parse("anchor:\"" + delimeterString("America") + "\"");
-
-            BooleanQuery mainq = new BooleanQuery();
-            Filter parentFilter = new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
-
-            ToParentBlockJoinQuery pq = new ToParentBlockJoinQuery(query, parentFilter, ScoreMode.Avg);
-
-            mainq.add(pq, BooleanClause.Occur.MUST);
-
-//            float bTime = System.nanoTime();
-//
-            TopDocs res = entitySearcher.search(query, 10);
-//            ArrayList<String> idf=tf_idfCandidates("nsdap");
-////
-            Document doc;
-//            for(String s: idf){
-//                System.out.println(s);
-//            }
-            for (int i = 0; i < 140; i++) {
-                if (i == res.totalHits) {
-                    break;
-                }
-                doc = entitySearcher.doc(res.scoreDocs[i].doc);
-                System.out.println(doc.get("entity"));
-                System.out.println(entitySearcher.explain(query, res.scoreDocs[i].doc));
-            }
         } catch (IOException ex) {
-//            System.out.println("this should hopfluy never happen");
-        } catch (ParseException e) {
-        }
+            System.out.println("Error while opening Readers:"+ex.getMessage());
+        } 
     }
 
     /**
-     * formates the string to a valid querystring.
-     *
+     * Formates the string to a valid querystring.
+     * Mostly used for uri formating.
      * @param s the string to be formated.
      * @return the formated string.
      */
@@ -115,8 +105,8 @@ public class GraphHandler {
     }
 
     /**
-     * formates an Uri to give back only the last value.
-     *
+     * Formates an Uri to give back only the last value.
+     * E.g : dbpedia.org/.../foo_bar will return foo_bar
      * @param s the string to be formated.
      * @return the formated string.
      */
@@ -137,7 +127,7 @@ public class GraphHandler {
      * extracts the entity form a uri.
      *
      * @param uri
-     * @return
+     * @return the entity
      */
     public static String getEntity(String uri) {
         if (uri.isEmpty()) {
@@ -162,7 +152,7 @@ public class GraphHandler {
      * Returns a string enclosed in delimeters.
      *
      * @param s
-     * @return
+     * @return 
      */
     public static String delimeterString(String s) {
         return DELIMETER + " " + s + " " + DELIMETER;
@@ -171,8 +161,8 @@ public class GraphHandler {
     /**
      * returns the top 20 entitys for whom their abstract text contains the highest tf_idf-Scores.
      *
-     * @param entity
-     * @return
+     * @param entity the entity to be searched for in the abstracts
+     * @return list with most promising matches
      */
     public ArrayList<String> tf_idfCandidates(String entity) {
         ArrayList<String> result = new ArrayList<>();
@@ -193,7 +183,12 @@ public class GraphHandler {
         }
         return result;
     }
-
+    /**
+     * Compares the neighbors of every entity in the list with all other entitys. 
+     * @param posEntitys possible entitys
+     * @param queryString a String to be parsed for the childquery
+     * @return the best macht for the query
+     */
     private String bestMatch(ArrayList<String> posEntitys, String queryString) {
         if (queryString.isEmpty()) {
             return queryString;
@@ -203,6 +198,7 @@ public class GraphHandler {
         QueryParser parser = new QueryParser(Version.LUCENE_46, "anchorN", analyzer);
         try {
             StringBuilder efBuilder = new StringBuilder();
+            //create query-string for selected entitys
             for (String s : posEntitys) {
                 efBuilder.append("title:\"");
                 efBuilder.append(delimeterString(getEntity(s)));
@@ -216,14 +212,12 @@ public class GraphHandler {
             childq.setBoost(1 - TF_IDF_ALPHA);
             ToParentBlockJoinQuery pq = new ToParentBlockJoinQuery(childq, parentFilter, ScoreMode.Avg);
 
-            mainq.add(pq, BooleanClause.Occur.MUST);
+            mainq.add(pq, BooleanClause.Occur.SHOULD);
             Query query = parser.parse(efBuilder.toString());
             query.setBoost(TF_IDF_ALPHA);
             mainq.add(query, BooleanClause.Occur.MUST);
-//            mainq.add(parser.parse("anchor:\"" + entity + "\""),BooleanClause.Occur.MUST);
 
             TopDocs docs = entitySearcher.search(mainq, 1);
-//            docs = searcher.search(pq, docs.totalHits);
             if (docs.totalHits > 0) {
                 res = entitySearcher.doc(docs.scoreDocs[0].doc).get("entity");
             }
@@ -234,7 +228,12 @@ public class GraphHandler {
         return res;
 
     }
-
+    /**
+     * Compares the neighbors of an entity with all other entitys.
+     * @param entity The selected entity
+     * @param queryString a String to be parsed for the childquery
+     * @return the best macht for the query
+     */
     private String bestMatch(String entity, String queryString) {
         if (queryString.isEmpty()) {
             return queryString;
@@ -242,20 +241,16 @@ public class GraphHandler {
         String res = "";
         QueryParser parser = new QueryParser(Version.LUCENE_46, "anchorN", analyzer);
         try {
-
             //create the filter for the parent.
             BooleanQuery mainq = new BooleanQuery();
             Filter parentFilter = new FixedBitSetCachingWrapperFilter(new QueryWrapperFilter(parentQuery));
 
             Query childq = parser.parse(queryString);
-            childq.setBoost(1 - TF_IDF_ALPHA);
             ToParentBlockJoinQuery pq = new ToParentBlockJoinQuery(childq, parentFilter, ScoreMode.Avg);
 
             mainq.add(pq, BooleanClause.Occur.SHOULD);
             Query query = parser.parse("anchor:\"" + delimeterString(entity) + "\"");
-            query.setBoost(TF_IDF_ALPHA);
             mainq.add(query, BooleanClause.Occur.MUST);
-//            mainq.add(parser.parse("anchor:\"" + entity + "\""),BooleanClause.Occur.MUST);
 
             TopDocs docs = entitySearcher.search(mainq, 1);
             if (docs.totalHits > 0) {
@@ -270,9 +265,9 @@ public class GraphHandler {
     }
 
     /**
-     * finds the most promising uri from a list of uri by comparing its neighbors
+     * Finds the most promising uris for a list of entitys.
      *
-     * @param entitys A list of lists containing possible uris from the anchorindex
+     * @param entitys A list of entitys determined by the NER
      * @return a list of the most promising uri for each entity
      */
     public HashMap<String, String> findMostPromisingURI(ArrayList<String> entitys) {
@@ -286,11 +281,15 @@ public class GraphHandler {
 
         ArrayList<String> tf_idf_List;
         String value;
-
+        
+        
+        //check entrys
         btime = System.nanoTime();
         HashMap<String, String> result = checkEntrie(entitys);
         entryTime = System.nanoTime() - btime;
+        
         for (Map.Entry<String, String> entry : result.entrySet()) {
+            //create querystring if needed
             if (entry.getValue() == null) {
                 queryString = "( ";
                 for (String enti : entitys) {
@@ -299,7 +298,7 @@ public class GraphHandler {
                     }
                 }
                 queryString = queryString.substring(0, queryString.length() - 3) + ")";
-
+                //search for anchors
                 btime = System.nanoTime();
                 value = bestMatch(entry.getKey(), queryString);
                 anchorTime += System.nanoTime() - btime;
@@ -313,10 +312,6 @@ public class GraphHandler {
                 result.put(entry.getKey(), value);
             }
         }
-
-//        for (String entity : entitys) {
-//            result.add(bestMatch(entity, queryString));
-//        }
         System.out.println("Number of entitys:" + entitys.size() + "\n avg entryCheck:" + entryTime / (entitys.size() * (Math.pow(10, 6)))
                 + " entryCheck:" + entryTime / (Math.pow(10, 6))
                 + "\n avg anchorTime:" + anchorTime / (entitys.size() * (Math.pow(10, 6)))
@@ -328,9 +323,9 @@ public class GraphHandler {
 
     /**
      * Searches for an excat match for every enitity in the list.
-     *
-     * @param entitys
-     * @return a map with enititys as keys and uri/null as value depending if there is a match
+     * A match occurs only if doc.title==entity
+     * @param entitys The entitys to search for.
+     * @return a map with enititys as keys and uri/null as value depending on whether there is a match or not.
      */
     public HashMap<String, String> checkEntrie(ArrayList<String> entitys) {
         HashMap<String, String> result = new HashMap<>();

@@ -160,16 +160,6 @@ public class TestingGui implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Search for Anchor":
-//                ArrayList<String> uri = graph.getAnchorUri(input.getText());
-//                entityOutput.setText(uri.get(0));
-//                //        String[] tmp=uri.split("/");
-//                //        uri=tmp[tmp.length-1];
-//                ArrayList<Document> docs = graph.getDocs(GraphHandler.formatStringForQuery(uri.get(0)));
-//                String neighbors = "";
-//                for (Document d : docs) {
-//                    neighbors = neighbors + d.get("neighbor") + "\n";
-//                }
-//                neighborOutput.setText(neighbors);
                 break;
             case "anotate":
                 float bTime=System.nanoTime();
@@ -181,10 +171,6 @@ public class TestingGui implements ActionListener{
                     newText+=s+"\n";
                 }
                 
-//                DatabaseHandler db=DatabaseHandler.getInstance();
-//                db.fillA(words);
-                
-//                ResultSet set=db.getUri();
                 entityOutput.setText(newText);
                 bTime=System.nanoTime();
                 HashMap<String,String> map=graph.findMostPromisingURI(words);
