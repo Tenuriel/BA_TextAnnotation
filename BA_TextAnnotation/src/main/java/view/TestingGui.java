@@ -22,8 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import model.GraphHandler;
 import edu.stanford.nlp.io.IOUtils;
+import java.awt.ScrollPane;
 import java.io.File;
 import java.util.HashMap;
+import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
+import javax.swing.ScrollPaneConstants;
 import model.NER_Handler;
 
 /**
@@ -82,7 +86,8 @@ public class TestingGui implements ActionListener{
         frame.add(panel);
         GridBagConstraints c=new GridBagConstraints();
         
-        JButton go=new JButton("Search for Anchor");
+//        JButton go=new JButton("Search for Anchor");
+        JToggleButton go= new JToggleButton("Toggle tf_idf use");
         go.setPreferredSize(new Dimension(150,40));       
         c.gridx=0;
         c.gridy=0;        
@@ -129,25 +134,30 @@ public class TestingGui implements ActionListener{
         c.gridy=2;   
         panel.add(textInput,c);
                
-       
         entityOutput=new JTextArea();
         border=BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK);
         entityOutput.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        entityOutput.setPreferredSize(new Dimension(300,textAreaHeight));
         c.gridx=1;
-        c.gridy=2;   
-        panel.add(entityOutput,c);
+        c.gridy=2;
+        JScrollPane scroll=new JScrollPane();
+        scroll.setPreferredSize(new Dimension(300,textAreaHeight));
+        scroll.setViewportView(entityOutput);
+        panel.add(scroll,c);
         
         
         neighborOutput=new JTextArea();
         border=BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
         neighborOutput.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        neighborOutput.setPreferredSize(new Dimension(300,textAreaHeight));
+//        neighborOutput.setPreferredSize(new Dimension(300,textAreaHeight));
         c.gridx=2;
-        c.gridy=2;   
-        panel.add(neighborOutput,c);
+        c.gridy=2;
+        scroll=new JScrollPane();
+        scroll.setPreferredSize(new Dimension(300,textAreaHeight));
+        scroll.setViewportView(neighborOutput);
+        panel.add(scroll,c);
+//        panel.add(neighborOutput,c);
         
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -159,7 +169,8 @@ public class TestingGui implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Search for Anchor":
+            case "Toggle tf_idf use":
+                graph.tf_idf_useage=!graph.tf_idf_useage;
                 break;
             case "anotate":
                 float bTime=System.nanoTime();

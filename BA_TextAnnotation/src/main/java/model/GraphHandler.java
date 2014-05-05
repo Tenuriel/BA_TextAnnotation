@@ -69,6 +69,10 @@ public class GraphHandler {
      * The parentquery for identifying parent-documents.
      */
     public Query parentQuery;
+    /**
+     * Indicates if the algorithmen should search for tfd_idf-candiates.
+     */
+    public boolean tf_idf_useage=false;
 
     public GraphHandler() {
         try {
@@ -302,7 +306,7 @@ public class GraphHandler {
                 btime = System.nanoTime();
                 value = bestMatch(entry.getKey(), queryString);
                 anchorTime += System.nanoTime() - btime;
-                if (value.isEmpty()) {
+                if (value.isEmpty()&&tf_idf_useage) {
                     tf_idf_counter++;
                     btime = System.nanoTime();
                     tf_idf_List = (tf_idfCandidates(entry.getKey()));
