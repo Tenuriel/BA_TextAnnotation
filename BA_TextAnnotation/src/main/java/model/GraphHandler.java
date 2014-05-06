@@ -77,8 +77,8 @@ public class GraphHandler {
     public GraphHandler() {
         try {
             analyzer = new StandardAnalyzer(Version.LUCENE_46);
-            entityReader = DirectoryReader.open(FSDirectory.open(new File("Entity_Index")));
-            abstractReader = DirectoryReader.open(FSDirectory.open(new File("Abstract_Index")));
+            entityReader = DirectoryReader.open(FSDirectory.open(new File("./Entity_Index")));
+            abstractReader = DirectoryReader.open(FSDirectory.open(new File("./Abstract_Index")));
 
             entitySearcher = new IndexSearcher(entityReader);
             abstractSearcher = new IndexSearcher(abstractReader);

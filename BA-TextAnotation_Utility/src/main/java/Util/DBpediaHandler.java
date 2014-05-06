@@ -14,8 +14,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -68,7 +66,7 @@ public class DBpediaHandler {
     public static void createTF_IDF() {
         try (PrintWriter pw = new PrintWriter("termCount_allDoc", "UTF-8")) {
             PrintWriter pw2 = new PrintWriter("doc_TermAndCount", "UTF-8");
-            Scanner scan = new Scanner(Paths.get("abstract_clean"));
+            Scanner scan = new Scanner(Paths.get("abstract_clean.txt"));
             String[] words;
             String[] line;
             TreeMap<String, Integer> tf = new TreeMap<>();
@@ -132,8 +130,8 @@ public class DBpediaHandler {
         String[] line;
         try {
             Scanner scan = new Scanner(Paths.get(filename));
-            pw = new PrintWriter("cleaned_properties", "UTF-8");
-            pw2 = new PrintWriter("cleaned_properties_neigborToEntity", "UTF-8");
+            pw = new PrintWriter("cleaned_properties.txt", "UTF-8");
+            pw2 = new PrintWriter("cleaned_properties_neigborToEntity.txt", "UTF-8");
             while (true) {
                 line = scan.nextLine().split(" ");
                 if (line[2].contains("dbpedia.org/resource")) {
@@ -166,8 +164,8 @@ public class DBpediaHandler {
     }
     public static void createEntityFile(){
         try {
-            Scanner scanner= new Scanner(Paths.get("../BA_TextAnnotation/cleaned_properties"));
-            PrintWriter pw=new PrintWriter("entitys.txt");
+            Scanner scanner= new Scanner(Paths.get("./cleaned_properties.txt"));
+            PrintWriter pw=new PrintWriter("entities.txt");
             TreeSet<String> set=new TreeSet<>();
             String[] line;
             while(scanner.hasNext()){
@@ -196,14 +194,14 @@ public class DBpediaHandler {
     }
     /**
      * Convert a dbpedia abstracts file of type uri;category;abstract to uri;absctract. it is
-     * ensured that only uris from entitys.txt are in the outputfile.
+     * ensured that only uris from entities.txt are in the outputfile.
      *
      * @param filename the name of the abstract file
      * @return status of operation
      */
     public static String cleanAbstracts(String filename) {
-        try (PrintWriter pw = new PrintWriter("abstract_clean", "UTF-8")) {
-            Scanner scan = new Scanner(Paths.get("entitys.txt"));
+        try (PrintWriter pw = new PrintWriter("abstract_clean.txt", "UTF-8")) {
+            Scanner scan = new Scanner(Paths.get("entities.txt"));
             Scanner scan2 = new Scanner(Paths.get(filename));
             scan2.nextLine();
             String[] tmp;
@@ -245,8 +243,8 @@ public class DBpediaHandler {
     public static void createCSV() {
         try {
             PrintWriter pw = new PrintWriter("data.csv", "UTF-8");
-            Scanner scan = new Scanner(Paths.get("combined"));
-            Scanner scan2 = new Scanner(Paths.get("entity_anchors"));
+            Scanner scan = new Scanner(Paths.get("combined.txt"));
+            Scanner scan2 = new Scanner(Paths.get("entity_anchors.txt"));
             String[] line;//=scan.nextLine().split(" ");
             Map<String, String> anchorMap = new HashMap<>();
             int idCounter = 0;
@@ -309,9 +307,9 @@ public class DBpediaHandler {
      */
     public static String createENAN() {
         try {
-            Scanner scan = new Scanner(Paths.get("cleaned_properties"));
-            Scanner scan2 = new Scanner(Paths.get("cleaned_properties_neigborToEntity"));
-            Scanner anchors = new Scanner(Paths.get("entity_anchors"));
+            Scanner scan = new Scanner(Paths.get("cleaned_properties.txt"));
+            Scanner scan2 = new Scanner(Paths.get("cleaned_properties_neigborToEntity.txt"));
+            Scanner anchors = new Scanner(Paths.get("entity_anchors.txt"));
             String[] split;
             Map<String, String> anchorMap = new HashMap<>();
             while (anchors.hasNext()) {
@@ -320,7 +318,7 @@ public class DBpediaHandler {
             }
             TreeSet<String> set = new TreeSet<>();
             int counter = 0;
-            PrintWriter pw = new PrintWriter("entity_neighbor_anchorsN", "UTF-8");
+            PrintWriter pw = new PrintWriter("entity_neighbor_anchorsN.txt", "UTF-8");
             while (scan.hasNext()) {
                 split = scan.nextLine().split("\\|");
                 if (anchorMap.containsKey(split[0]) && anchorMap.containsKey(split[1])) {
@@ -337,7 +335,7 @@ public class DBpediaHandler {
             }
             pw.close();
             set.clear();
-            pw = new PrintWriter("neighbor_entity_anchorsE", "UTF-8");
+            pw = new PrintWriter("neighbor_entity_anchorsE.txt", "UTF-8");
             while (scan2.hasNext()) {
                 split = scan2.nextLine().split("\\|");
                 if (anchorMap.containsKey(split[0]) && anchorMap.containsKey(split[1])) {
@@ -356,8 +354,8 @@ public class DBpediaHandler {
             set.clear();
 
             ArrayList<Scanner> scanners = new ArrayList<>();
-            scanners.add(new Scanner(Paths.get("entity_neighbor_anchorsN")));
-            scanners.add(new Scanner(Paths.get("neighbor_entity_anchorsE")));
+            scanners.add(new Scanner(Paths.get("entity_neighbor_anchorsN.txt")));
+            scanners.add(new Scanner(Paths.get("neighbor_entity_anchorsE.txt")));
             merge(scanners);
         } catch (IOException ex) {
             System.out.println("Error while creating ENAN:" + ex.getMessage());
@@ -370,12 +368,12 @@ public class DBpediaHandler {
      * creates a file with ID;entity;anchors fields.
      */
     public static void setIDs() {
-        Scanner entitys;
+        Scanner entities;
         Scanner anchorScan;
         try {
-            entitys = new Scanner(Paths.get("entitys.txt"));
+            entities = new Scanner(Paths.get("entities.txt"));
 
-            anchorScan = new Scanner(Paths.get("anchors"));
+            anchorScan = new Scanner(Paths.get("anchors.txt"));
             ArrayList<String> anchors;
             StringBuilder builder;
             String[] anchor;
@@ -391,11 +389,11 @@ public class DBpediaHandler {
                     anchorMap.put(anchor[0], anchors);
                 }
             }
-            PrintWriter pw = new PrintWriter("entity_anchors", "UTF-8");
+            PrintWriter pw = new PrintWriter("entity_anchors.txt", "UTF-8");
             int counter = 0;
             int i = 0;
-            while (entitys.hasNext()) {
-                tmp = entitys.nextLine();
+            while (entities.hasNext()) {
+                tmp = entities.nextLine();
                 if (anchorMap.containsKey(tmp)) {
                     anchors = anchorMap.get(tmp);
                     builder = new StringBuilder(tmp);
@@ -428,7 +426,7 @@ public class DBpediaHandler {
             System.out.println("no need for merging, to few files");
             return;
         }
-        PrintWriter pw = new PrintWriter("combined", "UTF-8");
+        PrintWriter pw = new PrintWriter("combined.txt", "UTF-8");
         int counter = 0;
         boolean finished = false;
         ArrayList<Scanner> toBeRemoved = new ArrayList<>();

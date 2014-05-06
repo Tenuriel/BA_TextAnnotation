@@ -59,7 +59,7 @@ public class Index_Handler {
             conf.setSimilarity(new CustomSimilarity());
             conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
             IndexWriter writer = new IndexWriter(dir, conf);
-            Scanner scan = new Scanner(Paths.get("abstract_clean"));
+            Scanner scan = new Scanner(Paths.get("abstract_clean.txt"));
             String[] line;
             Document doc;
             while (scan.hasNextLine()) {
@@ -87,8 +87,8 @@ public class Index_Handler {
      */
     public static String createBlockIndex() {
         try {
-            Scanner scan = new Scanner(Paths.get("combined"));
-            Scanner scan2 = new Scanner(Paths.get("entity_anchors"));
+            Scanner scan = new Scanner(Paths.get("combined.txt.txt"));
+            Scanner scan2 = new Scanner(Paths.get("entity_anchors.txt"));
             Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_46);
             Directory dir = FSDirectory.open(new File("Entity_Index"));
             IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_46, analyzer);
@@ -220,7 +220,7 @@ public class Index_Handler {
                 doc = searcher.doc(i);
                 set.add("<" + doc.get("dbpedia_uri") + ">" + "|" + doc.get("anchor"));
             }
-            PrintWriter pw = new PrintWriter("anchors.nt", "UTF-8");
+            PrintWriter pw = new PrintWriter("anchors.txt", "UTF-8");
             for (String s : set) {
                 pw.println(s);
             }

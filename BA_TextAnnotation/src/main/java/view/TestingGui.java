@@ -22,12 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import model.GraphHandler;
 import edu.stanford.nlp.io.IOUtils;
-import java.awt.ScrollPane;
 import java.io.File;
 import java.util.HashMap;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
-import javax.swing.ScrollPaneConstants;
+import model.EntityExtractor;
 import model.NER_Handler;
 
 /**
@@ -65,12 +64,12 @@ public class TestingGui implements ActionListener{
      * area for the text to be tokenized.
      */
     public JTextArea textInput ;
-    public NER_Handler ner;
+    public EntityExtractor ner;
     public JFrame frame;
     public GraphHandler graph;
     public static String defaultFile="./src/main/resources/testText_first_Lady.txt";
 //    public AnchorHandler anchor;
-    public TestingGui(GraphHandler graph,NER_Handler ner){
+    public TestingGui(GraphHandler graph,EntityExtractor ner){
 //        this.anchor=anchor;
         this.graph=graph;
         this.ner=ner;
