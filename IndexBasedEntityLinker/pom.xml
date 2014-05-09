@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>tim.pontzen</groupId>
-    <artifactId>BA-TextAnnotation</artifactId>
+    <artifactId>IndexBasedEntityLinker</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>BA-TextAnnotation</name>
+    <name>IndexBasedEntityLinker</name>
     <url>http://maven.apache.org</url>
 
     <properties>

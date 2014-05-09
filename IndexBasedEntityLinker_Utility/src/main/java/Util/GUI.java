@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -91,13 +92,19 @@ public class GUI implements ActionListener {
         c.gridy = 1;
         panel.add(b, c);
         
+        JLabel cLabel=new JLabel("Console :");
+        c.gridx=0;
+        c.gridy=2;
+        c.fill=GridBagConstraints.HORIZONTAL;
+        panel.add(cLabel,c);
+        
         console=new JTextArea();
         console.setEditable(false);
         JScrollPane conPane=new JScrollPane(console);
         conPane.setPreferredSize(new Dimension(buttDim.width*6, 60));
         c.gridx=0;
         c.gridwidth=6;
-        c.gridy=2;
+        c.gridy=3;
         c.fill=GridBagConstraints.HORIZONTAL;
         panel.add(conPane,c);
         

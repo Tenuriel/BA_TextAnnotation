@@ -4,8 +4,12 @@
  */
 package model;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,22 +33,27 @@ import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.search.join.ToParentBlockJoinQuery;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import view.TestingGui;
 
 /**
  *
  * @author Tim Pontzen
  */
 public class GraphHandler {
+
     /**
-     * The multiplier for the tf_idf scoring.
-     * Formula :score= alpha*tf_idf_score + (1-alpha)*neighbor_score
+     * The multiplier for the tf_idf scoring. Formula :score= alpha*tf_idf_score +
+     * (1-alpha)*neighbor_score
      */
     public static final float TF_IDF_ALPHA = 0.5f;
     /**
-     * The delimeter for encapsulating words. Is needed for excat matching 
-     * in lucene.
+     * The delimeter for encapsulating words. Is needed for excat matching in lucene.
      */
     public static final String DELIMETER = "lucenedeli";
+    /**
+     * indicates if certain methods should create an output. used for data collection and debugging.
+     */
+    public boolean output = false;
     /**
      * Analyzer for query creation.
      */
@@ -72,7 +81,7 @@ public class GraphHandler {
     /**
      * Indicates if the algorithmen should search for tfd_idf-candiates.
      */
-    public boolean tf_idf_useage=false;
+    public boolean tf_idf_useage = true;
 
     public GraphHandler() {
         try {
@@ -85,13 +94,13 @@ public class GraphHandler {
             abstractSearcher.setSimilarity(new CustomSimilarity());
             parentQuery = new TermQuery(new Term("type", "Parent"));
         } catch (IOException ex) {
-            System.out.println("Error while opening Readers:"+ex.getMessage());
-        } 
+            System.out.println("Error while opening Readers:" + ex.getMessage());
+        }
     }
 
     /**
-     * Formates the string to a valid querystring.
-     * Mostly used for uri formating.
+     * Formates the string to a valid querystring. Mostly used for uri formating.
+     *
      * @param s the string to be formated.
      * @return the formated string.
      */
@@ -109,8 +118,9 @@ public class GraphHandler {
     }
 
     /**
-     * Formates an Uri to give back only the last value.
-     * E.g : dbpedia.org/.../foo_bar will return foo_bar
+     * Formates an Uri to give back only the last value. E.g : dbpedia.org/.../foo_bar will return
+     * foo_bar
+     *
      * @param s the string to be formated.
      * @return the formated string.
      */
@@ -156,7 +166,7 @@ public class GraphHandler {
      * Returns a string enclosed in delimeters.
      *
      * @param s
-     * @return 
+     * @return
      */
     public static String delimeterString(String s) {
         return DELIMETER + " " + s + " " + DELIMETER;
@@ -187,8 +197,10 @@ public class GraphHandler {
         }
         return result;
     }
+
     /**
-     * Compares the neighbors of every entity in the list with all other entitys. 
+     * Compares the neighbors of every entity in the list with all other entitys.
+     *
      * @param posEntitys possible entitys
      * @param queryString a String to be parsed for the childquery
      * @return the best macht for the query
@@ -232,8 +244,10 @@ public class GraphHandler {
         return res;
 
     }
+
     /**
      * Compares the neighbors of an entity with all other entitys.
+     *
      * @param entity The selected entity
      * @param queryString a String to be parsed for the childquery
      * @return the best macht for the query
@@ -280,33 +294,35 @@ public class GraphHandler {
         float tf_idf_Time = 0;
         int tf_idf_counter = 0;
         float entryTime;
-
+        int entryCounter=0;
         String queryString;
 
         ArrayList<String> tf_idf_List;
         String value;
-        
-        
+
         //check entrys
         btime = System.nanoTime();
         HashMap<String, String> result = checkEntrie(entitys);
         entryTime = System.nanoTime() - btime;
-        
+
         for (Map.Entry<String, String> entry : result.entrySet()) {
             //create querystring if needed
             if (entry.getValue() == null) {
+                entryCounter++;
                 queryString = "( ";
                 for (String enti : entitys) {
                     if (!entry.getKey().equals(enti)) {
                         queryString += "anchorN:" + enti + " OR ";
                     }
                 }
-                queryString = queryString.substring(0, queryString.length() - 3) + ")";
+                if (!queryString.isEmpty()) {
+                    queryString = queryString.substring(0, queryString.length() - 3) + ")";
+                }
                 //search for anchors
                 btime = System.nanoTime();
                 value = bestMatch(entry.getKey(), queryString);
                 anchorTime += System.nanoTime() - btime;
-                if (value.isEmpty()&&tf_idf_useage) {
+                if (value.isEmpty() && tf_idf_useage) {
                     tf_idf_counter++;
                     btime = System.nanoTime();
                     tf_idf_List = (tf_idfCandidates(entry.getKey()));
@@ -316,20 +332,37 @@ public class GraphHandler {
                 result.put(entry.getKey(), value);
             }
         }
-        System.out.println("Number of entitys:" + entitys.size() + "\n avg entryCheck:" + entryTime / (entitys.size() * (Math.pow(10, 6)))
-                + " entryCheck:" + entryTime / (Math.pow(10, 6))
-                + "\n avg anchorTime:" + anchorTime / (entitys.size() * (Math.pow(10, 6)))
-                + " anchorTime:" + anchorTime / (Math.pow(10, 6))
-                + "\n avg tf_idf_time:" + tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6)))
-                + " tf_idf_time:" + tf_idf_Time / (Math.pow(10, 6)));
+        if (output) {
+            try{
+                PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter("./eval.csv", true)));
+                DecimalFormat dc=new DecimalFormat("#.##");
+                pw.println(TestingGui.input.getText()+";"+entitys.size()+";"+ (result.size()-entryCounter)+";"+ dc.format(entryTime / (entitys.size() * (Math.pow(10, 6))))
+                    + ";" + dc.format(entryTime / (Math.pow(10, 6))) +";"+entryCounter +";"
+                    + dc.format(anchorTime / (entitys.size() * (Math.pow(10, 6)))) +";"
+                    + dc.format(anchorTime / (Math.pow(10, 6)))+";"+tf_idf_counter
+                    + ";" + dc.format(tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6))))
+                    + ";" + dc.format(tf_idf_Time / (Math.pow(10, 6))));
+                pw.close();
+            }catch(IOException ex){
+                System.out.println(ex.getMessage());
+            }
+//            System.out.println("Number of entitys:" + entitys.size() + "\n avg entryCheck:" + entryTime / (entitys.size() * (Math.pow(10, 6)))
+//                    + " entryCheck:" + entryTime / (Math.pow(10, 6))
+//                    + "\n avg anchorTime:" + anchorTime / (entitys.size() * (Math.pow(10, 6)))
+//                    + " anchorTime:" + anchorTime / (Math.pow(10, 6))
+//                    + "\n avg tf_idf_time:" + tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6)))
+//                    + " tf_idf_time:" + tf_idf_Time / (Math.pow(10, 6)));
+        }
         return result;
     }
 
     /**
-     * Searches for an excat match for every enitity in the list.
-     * A match occurs only if doc.title==entity
+     * Searches for an excat match for every enitity in the list. A match occurs only if
+     * doc.title==entity
+     *
      * @param entitys The entitys to search for.
-     * @return a map with enititys as keys and uri/null as value depending on whether there is a match or not.
+     * @return a map with enititys as keys and uri/null as value depending on whether there is a
+     * match or not.
      */
     public HashMap<String, String> checkEntrie(ArrayList<String> entitys) {
         HashMap<String, String> result = new HashMap<>();

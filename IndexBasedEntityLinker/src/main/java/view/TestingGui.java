@@ -27,7 +27,6 @@ import java.util.HashMap;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import model.EntityExtractor;
-import model.NER_Handler;
 
 /**
  *
@@ -50,7 +49,7 @@ public class TestingGui implements ActionListener{
     /**
      * inputfield for anchorsearch.
      */
-    public JTextField input ;
+    public static JTextField input ;
     /**
      * found entitys in the anchor.
      */
@@ -162,7 +161,7 @@ public class TestingGui implements ActionListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.pack();
-
+        graph.output=true;
     }
 
     @Override
@@ -192,7 +191,7 @@ public class TestingGui implements ActionListener{
                 neighborOutput.setText(newText);
                 
 //                System.out.println(time/(Math.pow(10,9)));
-                input.setText("Time: "+(time/(Math.pow(10,9))));
+                //input.setText("Time: "+(time/(Math.pow(10,9))));
                 break;
         }
 
