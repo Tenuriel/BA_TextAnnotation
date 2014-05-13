@@ -39,7 +39,7 @@ public class NER_Handler implements EntityExtractor{
      * @return all found entitys
      */
     @Override
-    public ArrayList<String> anotate(String s) {
+    public ArrayList<String> searchEntities(String s) {
         ArrayList<String> result = new ArrayList<>();
         List<List<CoreLabel>> ner_out = classifier.classify(s);
         String tmp = "";

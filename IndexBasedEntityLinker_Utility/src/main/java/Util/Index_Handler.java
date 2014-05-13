@@ -87,7 +87,7 @@ public class Index_Handler {
      */
     public static String createBlockIndex() {
         try {
-            Scanner scan = new Scanner(Paths.get("combined.txt.txt"));
+            Scanner scan = new Scanner(Paths.get("combined.txt"));
             Scanner scan2 = new Scanner(Paths.get("entity_anchors.txt"));
             Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_46);
             Directory dir = FSDirectory.open(new File("Entity_Index"));
@@ -155,7 +155,6 @@ public class Index_Handler {
             writer.prepareCommit();
             writer.commit();
             writer.close();
-            System.exit(0);
         } catch (IOException ex) {
             System.out.println("Creating Blockindex failed :" + ex.getMessage());
             return "Creating Blockindex failed :" + ex.getMessage();

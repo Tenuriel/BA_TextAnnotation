@@ -10,5 +10,5 @@ import java.util.ArrayList;
  * 
  */
 public interface EntityExtractor {
-    public ArrayList<String> anotate(String s);
+    public ArrayList<String> searchEntities(String s);
 }

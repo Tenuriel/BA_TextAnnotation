@@ -1,8 +1,9 @@
 package main;
 
+import control.Controller;
 import model.GraphHandler;
 import model.NER_Handler;
-import view.TestingGui;
+import view.GUI;
 
 /**
  * Hello world!
@@ -14,6 +15,7 @@ public class App
     {
         GraphHandler graph=new GraphHandler();
         NER_Handler ner=new NER_Handler();
-        new TestingGui(graph,ner);
+        Controller c=new Controller(graph, ner); 
+        GUI gui=new GUI(c);
     }
 }

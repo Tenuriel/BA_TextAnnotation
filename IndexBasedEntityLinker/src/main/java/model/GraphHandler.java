@@ -33,7 +33,7 @@ import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.search.join.ToParentBlockJoinQuery;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import view.TestingGui;
+import view.GUI;
 
 /**
  *
@@ -173,7 +173,7 @@ public class GraphHandler {
     }
 
     /**
-     * returns the top 20 entitys for whom their abstract text contains the highest tf_idf-Scores.
+     * returns the top 20 entities for whom their abstract text contains the highest tf_idf-Scores.
      *
      * @param entity the entity to be searched for in the abstracts
      * @return list with most promising matches
@@ -199,9 +199,9 @@ public class GraphHandler {
     }
 
     /**
-     * Compares the neighbors of every entity in the list with all other entitys.
+     * Compares the neighbors of every entity in the list with all other entities.
      *
-     * @param posEntitys possible entitys
+     * @param posEntitys possible entities
      * @param queryString a String to be parsed for the childquery
      * @return the best macht for the query
      */
@@ -214,7 +214,7 @@ public class GraphHandler {
         QueryParser parser = new QueryParser(Version.LUCENE_46, "anchorN", analyzer);
         try {
             StringBuilder efBuilder = new StringBuilder();
-            //create query-string for selected entitys
+            //create query-string for selected entities
             for (String s : posEntitys) {
                 efBuilder.append("title:\"");
                 efBuilder.append(delimeterString(getEntity(s)));
@@ -246,7 +246,7 @@ public class GraphHandler {
     }
 
     /**
-     * Compares the neighbors of an entity with all other entitys.
+     * Compares the neighbors of an entity with all other entities.
      *
      * @param entity The selected entity
      * @param queryString a String to be parsed for the childquery
@@ -283,12 +283,12 @@ public class GraphHandler {
     }
 
     /**
-     * Finds the most promising uris for a list of entitys.
+     * Finds the most promising uris for a list of entities.
      *
-     * @param entitys A list of entitys determined by the NER
+     * @param entities A list of entities determined by the NER
      * @return a list of the most promising uri for each entity
      */
-    public HashMap<String, String> findMostPromisingURI(ArrayList<String> entitys) {
+    public HashMap<String, String> findMostPromisingURI(ArrayList<String> entities) {
         float btime;
         float anchorTime = 0;
         float tf_idf_Time = 0;
@@ -302,7 +302,7 @@ public class GraphHandler {
 
         //check entrys
         btime = System.nanoTime();
-        HashMap<String, String> result = checkEntrie(entitys);
+        HashMap<String, String> result = checkEntrie(entities);
         entryTime = System.nanoTime() - btime;
 
         for (Map.Entry<String, String> entry : result.entrySet()) {
@@ -310,7 +310,7 @@ public class GraphHandler {
             if (entry.getValue() == null) {
                 entryCounter++;
                 queryString = "( ";
-                for (String enti : entitys) {
+                for (String enti : entities) {
                     if (!entry.getKey().equals(enti)) {
                         queryString += "anchorN:" + enti + " OR ";
                     }
@@ -336,9 +336,9 @@ public class GraphHandler {
             try{
                 PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter("./eval.csv", true)));
                 DecimalFormat dc=new DecimalFormat("#.##");
-                pw.println(TestingGui.input.getText()+";"+entitys.size()+";"+ (result.size()-entryCounter)+";"+ dc.format(entryTime / (entitys.size() * (Math.pow(10, 6))))
+                pw.println(GUI.input.getText()+";"+entities.size()+";"+ (result.size()-entryCounter)+";"+ dc.format(entryTime / (entities.size() * (Math.pow(10, 6))))
                     + ";" + dc.format(entryTime / (Math.pow(10, 6))) +";"+entryCounter +";"
-                    + dc.format(anchorTime / (entitys.size() * (Math.pow(10, 6)))) +";"
+                    + dc.format(anchorTime / (entities.size() * (Math.pow(10, 6)))) +";"
                     + dc.format(anchorTime / (Math.pow(10, 6)))+";"+tf_idf_counter
                     + ";" + dc.format(tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6))))
                     + ";" + dc.format(tf_idf_Time / (Math.pow(10, 6))));
@@ -346,9 +346,9 @@ public class GraphHandler {
             }catch(IOException ex){
                 System.out.println(ex.getMessage());
             }
-//            System.out.println("Number of entitys:" + entitys.size() + "\n avg entryCheck:" + entryTime / (entitys.size() * (Math.pow(10, 6)))
+//            System.out.println("Number of entities:" + entities.size() + "\n avg entryCheck:" + entryTime / (entities.size() * (Math.pow(10, 6)))
 //                    + " entryCheck:" + entryTime / (Math.pow(10, 6))
-//                    + "\n avg anchorTime:" + anchorTime / (entitys.size() * (Math.pow(10, 6)))
+//                    + "\n avg anchorTime:" + anchorTime / (entities.size() * (Math.pow(10, 6)))
 //                    + " anchorTime:" + anchorTime / (Math.pow(10, 6))
 //                    + "\n avg tf_idf_time:" + tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6)))
 //                    + " tf_idf_time:" + tf_idf_Time / (Math.pow(10, 6)));
@@ -360,17 +360,17 @@ public class GraphHandler {
      * Searches for an excat match for every enitity in the list. A match occurs only if
      * doc.title==entity
      *
-     * @param entitys The entitys to search for.
+     * @param entities The entities to search for.
      * @return a map with enititys as keys and uri/null as value depending on whether there is a
      * match or not.
      */
-    public HashMap<String, String> checkEntrie(ArrayList<String> entitys) {
+    public HashMap<String, String> checkEntrie(ArrayList<String> entities) {
         HashMap<String, String> result = new HashMap<>();
         try {
             QueryParser parser = new QueryParser(Version.LUCENE_46, "title", analyzer);
             Query query;
             TopDocs docs;
-            for (String entity : entitys) {
+            for (String entity : entities) {
                 query = parser.parse("\"" + delimeterString(entity) + "\"");
                 docs = entitySearcher.search(query, 1);
                 if (docs.totalHits == 1) {
