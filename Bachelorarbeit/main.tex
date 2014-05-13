@@ -1,0 +1,394 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Masters/Doctoral Thesis 
+% LaTeX Template
+% Version 1.42 (19/1/14)
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original authors:
+% Steven Gunn 
+% http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/
+% and
+% Sunil Patel
+% http://www.sunilpatel.co.uk/thesis-template/
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Note:
+% Make sure to edit document variables in the Thesis.cls file
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt, a4paper, oneside]{Thesis} % Paper size, default font size and one-sided paper
+\graphicspath{{./Pics/}}
+\usepackage[square, numbers, comma, sort&compress]{natbib} % Use the natbib reference package - read up on this to edit the reference style; if you want text (e.g. Smith et al., 2012) for the in-text references (instead of numbers), remove 'numbers' 
+\usepackage{url}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{glossaries}
+\usepackage[ngerman]{babel}
+\hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue - change to black if annoying
+\title{\ttitle} % Defines the thesis title - don't touch this
+
+\begin{document}
+\lstset{language=Java,
+		mathescape}
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+\setstretch{1.3} % Line spacing of 1.3
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{} % Clears all page headers and footers
+\rhead{\thepage} % Sets the right side header to show the page number
+\lhead{} % Clears the left side page header
+
+\pagestyle{fancy} % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % New command to make the lines in the title page
+
+% PDF meta-data
+\hypersetup{pdftitle={\ttitle}}
+\hypersetup{pdfsubject=\subjectname}
+\hypersetup{pdfauthor=\authornames}
+\hypersetup{pdfkeywords=\keywordnames}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+\begin{center}
+
+\textsc{\LARGE \univname}\\[1.5cm] % University name
+\textsc{\Large Bachelorarbeit}\\[0.5cm] % Thesis type
+
+\HRule \\[0.4cm] % Horizontal line
+{\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
+\HRule \\[1.5cm] % Horizontal line
+ 
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+\authornames % Author name - remove the \href bracket to remove the link
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+\supname% Supervisor name - remove the \href bracket to remove the link  
+\end{flushright}
+\end{minipage}\\[3cm]
+ 
+\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+\textit{in the}\\[0.4cm]
+\groupname\\\deptname\\[2cm] % Research group name and department name
+ 
+{\large \today}\\[4cm] % Date
+%\includegraphics{Logo} % University/department logo - uncomment to place it
+ 
+\vfill
+\end{center}
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%	Your institution may give you a different text to place here
+%----------------------------------------------------------------------------------------
+
+\Declaration{
+
+\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+
+I, \authornames, declare that this thesis titled, '\ttitle' and the work presented in it are my own. I confirm that:
+
+\begin{itemize} 
+\item[\tiny{$\blacksquare$}] This work was done wholly or mainly while in candidature for a research degree at this University.
+\item[\tiny{$\blacksquare$}] Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+\item[\tiny{$\blacksquare$}] Where I have consulted the published work of others, this is always clearly attributed.
+\item[\tiny{$\blacksquare$}] Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+\item[\tiny{$\blacksquare$}] I have acknowledged all main sources of help.
+\item[\tiny{$\blacksquare$}] Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.
+\end{itemize}
+\vspace*{-\baselineskip}
+\vspace{2cm}
+Signed:\\
+\rule[1em]{25em}{0.5pt} % This prints a line for the signature
+ 
+Date:\\
+\rule[1em]{25em}{0.5pt} % This prints a line to write the date
+}
+
+\clearpage % Start a new page
+
+%----------------------------------------------------------------------------------------
+%	ABBREVIATIONS
+%----------------------------------------------------------------------------------------
+
+\setstretch{1.5} % Set the line spacing to 1.5, this makes the following tables easier to read
+
+\lhead{\emph{Abk\"urzungen}} % Set the left side page header to "Abbreviations"
+\listofsymbols{ll} % Include a list of Abbreviations (a table of two columns)
+{
+\textbf{BI} & \textbf{B}lock\textbf{I}ndex \\
+\textbf{ERU} & \textbf{E}ntity-\textbf{R}ecognition-\textbf{U}nit \\
+\textbf{GUI} & \textbf{G}enerell \textbf{U}ser \textbf{I}nterface \\
+\textbf{IBEL} & \textbf{I}ndex \textbf {B}ased \textbf{E}ntity \textbf{L}inker \\
+\textbf{IBELU} & \textbf{I}ndex \textbf {B}ased \textbf{E}ntity \textbf{L}inker \textbf{U}tility \\
+\textbf{idf} & \textbf{i}nverse \textbf{d}ocument \textbf{f}requency \\
+\textbf{JAR} & \textbf{J}ava \textbf{AR}chieve \\
+\textbf{NER} & \textbf{N}amed \textbf{E}ntity \textbf{R}ecognizer \\
+\textbf{tf} & \textbf{t}erm \textbf{f}requency \\
+\textbf{URI} & \textbf{U}niform \textbf{R}esource \textbf{I}dentifier \\
+%\textbf{} & \textbf{} \textbf{} \textbf{} \\
+%\textbf{Acronym} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or \\
+}
+\pagestyle{fancy} % The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+
+\clearpage
+\lhead{\emph{List of Figures}} % Set the left side page header to "List of Figures"
+\listoffigures % Write out the List of Figures
+%\lhead{\emph{Contents}} % Set the left side page header to "Contents"
+\tableofcontents % Write out the Table of Contents
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{fancy} % Return the page headers back to the "fancy" style
+
+% Include the chapters of the thesis as separate files from the Chapters folder
+% Uncomment the lines as you write the chapters
+\chapter{Einleitung}
+\label{Kapitel 1}
+
+\lhead{Kapitel 1.}
+\chead{\emph{Einleitung}}
+%-----------------------------------------------------------------------
+\chapter{System\"ubersicht}
+\label{Kapitel 2}
+\lhead{Kapitel 2.}
+\chead{\emph{System\"ubersicht}}
+
+In diesem Kapitel wird die Systemarchitektur und dessen Informationsfluss behandelt. Insgesamt besteht das System aus 4 Teilen:
+\begin{itemize}
+\item GUI
+\item Entity-Reconition-Unit(ERU)
+\item Linking Unit
+\item Index
+\end{itemize}
+Das nachfolgende Bild bietet einen \"Uberblick \"uber die Architektur und das Zusammenspiel der einzelnen Komponenten. Deren Funktion wird im Anschluss n\"aher erl\"autert.
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.55]{./system.png}
+\caption[System\"ubersicht]{System\"ubersicht}
+\end{figure}
+
+
+\section{GUI}
+Die GUI stellt die Schnittstelle zwischen Benutzer und Programm dar. Diese erlaubt ihm seinen zu anotierenden Text zu \"ubergeben und zwischen verschiedenen Optionen zu w\"ahlen. Der Input wird entgegenommen und dessen Text an die Entity-Recognition-Unit weitergeleitet. Am Ende bekommt es die verlinkten Entities von der Linking-Unit zur\"urck und gibt diese an den Benutzer weiter.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.55]{./GUI.png}
+\caption[GUI]{GUI-Verbindungen}
+\end{figure}
+
+
+\section{Enitity-Recogniction-Unit}
+Diese Einheit ist f\"ur die Erkennung von Named Entities verantwortlich. Die bedeutet, dass sie den ihr \"ubergebenen Text analysiert und alle sich darin befindlichen Entit\"aten extrahiert (z.B. Personen oder Orte). Das Ergebnis dieses Prozesses wird dann an die Linking-Unit weitergeleitet.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{./eeu.png}
+\caption[Entity-Extraction-Unit]{ERU}
+\end{figure}
+
+
+\section{Linking-Unit und Index}
+Die Linking-Unit versucht mit Hilfe des Indexes f\"ur jede an sie weitergeleitete Entit\"at eine passende URI zu finden. Dazu erstellt sie, unter Ber\"ucksichtigung der vom Benutzer eingestellten Optionen, eine Query und l\"asst den Index diese ausf\"uhren. Dessen R\"uckgabewert wird dann mit den Named Entities verkn\"upft und an die GUI weitergereicht.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{./linking.png}
+\caption[Linking Unit]{Linking-Unit}
+\end{figure}
+\section{Informationsfluss}
+bla \\
+bla\\
+bla
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{./seq.png}
+\caption[Programmablauf]{Programmablauf}
+\end{figure}
+%----------------------------------------------------------------------------
+\chapter{Implementierung}
+\label{Kapitel 3}
+\lhead{Kapitel 3.}
+\chead{\emph{Implementierung}}
+\section{Enitity-Recogniction-Unit}
+\section{Linking-Unit und Index}
+
+\section{Index}
+\subsection{BlockIndex}
+\begin{lstlisting}
+<child$_{1_1}$>
+...
+<child$_{n_1}$>
+<parent$_1$>
+...
+<child$_{m_1}$>
+...
+<child$_{1_m}$>
+...
+<child$_{n_m}$>
+<parent$_m$>
+\end{lstlisting}
+\begin{lstlisting}
+<anchorN$_{1_1}$>
+...
+<anchorN$_{n_1}$>
+<URI$_1$,anchor$_{1_1}$ ... anchor$_{i_1}$,title$_1$,type>
+\end{lstlisting}
+%------------------------------------------------------------------------
+\chapter{Evaluierung}
+\label{Kapitel 4}
+
+\lhead{Kapitel 4.}
+\chead{\emph{Evalurierung}}
+%-------------------------------------------------------------------------
+\chapter{Deployment und Erweiterung auf andere Sprachen}
+\label{Kapitel 5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+\lhead{Kapitel 5.}
+\chead{\emph{Deployment und Erweiterung auf andere Sprachen}}
+\section{Deployment}
+Um das Programm zu deployen muss lediglich die JAR mit compilierten Dependencies(falls das Programm aus dem Sourcecode compiliert wurde, ist dies die \\\glqq IndexBasedEntityLinker-1.0-jar-with-dependencies.jar\grqq), sowie ein passender Entity- und Abstract-Index in ein gleiches Verzeichnis kopiert werden.
+\subsection{Generierung der Indexe mit Utility-1.0}
+Sollten keine gültigen Indexe vorhanden sein, so k\"onnen diese entweder manuell oder \"uber die IndexBasedEntityLinker\_Utility(IBELU) generiert werden.
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.52]{util.jpg}
+\caption[Index Based Entity Linker Utility]{Index Based Entity Linker Utility}
+\end{figure}
+\clearpage
+Daf\"ur werden folgende Dateien ben\"otigt:
+\begin{itemize}
+\item Der DBpedia Anchor-Index der Computer Semantic Group der Universit\"at Bielefeld
+\item Mapping-based Properties (en) von DBpedia\footnote{\url{http://downloads.dbpedia.org/3.9/en/mappingbased\_properties\_en.nt.bz2}}
+\item Extended Abstracts (en) von DBpedia\footnote{\url{http://downloads.dbpedia.org/3.9/en/long\_abstracts\_en.nt.bz2}}
+\end{itemize}
+Die Abfolge der auszf\"uhrenden Operationen ist von links nach rechts sortiert und sollte auch in dieser Reihenfolge abgewickelt werden.\\
+Zur Erstellung des Entity-Indexes werden der Anchor-Index und die Mapping-based Properties ben\"otigt. Der Ablauf ist wie folgt:
+\begin{enumerate}
+\item Clean Properties: In dem zugeh\"origen Textfeld oberhalb des Buttons muss der Dateipfad (lokal oder absolut) zu der Mapping-Based Properties Datei angegeben werden. Diese wird dann von allen irrelevanten Daten ges\"aubert.\\
+Output: cleaned\_properties.txt, cleaned\_properties\_neigborToEntity.txt und \\entities.txt.
+\item Extract Anchors: Liest den Anchor-Index aus und schreibt alle \\ \textless URI,anchor\textgreater-Paare in eine Datei.\\
+Output: anchors.txt
+\item Pre BlockIndex: Erstellt f\"ur die Schnittmenge der URIs aus entities.txt und anchors.txt Dateien zur BlockIndex Generierung.\\
+Output:combined.txt, entity\_anchors.txt, entity\_neighbor\_anchorsN.txt,
+\\neighbor\_entity\_anchorsE.txt
+\item Create BlockIndex Erzeugt den BlockIndex(EntityIndex).\\
+Output : Blockindex
+\end{enumerate}
+
+Zu Generierung des Abstract-Indexes werden die entities.txt aus dem ersten Teil und die Long-Abstracts ben\"otigt:
+\begin{enumerate}
+\item Clean Abstracts: Nach Angabe des Dateipfades (lokal oder absolut) der\\ long-abstracts-Datei werden f\"ur alle URIs die ein Abstract besitzen und in entities.txt vorkommen \textless URI, abstract\textgreater-Paare erstellt und gespeichert.\\
+Output: abstract\_clean.txt
+\item Create Abstract Index: Erstellt den Abstract-Index.\\
+Output:Abstract Index
+\end{enumerate}
+\"Uber Erfolg oder Misserfolg (Fehlermeldungen) der ausgef\"uhrten Operationen wird der Benutzer der IBELU \"uber ein Konsolen-Feld (siehe Abbildung 5.1) informiert.
+
+\textbf{Anmerkung}: Diese Operationen sind teilweise sehr Speicherintensiv. Es sollten mindestens 12GB RAM zur Verf\"ugung gestellt werden und sichergestellt sein, dass die JVM diesen auch nutzen darf (VM Parameter: -Xmx12g).
+\subsection{Eigenst\"andige Generierung von Dateien}
+Die IBELU kann auch nur zur reinen Indexerstellung genutzt werden, w\"ahrend die daf\"ur ben\"otigten Dateien anderweitig erstellt werden. Im Nachfolgenden werden die Dateien und ihre Formate n\"aher erl\"autert.
+\subsubsection*{Dateien zur Erstellung des Entity-Indexes}
+Um den Index \"uber die IBELU zu erstellen, sind 2 Dateien erforderlich:
+\begin{itemize}
+\item combined.txt : In dieser Datei werden alle URIs auf ihre Nachbarn und deren Anchors gemappt. Ein Nachbar einer URI A ist in diesem Fall eine URI B, deren Graphknoten eine Kante zu dem Knoten von A besitzt.\\
+Format:
+\begin{lstlisting}
+URI$_1$|Neighbor$_1$|anchor$_{1,1}$;...;anchor$_{1,i}$
+...
+URI$_1$|Neighbor$_{m_1}$|anchor$_{m_1,1}$;...;anchor$_{m_1,j}$
+...
+...
+URI$_n$|Neighbor$_{m_n}$|anchor$_{m_n,1}$;...;anchor$_{m_n,k}$
+\end{lstlisting}
+\item entity\_anchors.txt : Diese Datei mappt alle URIs auf ihre Anchors.\\
+Format:
+\begin{lstlisting}
+URI$_1$|anchor$_{1,1}$;...;anchor$_{1,i}$
+...
+...
+...
+URI$_n$|anchor$_{n,1}$;...;anchor$_{n,j}$
+\end{lstlisting} 
+\end{itemize}
+Diese Dateien sollten lexikographisch sortiert sein, um den resultierenden Index performanter zu machen.
+
+\textbf{Anmerkung}: Nat\"urlich k\"onnen auch die Indexe eigenst\"andig erstellt werden. Aufbau und Funktionsweise werden in dem Kapitel \glqq Implementierung \grqq ausf\"uhrlich behandelt.
+\section{Erweiterung um andere Sprachen}
+Um IBEL mit anderen Sprachen nutzen zu k\"onnen, m\"ussen neue Indexe erstellt und die existierende Entity-Regonition-Unit angepasst beziehungsweise ersetzt werden.
+
+\subsection{Indexe}
+F\"ur jede zu unterst\"uzende Sprache muss ein neuer Entity-Index und ein neuer Abstract-Index erstellt werden. In Kapitel 5.1 wurde dies bereits ausf\"uhrlich behandelt.
+Die daf\"ur ben\"otigten Mapping-Based Properties sowie die long-Abstracts werden von DBpedia in 119 verschieden Sprachen zur Verf\"ugung gestellt. \\
+Die entsprechenden Anchors f\"ur diese Sprache müssen allerdings entweder eigenst\"andig generiert oder aus einer anderweitigen Quelle bezogen werden.
+
+\subsection{Entity Recognition}
+F\"ur die Entity-Regocnition-Unit kann, durch einen Austausch der Klassifizierer, weiterhin der Stanford-NER verwendet werden.  
+Auf der Downloadseite des Stanford-NER\footnote{\url{http://nlp.stanford.edu/software/CRF-NER.shtml}} finden sich Klassifizierer f\"ur die deutsche und chinesische Sprache. F\"ur andere Sprachen m\"ussen eigene Klassifzierer trainiert werden. Das n\"otige Vorgehen daf\"ur ist auf der FAQ-Seite\footnote{\url{http://nlp.stanford.edu/software/crf-faq.shtml\#a}} beschrieben. Um den neuen Klassifizierer nutzen zu k\"onnen, muss der Ladepfad in der CLASSIFIER\_PATH-Variable in der Klasse NER-Handler entsprechend angepasst werden.
+
+Es wird auch jede andere Implementation von Named-Entity-Regocnition unterst\"utz. Daf\"ur muss lediglich ein  Adapeter\footnote{\url{http://de.wikipedia.org/wiki/Adapter
+\_(Entwurfsmuster)}} geschrieben werden, welcher das EntityExtractor-Interface implementiert. Dieser muss dann in der Klasse App.java der GUI anstelle des NER\_Handlers im Konsturktoraufruf \"ubergeben werden.
+
+\textbf{Anmerkung} : Da das Programm im Nachhinein in eine Serverapplikation f\"ur die Semantic Computer Group umgebaut wird, wird die GUI voraussichtlich nicht mehr verwendet werden. Daher muss der Adapter dann den NER\_Hanlder an einer anderen Stelle ersetzen.
+
+\chapter{Zusammenfassung}
+
+
+
+\glossarystyle{altlistgroup}
+\makeglossaries
+\newglossaryentry{anchor}{
+name=anchor,
+description={Ein Webelement, das eine bestimmte URL mit einem Text auf einer Webseite verbindet.}}
+%\newglossaryentry{label}{setting}
+
+\printglossary
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+
+
+
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+\backmatter
+
+
+\end{document}  
