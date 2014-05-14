@@ -214,7 +214,7 @@ Diese Einheit ist f\"ur die Erkennung von Named Entities verantwortlich. Die bed
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.55]{./eeu.png}
-\caption[Entity-Extraction-Unit]{ERU}
+\caption[EEnitity-Recognition-Unit]{Enitity-Recognition-Unit}
 \end{figure}
 
 
@@ -226,9 +226,14 @@ Die Linking-Unit versucht mit Hilfe des Indexes f\"ur jede an sie weitergeleitet
 \caption[Linking Unit]{Linking-Unit}
 \end{figure}
 \section{Informationsfluss}
-bla \\
-bla\\
-bla
+Um die Informationsverarbeitung noch einmal in einer Gesammt\"ubersicht zu betrachten, sind alle Abl\"aufe in dem folgenden Sequenzdiagramm verdeutlicht.
+Folgende Szenarien sind abgedeckt :
+\begin{itemize}
+\item Texteingabe
+\item Optionsauswahl
+\item Annotierung
+\end{itemize}
+
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.55]{./seq.png}
@@ -239,29 +244,76 @@ bla
 \label{Kapitel 3}
 \lhead{Kapitel 3.}
 \chead{\emph{Implementierung}}
-\section{Enitity-Recogniction-Unit}
-\section{Linking-Unit und Index}
+Der Source-Code f\"ur den Index Based Entity Linker(IBEL) wird als ein  Maven\footnote{\url{http://maven.apache.org/}}-Projekt f\"ur Java verwaltet. Dies erm\"oglicht ein komfortables Warten und Weiterentwickeln des Codes, da alle ben\"otigten Bibliotheken automatisch \"uber das zentrale Maven-Repository bezogen werden. Zus\"atzlich ist sichergestellt, dass diese die richtige Version besitzen um Kompatibilitätsprobleme zu vermeiden.\\
+Als Entwicklungsumgebung wurde Netbeans 8.0 verwendet und als Java-Version Java 7. 
+Im Folgenden wird nun die Implementierung der einzelnen Funktions-Einheiten, welche in Kapitel \ref{Kapitel 2} vorgestellt wurden, behandelt.
+
+\section{GUI und Controller}
+Um die einzelnen Bestandteile des IBEL zu kapseln und somit leichter zu Warten, wurde eine Controller implementiert, dessen alleinige Aufgabe es ist, die Kommunikation zwischen den Klassen zu handhaben. \\
+Die Gui nimmt weiterhin die Eingaben des Benutzers entgegen, jedoch wird die Auswertung der Interaktion nun von dem Controller \"ubernommen. Hierf\"ur implementiert dieser das ActionListener-Interface des java.awt.event-Packages.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{./guiCont.png}
+\caption[GUI and Controller]{GUI and Controller}
+\end{figure}
+
+\section{Enitity-Recognition-Unit}
+Um den vom Benutzer eingegeben Text untersuchen zu k\"onnen, benutzt IBEL den Stanford NER, einen von der Universit\"at Stanford entwickelten Named Entity Recognizer, der Wortsequenzen in einem Text kennzeichnet, bei denen es sich um Namen f\"ur Dinge handelt, wie zum Beispiel Personen oder Firmennamen \footnote{\url{http://nlp.stanford.edu/software/CRF-NER.shtml}}. 
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{./eruImp.png}
+\caption[Entity-Recognition-Unit Impl.]{Entity-Recognition-Unit Implementation}
+\end{figure}
+
+Die Schnittstelle zwischen dem Controller und der Enitity-Recognition-Unit(ERU) bildet das EntityExtractor-Interface. Jede Klasse die dieses Implementiert, kann vom Controller genutzt werden um Entit\"aten in Texten erkennen zu lassen. Der NER\_Handler, welcher dieses Interface implementiert, nutzt die Classifier des Stanford-NER um eine Liste mit Entit\"aten in dem ihm \"ubergebenen Text zu extrahieren.
+
+\section{Linking-Unit}
+Nachdem die Entity-Recognition-Unit alle gefundenen Entit\"aten an den Controller\\ zurückgeben hat, werden diese an den GraphHandler zum Entity Linking weitergeleitet. Dieser erstellt Querys \"ur Lucene, einer performanten Open Source Java-Bibliothek f\"ur Textsuche\footnote{\url{http://lucene.apache.org/core/}}, und l\"asst diese dann aus\"uhren. Die ermittelten URIs werden mit den Entit\"aten verkn\"upft und an den Controller zur\"uckgegeben.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{./entLinkImp.png}
+\caption[Entity Linking Unit]{Entity Linking Unit}
+\end{figure}
+
+\subsection{Ablauf des Linkings}
+Der Entity-Linking-Algorithmus erh\"alt eine Liste von Entit\"aten und durchl\"auft dann 3 Phasen:
+\begin{enumerate}
+\item Titelvergleich : Es wird geschaut ob die Entit\"at ein Titel f\"ur eine DBpedia Seite ist. Zum Beispiel w\"are die Entit\"at \glqq United States\grqq{} der Titel der DBpedia Seite mit der URI \glqq http://dbpedia.org/resource/United\_States\grqq{} .
+
+\item Anchorsuche : Falls die Titelsuche kein Ergebnis liefert, so wird \"uberpr\"uft ob die Entit\"at ein verzeichneter Anchor einer URI ist. In dem United States Beispiel w\"are \glqq USA\grqq{} einer dieser Anchors. Da ein Anchor disambig sein kann, wird versucht \"uber den semantischen Kontext eine Entscheidung zu treffen. Dazu werden die Nachbaranchor der möglichen Kandidaten mit allen anderen gefunden Entit\"aten verglichen. Der Kandidat mit den meisten \"Ubereinstimmungen hat die grö\ss te Wahrscheinlichkeit die gesuchte URI zu sein und wird deshalb mit der Entit\"at verkn\"upft.
+
+\item tf-idf-Suche : Wurde in den ersten beiden Schritten keine passende URI gefunden und der Benutzer hat die entsprechende Option angeben, so wird versucht \"uber eine tf-idf-Suche eine URI zu ermitteln. Dazu wird in den Abstract-Texten aller DBpedia Seiten nach dem Vorkommen der Entit\"at gesucht. Die 20 erfolgreichsten Suchtreffer werden nun behandelt als w\"aren sie Kandidaten f\"ur einen disambiguen Anchor. Mit ihnen wird wie in der vorherigen Phase verfahren.
+\end{enumerate}
+In dem Folgenden Aktivit\"atsdiagramm wird der noch einmal Linking-Algorithmus verdeutlicht.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{./ablauf.png}
+\caption[Entity Linking]{Entity Linking}
+\end{figure}
+
 
 \section{Index}
-\subsection{BlockIndex}
-\begin{lstlisting}
-<child$_{1_1}$>
-...
-<child$_{n_1}$>
-<parent$_1$>
-...
-<child$_{m_1}$>
-...
-<child$_{1_m}$>
-...
-<child$_{n_m}$>
-<parent$_m$>
-\end{lstlisting}
+%\footnote{\url{http://nlp.stanford.edu/software/CRF-NER.shtml}}
+Insgesamt gibt es 2 Indexe. Den EntityIndex und den AbstractIndex
+\subsection{EntityIndex}
+
 \begin{lstlisting}
 <anchorN$_{1_1}$>
 ...
 <anchorN$_{n_1}$>
 <URI$_1$,anchor$_{1_1}$ ... anchor$_{i_1}$,title$_1$,type>
+\end{lstlisting}
+\subsection{AbstractIndex}
+Der AbstractIndex ist ein Standart-Index, dessen Dokumente 2 Felder enthalten:
+\begin{enumerate}
+\item URI
+\item Abstract der URI
+\end{enumerate}
+Sein Format sieht wie Folgt aus:
+\begin{lstlisting}
+<URI$_1$,abstract$_1$>
+...
+<URI$_n$,abstract$_n$>
 \end{lstlisting}
 %------------------------------------------------------------------------
 \chapter{Evaluierung}

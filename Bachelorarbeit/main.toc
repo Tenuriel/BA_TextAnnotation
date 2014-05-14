@@ -11,16 +11,21 @@
 \contentsline {section}{\numberline {2.3}Linking-Unit und Index}{4}{section.16}
 \contentsline {section}{\numberline {2.4}Informationsfluss}{4}{section.18}
 \contentsline {chapter}{\numberline {3}Implementierung}{6}{chapter.20}
-\contentsline {section}{\numberline {3.1}Index}{6}{section.21}
-\contentsline {subsection}{\numberline {3.1.1}BlockIndex}{6}{subsection.22}
-\contentsline {chapter}{\numberline {4}Evaluierung}{7}{chapter.40}
-\contentsline {chapter}{\numberline {5}Deployment und Erweiterung auf andere Sprachen}{8}{chapter.41}
-\contentsline {section}{\numberline {5.1}Deployment}{8}{section.42}
-\contentsline {subsection}{\numberline {5.1.1}Generierung der Indexe mit Utility-1.0}{8}{subsection.43}
-\contentsline {subsection}{\numberline {5.1.2}Eigenst\"andige Generierung von Dateien}{10}{subsection.53}
-\contentsline {section}{\numberline {5.2}Erweiterung um andere Sprachen}{11}{section.68}
-\contentsline {subsection}{\numberline {5.2.1}Indexe}{11}{subsection.69}
-\contentsline {subsection}{\numberline {5.2.2}Entity Recognition}{11}{subsection.70}
-\contentsline {chapter}{\numberline {6}Zusammenfassung}{13}{chapter.74}
+\contentsline {section}{\numberline {3.1}GUI und Controller}{6}{section.22}
+\contentsline {section}{\numberline {3.2}Enitity-Recognition-Unit}{7}{section.24}
+\contentsline {section}{\numberline {3.3}Linking-Unit}{8}{section.27}
+\contentsline {subsection}{\numberline {3.3.1}Ablauf des Linkings}{8}{subsection.30}
+\contentsline {section}{\numberline {3.4}Index}{10}{section.35}
+\contentsline {subsection}{\numberline {3.4.1}EntityIndex}{10}{subsection.36}
+\contentsline {subsection}{\numberline {3.4.2}AbstractIndex}{10}{subsection.42}
+\contentsline {chapter}{\numberline {4}Evaluierung}{11}{chapter.49}
+\contentsline {chapter}{\numberline {5}Deployment und Erweiterung auf andere Sprachen}{12}{chapter.50}
+\contentsline {section}{\numberline {5.1}Deployment}{12}{section.51}
+\contentsline {subsection}{\numberline {5.1.1}Generierung der Indexe mit Utility-1.0}{12}{subsection.52}
+\contentsline {subsection}{\numberline {5.1.2}Eigenst\"andige Generierung von Dateien}{14}{subsection.62}
+\contentsline {section}{\numberline {5.2}Erweiterung um andere Sprachen}{15}{section.77}
+\contentsline {subsection}{\numberline {5.2.1}Indexe}{15}{subsection.78}
+\contentsline {subsection}{\numberline {5.2.2}Entity Recognition}{15}{subsection.79}
+\contentsline {chapter}{\numberline {6}Zusammenfassung}{17}{chapter.83}
 \vspace {2em}
 \vspace {2em}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  12 MAY 2014 23:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  14 MAY 2014 11:04
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -863,24 +863,24 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 190.
 
-<./Pics/./system.png, id=161, 757.83125pt x 296.10625pt>
+<./Pics/./system.png, id=194, 757.83125pt x 296.10625pt>
 File: ./Pics/./system.png Graphic file (type png)
 
 <use ./Pics/./system.png>
-<./Pics/./GUI.png, id=162, 526.96875pt x 336.25626pt>
+<./Pics/./GUI.png, id=195, 526.96875pt x 336.25626pt>
 File: ./Pics/./GUI.png Graphic file (type png)
  <use ./Pics/./GUI.png>
 [2
 
  <./Pics/./system.png (PNG copy)>]
-<./Pics/./eeu.png, id=169, 346.29375pt x 195.73125pt>
+<./Pics/./eeu.png, id=202, 346.29375pt x 195.73125pt>
 File: ./Pics/./eeu.png Graphic file (type png)
  <use ./Pics/./eeu.png>
-<./Pics/./linking.png, id=170, 587.19376pt x 145.54375pt>
+<./Pics/./linking.png, id=203, 587.19376pt x 145.54375pt>
 File: ./Pics/./linking.png Graphic file (type png)
 
 <use ./Pics/./linking.png> [3 <./Pics/./GUI.png (PNG copy)> <./Pics/./eeu.png (
-PNG copy)>] <./Pics/./seq.png, id=176, 747.79375pt x 587.19376pt>
+PNG copy)>] <./Pics/./seq.png, id=209, 747.79375pt x 808.01875pt>
 File: ./Pics/./seq.png Graphic file (type png)
 
 <use ./Pics/./seq.png> [4 <./Pics/./linking.png (PNG copy)>] [5 <./Pics/./seq.p
@@ -889,37 +889,56 @@ Kapitel 3.
 ------------------------------------------------------------------------------
  3 Implementierung
 ------------------------------------------------------------------------------
-[6
+<./Pics/./guiCont.png, id=221, 386.44376pt x 205.76875pt>
+File: ./Pics/./guiCont.png Graphic file (type png)
+
+<use ./Pics/./guiCont.png>
+<./Pics/./eruImp.png, id=224, 486.81876pt x 336.25626pt>
+File: ./Pics/./eruImp.png Graphic file (type png)
+
+<use ./Pics/./eruImp.png> [6
 
 ]
+<./Pics/./entLinkImp.png, id=235, 627.34375pt x 416.55624pt>
+File: ./Pics/./entLinkImp.png Graphic file (type png)
+
+<use ./Pics/./entLinkImp.png> [7 <./Pics/./guiCont.png (PNG copy)> <./Pics/./er
+uImp.png (PNG copy)>] [8 <./Pics/./entLinkImp.png (PNG copy)>]
+<./Pics/./ablauf.png, id=249, 647.41875pt x 496.85625pt>
+File: ./Pics/./ablauf.png Graphic file (type png)
+
+<use ./Pics/./ablauf.png> [9 <./Pics/./ablauf.png (PNG copy)>]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 314.
+ [10]
 Kapitel 4.
 ------------------------------------------------------------------------------
  4 Evaluierung
 ------------------------------------------------------------------------------
-[7
+[11
 
 ]
 Kapitel 5.
 ------------------------------------------------------------------------------
  5 Deployment und Erweiterung auf andere Sprachen
 ------------------------------------------------------------------------------
-<./Pics/util.jpg, id=215, 790.45313pt x 185.94469pt>
+<./Pics/util.jpg, id=277, 790.45313pt x 185.94469pt>
 File: ./Pics/util.jpg Graphic file (type jpg)
  <use ./Pics/util.jpg>
-[8
+[12
 
  <./Pics/util.jpg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 298.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 351.
 
  (/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 298.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 351.
 
-[9
+[13
 
-] [10] [11] [12]
+] [14] [15] [16]
 Kapitel 6.
 ------------------------------------------------------------------------------
  6 Zusammenfassung
@@ -927,9 +946,9 @@ Kapitel 6.
 \glo@main@file=\write7
 \openout7 = `main.glo'.
 
-Package glossaries Info: Writing glossary file main.glo on input line 367.
+Package glossaries Info: Writing glossary file main.glo on input line 420.
 No file main.gls.
-[13
+[17
 
 \openout3 = `main.ist'.
 
@@ -937,37 +956,33 @@ No file main.gls.
 ------------------------------------------------------------------------------
  Literaturverzeichnis
 ------------------------------------------------------------------------------
-(./main.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+(./main.aux) ) 
 Here is how much of TeX's memory you used:
- 12024 strings out of 495021
- 163826 string characters out of 1181035
- 262799 words of memory out of 3000000
- 14870 multiletter control sequences out of 15000+50000
+ 12061 strings out of 495021
+ 164458 string characters out of 1181035
+ 261804 words of memory out of 3000000
+ 14890 multiletter control sequences out of 15000+50000
  15741 words of font info for 59 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  48i,12n,73p,1080b,1846s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
-xlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/font
-s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-texli
-ve/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type
-1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
-onts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmt
-i10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pfb></u
-sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/tex
-mf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/f
-onts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on main.pdf (18 pages, 324725 bytes).
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-
+texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fon
+ts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/pub
+lic/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pf
+b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share
+/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texliv
+e/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
+ti12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb></u
+sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/symbols/msam7.pfb>
+Output written on main.pdf (22 pages, 369944 bytes).
 PDF statistics:
- 354 PDF objects out of 1000 (max. 8388607)
- 93 named destinations out of 1000 (max. 500000)
- 207 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 417 PDF objects out of 1000 (max. 8388607)
+ 106 named destinations out of 1000 (max. 500000)
+ 267 words of extra memory for PDF output out of 10000 (max. 10000000)
 
