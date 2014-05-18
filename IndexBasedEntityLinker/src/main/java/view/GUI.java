@@ -43,7 +43,7 @@ public class GUI {
     /**
      * labe for neighborOutpur field.
      */
-    public static JLabel neighbors_label = new JLabel("neighbors");
+    public static JLabel neighbors_label = new JLabel("URIs");
     /**
      * label for textInput field.
      */
@@ -53,11 +53,11 @@ public class GUI {
      */
     public static JTextField input;
     /**
-     * found entitys in the anchor.
+     * found entitys in the text.
      */
     public JTextArea entityOutput;
     /**
-     * foudn neighbors for the entity.
+     * found uris for the entity.
      */
     public JTextArea neighborOutput;
     /**
@@ -91,13 +91,21 @@ public class GUI {
         GridBagConstraints c = new GridBagConstraints();
 
 //        JButton go=new JButton("Search for Anchor");
+        JPanel optionP=new JPanel(new GridBagLayout());
         JToggleButton go = new JToggleButton("Toggle tf_idf use");
         go.setPreferredSize(new Dimension(150, 40));
         c.gridx = 0;
         c.gridy = 0;
-        panel.add(go, c);
+        optionP.add(go,c);
+        panel.add(optionP, c);
         go.addActionListener(controller);
-
+        go = new JToggleButton("csv output");
+        go.setPreferredSize(new Dimension(150, 40));
+        c.gridx = 1;
+        go.addActionListener(controller);
+        optionP.add(go,c);
+        
+        
         JButton anotate = new JButton("anotate");
         anotate.setPreferredSize(new Dimension(150, 40));
         c.gridx = 2;

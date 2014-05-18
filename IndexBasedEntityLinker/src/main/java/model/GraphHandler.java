@@ -206,8 +206,8 @@ public class GraphHandler {
      * @return the best macht for the query
      */
     private String bestMatch(ArrayList<String> posEntitys, String queryString) {
-        if (queryString.isEmpty()) {
-            return queryString;
+        if (queryString.isEmpty()||posEntitys.isEmpty()) {
+            return "";
         }
 
         String res = "";
@@ -294,9 +294,16 @@ public class GraphHandler {
         float tf_idf_Time = 0;
         int tf_idf_counter = 0;
         float entryTime;
-        int entryCounter=0;
+        int entryCounter = 0;
         String queryString;
-
+        PrintWriter tfWriter = null;
+        if (output) {
+            try {
+                tfWriter = new PrintWriter(new BufferedWriter(new FileWriter("./tf_idf.txt", true)));
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
         ArrayList<String> tf_idf_List;
         String value;
 
@@ -328,22 +335,28 @@ public class GraphHandler {
                     tf_idf_List = (tf_idfCandidates(entry.getKey()));
                     value = bestMatch(tf_idf_List, queryString);
                     tf_idf_Time += System.nanoTime() - btime;
+                    if (tfWriter != null && output) {
+                        tfWriter.println(entry.getKey() + "\t" + value);
+                    }
                 }
                 result.put(entry.getKey(), value);
             }
         }
         if (output) {
-            try{
-                PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter("./eval.csv", true)));
-                DecimalFormat dc=new DecimalFormat("#.##");
-                pw.println(GUI.input.getText()+";"+entities.size()+";"+ (result.size()-entryCounter)+";"+ dc.format(entryTime / (entities.size() * (Math.pow(10, 6))))
-                    + ";" + dc.format(entryTime / (Math.pow(10, 6))) +";"+entryCounter +";"
-                    + dc.format(anchorTime / (entities.size() * (Math.pow(10, 6)))) +";"
-                    + dc.format(anchorTime / (Math.pow(10, 6)))+";"+tf_idf_counter
-                    + ";" + dc.format(tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6))))
-                    + ";" + dc.format(tf_idf_Time / (Math.pow(10, 6))));
+            try {
+                PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("./eval.csv", true)));
+                DecimalFormat dc = new DecimalFormat("#.##");
+                pw.println(GUI.input.getText() + ";" + entities.size() + ";" + (result.size() - entryCounter) + ";" + dc.format(entryTime / (entities.size() * (Math.pow(10, 6))))
+                        + ";" + dc.format(entryTime / (Math.pow(10, 6))) + ";" + entryCounter + ";"
+                        + dc.format(anchorTime / (entities.size() * (Math.pow(10, 6)))) + ";"
+                        + dc.format(anchorTime / (Math.pow(10, 6))) + ";" + tf_idf_counter
+                        + ";" + dc.format(tf_idf_Time / (tf_idf_counter * (Math.pow(10, 6))))
+                        + ";" + dc.format(tf_idf_Time / (Math.pow(10, 6))));
                 pw.close();
-            }catch(IOException ex){
+                if (tfWriter != null) {
+                    tfWriter.close();
+                }
+            } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
 //            System.out.println("Number of entities:" + entities.size() + "\n avg entryCheck:" + entryTime / (entities.size() * (Math.pow(10, 6)))
