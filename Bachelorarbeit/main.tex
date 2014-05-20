@@ -156,7 +156,7 @@ Date:\\
 %----------------------------------------------------------------------------------------
 
 \clearpage
-\lhead{\emph{List of Figures}} % Set the left side page header to "List of Figures"
+\lhead{\emph{Abbildungsverzeichnis}} % Set the left side page header to "List of Figures"
 \listoffigures % Write out the List of Figures
 %\lhead{\emph{Contents}} % Set the left side page header to "Contents"
 \tableofcontents % Write out the Table of Contents
@@ -275,15 +275,41 @@ Nachdem die Entity-Recognition-Unit alle gefundenen Entit\"aten an den Controlle
 \caption[Entity Linking Unit]{Entity Linking Unit}
 \end{figure}
 
-\subsection{Ablauf des Linkings}
+\subsection*{Ablauf des Linkings}
+
 Der Entity-Linking-Algorithmus erh\"alt eine Liste von Entit\"aten und durchl\"auft dann 3 Phasen:
 \begin{enumerate}
 \item Titelvergleich : Es wird geschaut ob die Entit\"at ein Titel f\"ur eine DBpedia Seite ist. Zum Beispiel w\"are die Entit\"at \glqq United States\grqq{} der Titel der DBpedia Seite mit der URI \glqq http://dbpedia.org/resource/United\_States\grqq{} .
 
 \item Anchorsuche : Falls die Titelsuche kein Ergebnis liefert, so wird \"uberpr\"uft ob die Entit\"at ein verzeichneter Anchor einer URI ist. In dem United States Beispiel w\"are \glqq USA\grqq{} einer dieser Anchors. Da ein Anchor disambig sein kann, wird versucht \"uber den semantischen Kontext eine Entscheidung zu treffen. Dazu werden die Nachbaranchor der möglichen Kandidaten mit allen anderen gefunden Entit\"aten verglichen. Der Kandidat mit den meisten \"Ubereinstimmungen hat die grö\ss te Wahrscheinlichkeit die gesuchte URI zu sein und wird deshalb mit der Entit\"at verkn\"upft.
 
-\item tf-idf-Suche : Wurde in den ersten beiden Schritten keine passende URI gefunden und der Benutzer hat die entsprechende Option angeben, so wird versucht \"uber eine tf-idf-Suche eine URI zu ermitteln. Dazu wird in den Abstract-Texten aller DBpedia Seiten nach dem Vorkommen der Entit\"at gesucht. Die 20 erfolgreichsten Suchtreffer werden nun behandelt als w\"aren sie Kandidaten f\"ur einen disambiguen Anchor. Mit ihnen wird wie in der vorherigen Phase verfahren.
+\item tf-idf-Suche : Wurde in den ersten beiden Schritten keine passende URI gefunden und der Benutzer hat die entsprechende Option angeben, so wird versucht \"uber eine tf-idf-Suche eine URI zu ermitteln. Dazu wird in den Abstract-Texten aller DBpedia Seiten nach dem Vorkommen der Entit\"at gesucht. Der \grqq term frequencey\grqq{}-Wert (tf) gibt dabei an, wie h\"aufig die Entit\"at gefunden wurde und die \grqq inverse document frequencey\grqq{} (idf) wertet die Bedeutung im Kontext mit allen Dokumenten (in diesem Falle DBpedia Seiten). Die 20 erfolgreichsten Suchtreffer werden nun behandelt als w\"aren sie Kandidaten f\"ur einen disambiguen Anchor. Mit ihnen wird wie in der vorherigen Phase verfahren.
 \end{enumerate}
+
+Pseudocode :
+\begin{lstlisting}
+function findURIs(List entities)
+	map<k,v> result;
+	URI tmp;
+	forall entity in entities
+		tmp=searchTitle(entity)				\\titelsuche
+		if(tmp!=null)
+			result.put(entity,tmp);
+		else
+			tmp=anchorSearch(entity)		\\Anchorsuche
+			if(tmp!=null)
+				result.put(entity,tmp);
+			else if(tf_idf_Search==true)
+				list posURIs=tf_idf_Lookup(entity)\\Abstractsuche
+				tmp=anchorSearch(posURIs)\\Anchorsuche mit 
+							\\Abstractsuchergebnissen
+				result.put(entity,tmp)
+			endif
+		endif
+	endfor
+	return result;
+\end{lstlisting}
+\clearpage
 In dem Folgenden Aktivit\"atsdiagramm wird der noch einmal Linking-Algorithmus verdeutlicht.
 \begin{figure}[ht!]
 \centering
@@ -293,15 +319,24 @@ In dem Folgenden Aktivit\"atsdiagramm wird der noch einmal Linking-Algorithmus v
 
 
 \section{Index}
-%\footnote{\url{http://nlp.stanford.edu/software/CRF-NER.shtml}}
-Insgesamt gibt es 2 Indexe. Den EntityIndex und den AbstractIndex
+%\footnote{\url{http://lucene.apache.org/core/4_6_0/join/org/apache/lucene/search/join/ToParentBlockJoinQuery.html}}
+Ein Lucene-Index ist eine indexierte Ansammlung von Dokumenten. Ein Dokument besitzt eine beliebige Anzahl von Feldern in denen Informationen gespeichert werden k\"onnen. 
+Der Index aus der System\"ubersicht wurde in der Implementierung in 2 Indexe unterteilt. Dies liegt haupts\"achlich daran, dass sie unterschiedliche Formate f\"ur besitzen, um die aufgabenspezifischen Querys effizienter zu machen.
 \subsection{EntityIndex}
-
+Der EntityIndex wurde als BlockIndex angelegt, d.h. er besitzt 2 unterschiedliche Dokumenttypen:
+\begin{enumerate}
+\item Kinddokument : Ein Kinddokument ist ein gew\"ohnliches Dokument.
+\item Elterndokument : Elterndokumente unterscheiden sich von Kinddokumenten durch ein Indikatorfeld das f\"ur alle Elterndokumente den gleichen Wert hat.
+\end{enumerate}
+Um Eltern und deren Kinder bei der Queryauswertung richtig zuordnen zu k\"onnen, muss bei der Indexerstellung eine bestimmte Reihenfolge eingehalten werden : Erst werden alle Kinddoumente eines gleichen Elter hinzugef\"ugt, gefolgt von dem Elterndokument.\\
+Dieses besondere Format erm\"oglicht \texttt{ToParentBlockJoinQuerys}. Diese Querys selektieren erst Elterndokumente und f\"uhren dann eine weitere Query auf den Kindern dieser Eltern aus. Dadurch kann sehr gezielt und somit effizient gesucht werden.\\
+In der Implementation repr\"asentieren Elterndokumente die einzelnen Seiten aus DBpedia. Sie speichern den Titel, die URI und alle Anchors einer Seite. Die Kinddokumente  besitzen nur ein Feld mit einem Anchor eines Nachbarn der URI aus dem Elterndokument.\\
+Zur Veranschaulichung wird hier noch einmal das Format des EntityIndexes gezeigt:
 \begin{lstlisting}
-<anchorN$_{1_1}$>
+<anchorN$_{1_1}$> (Kind 1)
 ...
-<anchorN$_{n_1}$>
-<URI$_1$,anchor$_{1_1}$ ... anchor$_{i_1}$,title$_1$,type>
+<anchorN$_{n_1}$> (Kind n)
+<URI$_1$,anchor$_{1_1}$ ... anchor$_{i_1}$,title$_1$,type> (Elter der Kinder 1 - n) 
 \end{lstlisting}
 \subsection{AbstractIndex}
 Der AbstractIndex ist ein Standart-Index, dessen Dokumente 2 Felder enthalten:
@@ -315,12 +350,75 @@ Sein Format sieht wie Folgt aus:
 ...
 <URI$_n$,abstract$_n$>
 \end{lstlisting}
+Da Lucene f\"ur sein Query-Scoring tf-idf-Werte verwendet und auch genau diese bei der Abstract Suche erw\"unscht sind, liefert eine normale Query bereits das gew\"unschte Ergebnis.
 %------------------------------------------------------------------------
 \chapter{Evaluierung}
 \label{Kapitel 4}
-
 \lhead{Kapitel 4.}
 \chead{\emph{Evalurierung}}
+
+Dieses Kapitel besch\"aftigt sich intensiv mit der Analyse des Linking-Algorithmus. Insbesondere wird auf die Aspekte Geschwindigkeit und Genauigkeit eingegangen. Als Basis f\"ur die Auswertung wurden Texte aus Wikipedia\footnote{\url{www.wikipedia.org}} genommen und f\"ur die Semantik-Analyse Datens\"atze des Max Plank Institutes.\\
+Die Tabellen f\"ur die Graphen finden sich im Anhang.
+
+\section{Geschwindigkeit}
+Der ma\ss geblicheste Faktor der Geschwindigkeit ist die Benutzungsdauer des Programms. Man spricht hierbei von einem "warmed up Index", was bedeutet, dass aufgrund von Cashe-Eintr\"agen Daten schneller ermittelt werden k\"onnen.
+\subsection{Unwarmed Mode}
+Da der \grqq warmed up\grqq{}-Modus sehr inkonsistente Ergebnisse f\"ur wiederholte Versuche mit gleichen Texten liefert, wird der \grqq unwarmed mode\grqq{} betrachtet, in dem das Programm noch \"uber keinerlei Cashe-Eintr\"age f\"ur Querys verf\"ugt. Dies ist auch gleichzeitig eines der Worst-Case-Szenarien des Linking-Algorithmus.\clearpage
+In einem durchschnittlichen Text lassen sich fast 80\% aller , durch den Stanford-NER , gefunden Entit\"aten entweder mit einem Titel oder einem Anchor verbinden. Der Rest muss mit Hilfe von tf\_idf-Werten bestimmt werden.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=1]{./lookupRes.png}
+\caption[Average Lookup Results]{Average Lookup Results}
+\end{figure}
+
+Um die einzelnen Operationen in einem zeitlichen Zusammenhang betrachten zu \"onnen wird als n\"achstes die durchschnittlich ben\"otigte Zeit f\"ur jede dieser Operationen betrachtet. 
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=1]{./lookupTime.png}
+\caption[Average Lookup Times]{Average Lookup Times}
+\end{figure}
+
+Wie man in der Abbildung gut sehen kann, sind Titel- und Anchorsuche g\"unstige Operationen im Vergleich zu der tf-idf-Suche, wobei die Titelsuche fast doppelt so schnell ver\"auft wie die Anchorsuche. Im Idealfall sollten die zu linkenden Entit\"aten entweder ein Titel oder ein Anchor sein.
+
+\textbf{Anmerkung} : Bei der Abbildung handelt es sich nur um die ben\"otigte Zeit der verschiedenen Operationen. Da diese aber sequentiell Ablaufen, bedeutet dies, dass die Linking-Zeit der Summer der benutzten Operationen entspricht (z.B. betr\"agt die Zeit f\"ur Anchor-Linking Titel-Lookup + Anchor-Lookup).
+\subsection{Warmed Up}
+Zum Vergleich mit einem \grqq warmed up Index \grqq{} wurde die eine H\"alfte der Testtexte benutzt um Cashe-Eintr\"age anzulegen und die andere andere H\"alfte wurde dann normal annotiert. Das Ergebnis ist ein deutlicher Anstieg in Geschwindigkeit.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=1]{./zeitvergleich.png}
+\caption[zeitvergleich]{zeitvergleich}
+\end{figure}
+\section{Genauigkeit}
+Nach der Betrachtung der Geschwindigkeit ist nun die Ergebnis-Qualit\"at der einzelnen Operationen interessant.
+\subsection{Titelsuche}
+Da die Titelsuche nur f\"ur exakte \"Ubereinstimmungen ein Ergebnis liefert, werden die Entit\"aten nahezu immer richtig verlinkt. Eine Fehlverlinkung tritt nur auf, wenn eine Entit\"at mit einem Titel \"ubereinstimmt, aber dieser im semantischen Kontext eine andere Bedeutung hat.\\
+Beispiel :\\
+Tiger was lost in the woods when he got divorced from Elin.\footnote{Auszug des KORE50-Datensatzes des Max Planck Instituts} \\Der Stanford-NER liefert f\"ur diesen Satz die 2 Entit\"aten Tiger und Elin zur\"uck. Die Titelsuche findet dann f\"ur Tiger die URI \texttt{http://dbpedia.org/resource/Tiger}. Richtig w\"are in diesem Falle aber \texttt{http://dbpedia.org/resource/Tiger\_Woods}.
+
+\subsection{Anchorsuche}
+Die Anchorsuche besitzt die selben Eigenschaften wie die Titelsuche. Ihre Ergebnisse sind sehr Pr\"aziese und nur falsch, wenn durch den semantische Kontext eine andere Bedeutung entsteht.
+\subsection{Tf-Idf-Suche}
+Die tf-idf-Suche ist im Vergleich zu den ersten beiden Suchenmethoden sehr unzuverl\"assig. Sie ermittelt zwar eine URI f\"ur eine Seite, die zu dem   semantischen Kontext und der Entit\"at passt, ist aber mei\ss tens eine falsche Verlinkung. Folgende Ursachen k\"onnen daf\"ur verantwortlich sein:
+\begin{itemize}
+\item Die Entit\"at besitzt keine passende DBpedia-Seite.
+\item Der indexierte Abstract-Text der richtigen DBpedia-Seite ist zu kurz um eine Disambiguirung zu erm\"oglichen.
+\item Eine thematisch nahe verwandte DBpedia-Seite besitzt einen gr\"o\ss eren Abstract-Text mit mehr Referenzen auf die Entit\"at.
+\item Der Stanford-NER hat ein falsches Ergebnis geliefert.
+\end{itemize}
+Der letzte Fall ist besonders von Interesse, da die tf-idf-Suche eine sehr teure optionale Operation ist. Bei der Verlinkung der Test-Texte wurde diese Suche f\"ur 220 Kandidaten verwendet. Circa 56\% davon waren falsche Entit\"aten, wie zum Beispiel die Adjektive german, russian und jewish .
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=1]{./tfPrecision.png}
+\caption[Tf-Idf-Kandidaten]{Tf-Idf-Kandidaten}
+\end{figure}
+
+
+\section{Semantikanalyse mit KORE}
+Das Max Planck Institut f\"ur Informatik\footnote{\url{http://www.mpi-inf.mpg.de/index\_d.php}} bietet von Hand gefertigte Datens\"atze zum Testen von Disambiguirungsalgorithmen. Diese Keyphrase Overlap Relatedness for Entity Dismabiguation (KORE)\footnote{\url{http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz}} Testdaten sind so erstellt, dass sie besonders schwer zu Disambiguieren sind. \\
+Da nahezu alle, vom Stanford-NER erkannten, Entit\"aten in diesen Texten, ihre Bedeutung nur \"uber den semantischen Kontext erhalten und dies genau die schw\"ache der Titel- und Anchorsuche sind, schneidet der Index Based Entity Linker (IBEL) schlecht ab.  Die Hauptproblematik ist, dass die Entit\"aten fast nie Anchor einer URI sind, noch der Titel zu einer indexierten Seite. Damit wird fast immer die tf-idf-Suche verwendet, welche den schw\"achsten Teil von IBEL darstellt.\\
+Als Fazit f\"ur die Semantikanalyse ergibt sich, dass IBEL zwar Anchor gut \"uber Kontextanalyse Disambiguiren kann, aber anchorlose Entit\"aten fast nie  
+richtig verlinkt werden.
+
 %-------------------------------------------------------------------------
 \chapter{Deployment und Erweiterung auf andere Sprachen}
 \label{Kapitel 5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
@@ -328,7 +426,7 @@ Sein Format sieht wie Folgt aus:
 \lhead{Kapitel 5.}
 \chead{\emph{Deployment und Erweiterung auf andere Sprachen}}
 \section{Deployment}
-Um das Programm zu deployen muss lediglich die JAR mit compilierten Dependencies(falls das Programm aus dem Sourcecode compiliert wurde, ist dies die \\\glqq IndexBasedEntityLinker-1.0-jar-with-dependencies.jar\grqq), sowie ein passender Entity- und Abstract-Index in ein gleiches Verzeichnis kopiert werden.
+Um das Programm zu deployen muss lediglich die JAR mit compilierten Dependencies(falls das Programm aus dem Sourcecode compiliert wurde, ist dies die \\\grqq IndexBasedEntityLinker-1.0-jar-with-dependencies.jar\grqq), sowie ein passender Entity- und Abstract-Index in ein gleiches Verzeichnis kopiert werden.
 \subsection{Generierung der Indexe mit Utility-1.0}
 Sollten keine gültigen Indexe vorhanden sein, so k\"onnen diese entweder manuell oder \"uber die IndexBasedEntityLinker\_Utility(IBELU) generiert werden.
 \begin{figure}[ht]
@@ -431,7 +529,7 @@ description={Ein Webelement, das eine bestimmte URL mit einem Text auf einer Web
 \addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
 
 \appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
-
+\chapter{Evaluierungstabellen}
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 

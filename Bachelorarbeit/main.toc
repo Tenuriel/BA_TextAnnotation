@@ -6,7 +6,7 @@
 \contentsline {chapter}{Inhaltsverzeichnis}{iv}{dummy.7}
 \contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.9}
 \contentsline {chapter}{\numberline {2}System\"ubersicht}{2}{chapter.10}
-\contentsline {section}{\numberline {2.1}GUI}{3}{section.12}
+\contentsline {section}{\numberline {2.1}Graphical User Interface}{3}{section.12}
 \contentsline {section}{\numberline {2.2}Enitity-Recogniction-Unit}{3}{section.14}
 \contentsline {section}{\numberline {2.3}Linking-Unit und Index}{4}{section.16}
 \contentsline {section}{\numberline {2.4}Informationsfluss}{4}{section.18}
@@ -14,18 +14,26 @@
 \contentsline {section}{\numberline {3.1}GUI und Controller}{6}{section.22}
 \contentsline {section}{\numberline {3.2}Enitity-Recognition-Unit}{7}{section.24}
 \contentsline {section}{\numberline {3.3}Linking-Unit}{8}{section.27}
-\contentsline {subsection}{\numberline {3.3.1}Ablauf des Linkings}{8}{subsection.30}
-\contentsline {section}{\numberline {3.4}Index}{10}{section.35}
-\contentsline {subsection}{\numberline {3.4.1}EntityIndex}{10}{subsection.36}
-\contentsline {subsection}{\numberline {3.4.2}AbstractIndex}{10}{subsection.42}
-\contentsline {chapter}{\numberline {4}Evaluierung}{11}{chapter.49}
-\contentsline {chapter}{\numberline {5}Deployment und Erweiterung auf andere Sprachen}{12}{chapter.50}
-\contentsline {section}{\numberline {5.1}Deployment}{12}{section.51}
-\contentsline {subsection}{\numberline {5.1.1}Generierung der Indexe mit Utility-1.0}{12}{subsection.52}
-\contentsline {subsection}{\numberline {5.1.2}Eigenst\"andige Generierung von Dateien}{14}{subsection.62}
-\contentsline {section}{\numberline {5.2}Erweiterung um andere Sprachen}{15}{section.77}
-\contentsline {subsection}{\numberline {5.2.1}Indexe}{15}{subsection.78}
-\contentsline {subsection}{\numberline {5.2.2}Entity Recognition}{15}{subsection.79}
-\contentsline {chapter}{\numberline {6}Zusammenfassung}{17}{chapter.83}
+\contentsline {section}{\numberline {3.4}Index}{10}{section.56}
+\contentsline {subsection}{\numberline {3.4.1}EntityIndex}{10}{subsection.57}
+\contentsline {subsection}{\numberline {3.4.2}AbstractIndex}{11}{subsection.65}
+\contentsline {chapter}{\numberline {4}Evaluierung}{12}{chapter.72}
+\contentsline {section}{\numberline {4.1}Geschwindigkeit}{12}{section.74}
+\contentsline {subsection}{\numberline {4.1.1}Unwarmed Mode}{12}{subsection.75}
+\contentsline {subsection}{\numberline {4.1.2}Warmed Up}{14}{subsection.78}
+\contentsline {section}{\numberline {4.2}Genauigkeit}{14}{section.80}
+\contentsline {subsection}{\numberline {4.2.1}Titelsuche}{15}{subsection.81}
+\contentsline {subsection}{\numberline {4.2.2}Anchorsuche}{15}{subsection.83}
+\contentsline {subsection}{\numberline {4.2.3}Tf-Idf-Suche}{15}{subsection.84}
+\contentsline {section}{\numberline {4.3}Semantikanalyse mit KORE}{16}{section.86}
+\contentsline {chapter}{\numberline {5}Deployment und Erweiterung auf andere Sprachen}{17}{chapter.89}
+\contentsline {section}{\numberline {5.1}Deployment}{17}{section.90}
+\contentsline {subsection}{\numberline {5.1.1}Generierung der Indexe mit Utility-1.0}{17}{subsection.91}
+\contentsline {subsection}{\numberline {5.1.2}Eigenst\"andige Generierung von Dateien}{19}{subsection.101}
+\contentsline {section}{\numberline {5.2}Erweiterung um andere Sprachen}{20}{section.116}
+\contentsline {subsection}{\numberline {5.2.1}Indexe}{20}{subsection.117}
+\contentsline {subsection}{\numberline {5.2.2}Entity Recognition}{20}{subsection.118}
+\contentsline {chapter}{\numberline {6}Zusammenfassung}{22}{chapter.122}
 \vspace {2em}
+\contentsline {chapter}{\numberline {A}Evaluierungstabellen}{23}{appendix.123}
 \vspace {2em}
