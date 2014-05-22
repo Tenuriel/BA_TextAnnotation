@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  20 MAY 2014 03:00
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  22 MAY 2014 03:20
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -556,10 +556,10 @@ Now handling font encoding PD1 ...
 (/usr/share/texmf-texlive/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Option `bookmarks' set `true' on input line 2864.
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 2864.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 2864
-.
+Package hyperref Info: Option `bookmarks' set `false' on input line 2864.
+Package hyperref Info: Option `bookmarksopen' set `false' on input line 2864.
+Package hyperref Info: Option `bookmarksnumbered' set `false' on input line 286
+4.
 Package hyperref Info: Option `hypertexnames' set `false' on input line 2864.
 Package hyperref Info: Option `colorlinks' set `true' on input line 2864.
 Package hyperref Info: Option `unicode' set `true' on input line 2864.
@@ -577,7 +577,7 @@ Package hyperref Info: Plain pages OFF on input line 2990.
 Package hyperref Info: Backreferencing OFF on input line 2995.
 
 Implicit mode ON; LaTeX internals redefined
-Package hyperref Info: Bookmarks ON on input line 3191.
+Package hyperref Info: Bookmarks OFF on input line 3197.
 (/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
 \Urlmuskip=\muskip11
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
@@ -785,13 +785,9 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 LaTeX Info: Redefining \ref on input line 39.
 LaTeX Info: Redefining \pageref on input line 39.
- (./main.out)
-(./main.out)
-\@outlinefile=\write4
-\openout4 = `main.out'.
-
 \AtBeginShipoutBox=\box37
- (/usr/share/texmf-texlive/tex/latex/listings/lstlang1.sty
+
+(/usr/share/texmf-texlive/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
 LaTeX Font Info:    Try loading font information for U+msa on input line 80.
@@ -820,11 +816,11 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 ]
 ------------------------------------------------------------------------------
- List of Figures
+ Abbildungsverzeichnis
 ------------------------------------------------------------------------------
 (./main.lof)
-\tf@lof=\write5
-\openout5 = `main.lof'.
+\tf@lof=\write4
+\openout4 = `main.lof'.
 
  [3
 
@@ -838,8 +834,8 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 
 ])
-\tf@toc=\write6
-\openout6 = `main.toc'.
+\tf@toc=\write5
+\openout5 = `main.toc'.
 
  [5]
 Kapitel 1.
@@ -851,123 +847,130 @@ Kapitel 1.
 
 
 ]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 191.
+
+ (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 191.
+ [2] [3]
 Kapitel 2.
 ------------------------------------------------------------------------------
  2 System\"ubersicht
 ------------------------------------------------------------------------------
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 190.
-
-(/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 190.
-
-<./Pics/./system.png, id=248, 757.83125pt x 296.10625pt>
+<./Pics/./system.png, id=192, 757.83125pt x 296.10625pt>
 File: ./Pics/./system.png Graphic file (type png)
 
 <use ./Pics/./system.png>
-<./Pics/./GUI.png, id=249, 526.96875pt x 336.25626pt>
+<./Pics/./GUI.png, id=193, 526.96875pt x 336.25626pt>
 File: ./Pics/./GUI.png Graphic file (type png)
  <use ./Pics/./GUI.png>
-[2
+[4
 
  <./Pics/./system.png (PNG copy)>]
-<./Pics/./eeu.png, id=255, 346.29375pt x 195.73125pt>
+<./Pics/./eeu.png, id=198, 346.29375pt x 195.73125pt>
 File: ./Pics/./eeu.png Graphic file (type png)
  <use ./Pics/./eeu.png>
-<./Pics/./linking.png, id=256, 587.19376pt x 145.54375pt>
+<./Pics/./linking.png, id=199, 587.19376pt x 145.54375pt>
 File: ./Pics/./linking.png Graphic file (type png)
 
-<use ./Pics/./linking.png> [3 <./Pics/./GUI.png (PNG copy)> <./Pics/./eeu.png (
-PNG copy)>] <./Pics/./seq.png, id=261, 747.79375pt x 808.01875pt>
+<use ./Pics/./linking.png> [5 <./Pics/./GUI.png (PNG copy)> <./Pics/./eeu.png (
+PNG copy)>] <./Pics/./seq.png, id=204, 747.79375pt x 808.01875pt>
 File: ./Pics/./seq.png Graphic file (type png)
 
-<use ./Pics/./seq.png> [4 <./Pics/./linking.png (PNG copy)>] [5 <./Pics/./seq.p
+<use ./Pics/./seq.png> [6 <./Pics/./linking.png (PNG copy)>] [7 <./Pics/./seq.p
 ng (PNG copy)>]
 Kapitel 3.
 ------------------------------------------------------------------------------
  3 Implementierung
 ------------------------------------------------------------------------------
-<./Pics/./guiCont.png, id=273, 386.44376pt x 205.76875pt>
+<./Pics/./guiCont.png, id=217, 386.44376pt x 205.76875pt>
 File: ./Pics/./guiCont.png Graphic file (type png)
 
 <use ./Pics/./guiCont.png>
-<./Pics/./eruImp.png, id=276, 486.81876pt x 336.25626pt>
+<./Pics/./eruImp.png, id=220, 486.81876pt x 336.25626pt>
 File: ./Pics/./eruImp.png Graphic file (type png)
 
-<use ./Pics/./eruImp.png> [6
+<use ./Pics/./eruImp.png> [8
 
 ]
-<./Pics/./entLinkImp.png, id=287, 627.34375pt x 416.55624pt>
+<./Pics/./entLinkImp.png, id=228, 627.34375pt x 416.55624pt>
 File: ./Pics/./entLinkImp.png Graphic file (type png)
 
-<use ./Pics/./entLinkImp.png> [7 <./Pics/./guiCont.png (PNG copy)> <./Pics/./er
-uImp.png (PNG copy)>] [8 <./Pics/./entLinkImp.png (PNG copy)>]
+<use ./Pics/./entLinkImp.png> [9 <./Pics/./guiCont.png (PNG copy)> <./Pics/./er
+uImp.png (PNG copy)>] [10 <./Pics/./entLinkImp.png (PNG copy)>]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 296.
- [9]
-<./Pics/./ablauf.png, id=329, 647.41875pt x 496.85625pt>
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 316.
+ [11]
+<./Pics/./ablauf.png, id=269, 647.41875pt x 496.85625pt>
 File: ./Pics/./ablauf.png Graphic file (type png)
 
-<use ./Pics/./ablauf.png> [10
+<use ./Pics/./ablauf.png> [12
 
- <./Pics/./ablauf.png (PNG copy)>] [11]
+ <./Pics/./ablauf.png (PNG copy)>] [13]
 Kapitel 4.
 ------------------------------------------------------------------------------
  4 Evaluierung
 ------------------------------------------------------------------------------
-[12
+[14
 
-] <./Pics/./lookupRes.png, id=361, 362.10281pt x 217.5628pt>
+] <./Pics/./lookupRes.png, id=302, 362.10281pt x 217.5628pt>
 File: ./Pics/./lookupRes.png Graphic file (type png)
 
 <use ./Pics/./lookupRes.png>
-<./Pics/./lookupTime.png, id=362, 362.10281pt x 217.5628pt>
+<./Pics/./lookupTime.png, id=303, 362.10281pt x 217.5628pt>
 File: ./Pics/./lookupTime.png Graphic file (type png)
 
-<use ./Pics/./lookupTime.png> [13
+<use ./Pics/./lookupTime.png> [15
 
  <./Pics/./lookupRes.png (PNG copy)> <./Pics/./lookupTime.png (PNG copy)>]
-<./Pics/./zeitvergleich.png, id=368, 362.10281pt x 217.5628pt>
+<./Pics/./zeitvergleich.png, id=308, 362.10281pt x 217.5628pt>
 File: ./Pics/./zeitvergleich.png Graphic file (type png)
 
-<use ./Pics/./zeitvergleich.png> [14 <./Pics/./zeitvergleich.png (PNG copy)>]
-<./Pics/./tfPrecision.png, id=374, 347.04657pt x 217.5628pt>
+<use ./Pics/./zeitvergleich.png> [16 <./Pics/./zeitvergleich.png (PNG copy)>]
+<./Pics/./tfPrecision.png, id=314, 347.04657pt x 217.5628pt>
 File: ./Pics/./tfPrecision.png Graphic file (type png)
 
-<use ./Pics/./tfPrecision.png> [15] [16 <./Pics/./tfPrecision.png (PNG copy)>]
+<use ./Pics/./tfPrecision.png> [17] [18 <./Pics/./tfPrecision.png (PNG copy)>]
 Kapitel 5.
 ------------------------------------------------------------------------------
  5 Deployment und Erweiterung auf andere Sprachen
 ------------------------------------------------------------------------------
-<./Pics/util.jpg, id=391, 790.45313pt x 185.94469pt>
+<./Pics/util.jpg, id=331, 790.45313pt x 185.94469pt>
 File: ./Pics/util.jpg Graphic file (type jpg)
  <use ./Pics/util.jpg>
-[17
+[19
 
  <./Pics/util.jpg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 449.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 469.
 
  (/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 449.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 469.
 
-[18
+[20
 
-] [19] [20] [21]
+] [21] [22] [23]
 Kapitel 6.
 ------------------------------------------------------------------------------
  6 Zusammenfassung
 ------------------------------------------------------------------------------
-\glo@main@file=\write7
-\openout7 = `main.glo'.
+[24
 
-Package glossaries Info: Writing glossary file main.glo on input line 518.
+]
+Kapitel 7.
+------------------------------------------------------------------------------
+ 7 Ausblick
+------------------------------------------------------------------------------
+\glo@main@file=\write6
+\openout6 = `main.glo'.
+
+Package glossaries Info: Writing glossary file main.glo on input line 538.
 No file main.gls.
-[22
+[25
 
 \openout3 = `main.ist'.
 
@@ -976,41 +979,44 @@ Anhang A.
 ------------------------------------------------------------------------------
  A Evaluierungstabellen
 ------------------------------------------------------------------------------
-[23
+[26
 
 ]
 ------------------------------------------------------------------------------
  Literaturverzeichnis
 ------------------------------------------------------------------------------
-(./main.aux) ) 
+(./main.bbl) [27
+
+
+] [28] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 12174 strings out of 495021
- 166102 string characters out of 1181035
- 283810 words of memory out of 3000000
- 14951 multiletter control sequences out of 15000+50000
+ 12179 strings out of 495021
+ 166144 string characters out of 1181035
+ 283781 words of memory out of 3000000
+ 14935 multiletter control sequences out of 15000+50000
  15909 words of font info for 60 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  48i,12n,73p,1080b,1846s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.p
-fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fon
-ts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share
-/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texliv
-e/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1
-/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfo
-nts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti
-10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pfb></us
-r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/tex
-mf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-texlive/f
-onts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/fonts/type1/p
-ublic/amsfonts/symbols/msam7.pfb>
-Output written on main.pdf (29 pages, 462780 bytes).
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
+mbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share
+/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texl
+ive/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/a
+msfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></us
+r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf
+-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/font
+s/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
+cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/symbols/msam7.pfb>
+Output written on main.pdf (34 pages, 475196 bytes).
 PDF statistics:
- 551 PDF objects out of 1000 (max. 8388607)
- 153 named destinations out of 1000 (max. 500000)
- 351 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 521 PDF objects out of 1000 (max. 8388607)
+ 176 named destinations out of 1000 (max. 500000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 

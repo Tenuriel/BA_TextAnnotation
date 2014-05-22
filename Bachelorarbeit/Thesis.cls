@@ -149,9 +149,9 @@
         keywordstyle=\color{blue},
         commentstyle=\color[rgb]{0.13,0.55,0.13}\em,
         stringstyle=\color[rgb]{0.7,0,0} }
-\usepackage[pdfpagemode={UseOutlines},bookmarks=true,bookmarksopen=true,
-   bookmarksopenlevel=0,bookmarksnumbered=true,hypertexnames=false,
-   colorlinks,linkcolor={blue},citecolor={blue},urlcolor={red},
+\usepackage[pdfpagemode={UseOutlines},bookmarks=false,bookmarksopen=false,
+   bookmarksopenlevel=0,bookmarksnumbered=false,hypertexnames=false,
+   colorlinks,linkcolor={blue},citecolor={black},urlcolor={red},
    pdfstartview={FitV},unicode,breaklinks=true]{hyperref}
 \pdfstringdefDisableCommands{
    \let\\\space
@@ -323,8 +323,8 @@
 }\end{spacing}
 }
 \renewcommand\listoffigures{
-\btypeout{List of Figures}
-\addtotoc{List of Figures}
+\btypeout{Abbildungsverzeichnis}
+\addtotoc{Abbildungsverzeichnis}
 \begin{spacing}{1}{
     \setlength{\parskip}{1pt}
     \if@twocolumn

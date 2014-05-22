@@ -136,7 +136,6 @@ Date:\\
 \lhead{\emph{Abk\"urzungen}} % Set the left side page header to "Abbreviations"
 \listofsymbols{ll} % Include a list of Abbreviations (a table of two columns)
 {
-\textbf{BI} & \textbf{B}lock\textbf{I}ndex \\
 \textbf{ERU} & \textbf{E}ntity-\textbf{R}ecognition-\textbf{U}nit \\
 \textbf{GUI} & \textbf{G}enerell \textbf{U}ser \textbf{I}nterface \\
 \textbf{IBEL} & \textbf{I}ndex \textbf {B}ased \textbf{E}ntity \textbf{L}inker \\
@@ -144,6 +143,7 @@ Date:\\
 \textbf{idf} & \textbf{i}nverse \textbf{d}ocument \textbf{f}requency \\
 \textbf{JAR} & \textbf{J}ava \textbf{AR}chieve \\
 \textbf{NER} & \textbf{N}amed \textbf{E}ntity \textbf{R}ecognizer \\
+\textbf{RDF} & \textbf{R}esource \textbf{D}escription \textbf{F}ramework \\
 \textbf{tf} & \textbf{t}erm \textbf{f}requency \\
 \textbf{URI} & \textbf{U}niform \textbf{R}esource \textbf{I}dentifier \\
 %\textbf{} & \textbf{} \textbf{} \textbf{} \\
@@ -179,6 +179,26 @@ Date:\\
 
 \lhead{Kapitel 1.}
 \chead{\emph{Einleitung}}
+In der heutigen Zeit spielen Wissensdatenbanken wie Wikipedia\footnote{\url{wikipedia.org}} eine immer gr\"o\ss ere Rolle. Sie repr\"asentieren das gesammelte Wissen der Menschheit und stellen es zur freien Verf\"ugung. Eine wichtige Eigenschaft von Wikipedia ist die Reichhaltigkeit von eingebetteten Links in jedem Artikel, welche die wichtigsten Terme mit anderen Seiten verknüpfen und somit einem Benutzer einen schnellen Weg zu zus\"aztlichen Informationen zu gew\"ahren\citep{rada07}.\\
+W\"ahrend diese Links in Wikipedia, dank der massiven Anzahl an Beitragenden, manuell erstellt werden k\"onnen, ist f\"ur viele andere Dienste, wie zum Beispiel Web-Personensuche und Informationsextraktion, eine automatisierte L\"osung gew\"unscht. Die daf\"ur n\"otige Named-Entity-Disambiguierung ist Problematisch, da eine Entit\"at multiple Benennungen hat und diese unter Umst\"anden auch mit anderen Entit\"aten teilt \cite{wei10}.\\
+Die Aufgabe des Entity-Linkings ist es Entit\"aten aus einem Webtext mit dem \"Aquivalent aus einer Wissensdatenbank zu verbinden. 
+
+\section{Verwandte Arbeiten}
+\subsection{DBpedia}
+%\footnote{\url{dbpedia.org}}
+W\"ahrend die mei\ss ten Wissensdatenbanken heutzutage auf spezifische Dom\"anen beschr\"ankt sind und von einer kleinen Gruppe von Wissensmodelierern, unter hohen Kosten, erstellt und gewartet werden, hat es Wikipedia geschafft, zu einer der zentralen Wissensquellen der Menschheit zu werden, die von tausenden von Beitragenden erhalten wird \citep{chr09}. Jedoch gibt es trotz dieses Erfolges einige Probleme und ungenutztes Potential \citep{moha12}:
+\begin{itemize}
+\item Suche ist in Wikipedia auf Keywordmatching begrenzt
+\item M\"ogliche Inkonsistenzen durch Datenduplikation auf verschiedenen Seiten und in unterschiedlichen Wikipedia-Sprachausgaben.
+\end{itemize}
+Das DBpedia Projekt extrahiert strukturierte Informationen von Wikipedia und macht diese f\"ur das Web verf\"ugbar. Um die Daten stets aktuell zu halten, wird \"uber den Wikipedia live article feed jede \"Anderung in Wikipedia registriert und eine entsprechende Aktualisierung in DBpedia \"ubernommen. Alle DBpedia-Entit\"aten besitzen einen einzigartigen globalen Identifier, der nach den Linked Data Grunds\"atzen\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}} dereferenziert werden kann \citep{chr09}. Dies und die breitgef\"acherte Dom\"anenabdeckung hat dazu gef\"uhrt, dass viele Data-Publisher ihre Datenquellen mit RDF-Links zu DBpedia versehen. Dies macht DBpedia zu einem der zentralen Linked Open Data Netzknoten (Hub)\footnote{\url{http://webknox.com/p/linked-open-data-visualization}}.
+
+\subsection{DBpedia Spotlight}
+DBpedia Spotlight\footnote{\url{spotlight.dbpedia.org}} ist ein open source Projekt zur automatischen Annotation von Entit\"aten aus DBpedia\citep{joch13}. Urspr\"unglich nur f\"ur die englische Sprache entwickelt, ist es inzwischen um 9 weitere Sprachen erweitert worden. W\"ahrend viele semantische Annotationssysteme auf geringe Gruppen von Entit\"atstypen wie zum Beispiel Personen, Organisation oder Orte beschr\"ankt sind, versucht DBpedia Spotlight bis zu 320 verschiedene Klassen in der DBpedia Ontology zu annotieren\citep{mend11}. Um unterschiedlichen Anforderungen f\"ur verschiedene Anwendungsgebiete gerecht zu werden, ist es dem Benutzer m\"oglich die Suchdom\"anen, so wie die Fehlertoleranz anzupassen.
+
+\section{Konzeption}
+Das Ziel dieser Arbeit ist ein \"ahnliches, aber effizienteres Programm wie DBpedia Spotlight zu entwickeln. W\"ahrend die meisten Annotationsprogramme einen Graph f\"ur die Entit\"atenmenge aufbauen und diesen dann durchsuchen, wird in dem Index Based Entity Linker (IBEL) ein indexbasierter Ansatz verfolgt. Mit Hilfe des Anchor-Indexes der Semantic Computing Group Bielefeld und DBpedia-Datendumps wird ein Nachbarschafts-Anchor-Index erstellt, der jede Entit\"at mit den Anchors seiner DBpedia-Graphnachbarn verkn\"upft. \"Uber diesen Index kann dann jede Entit\"at sehr schnell und effizient mit ihren potentiellen DBpedia\"aquivalenten in Verbindung gebracht und dann \"uber die Nachbar-Anchor disambiguiert werden. Dazu werden alle weiteren Entit\"aten in der Textquelle mit den Nachbar-Anchors verglichen um den semantischen Kontext in die Suche mit einzubeziehen. Daraus resultiert dann ein Score, der zur Auswahl der verschiedenen Suchergebnisse dient.
+
 %-----------------------------------------------------------------------
 \chapter{System\"ubersicht}
 \label{Kapitel 2}
@@ -511,7 +531,7 @@ Es wird auch jede andere Implementation von Named-Entity-Regocnition unterst\"ut
 \textbf{Anmerkung} : Da das Programm im Nachhinein in eine Serverapplikation f\"ur die Semantic Computer Group umgebaut wird, wird die GUI voraussichtlich nicht mehr verwendet werden. Daher muss der Adapter dann den NER\_Hanlder an einer anderen Stelle ersetzen.
 
 \chapter{Zusammenfassung}
-
+\chapter{Ausblick}
 
 
 \glossarystyle{altlistgroup}
@@ -530,15 +550,44 @@ description={Ein Webelement, das eine bestimmte URL mit einem Text auf einer Web
 
 \appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
 \chapter{Evaluierungstabellen}
+
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
 
 
 
-\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+\addtocontents{toc} % Add a gap in the Contents, for aesthetics
 
 \backmatter
 
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
 
+\label{Quellen}
+
+\lhead{\emph{Quellen}} % Change the page header to say "Bibliography"
+
+\bibliographystyle{alpha} % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+%\nocite{*}
+
+
+\bibliography{Bibliography}
+\section*{Internetquellen}
+\begin{itemize}
+\item \url{http://maven.apache.org/}
+\item \url{http://nlp.stanford.edu/software/CRF-NER.shtml}
+\item \url{http://lucene.apache.org/core/}
+\item \url{www.wikipedia.org}
+\item \url{http://www.mpi-inf.mpg.de/index\_d.php}
+\item \url{http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz}
+\item \url{http://de.wikipedia.org/wiki/Adapter
+\_(Entwurfsmuster)}
+\item \url{http://nlp.stanford.edu/software/crf-faq.shtml\#a}
+\item \url{dbpedia.org}
+\item \url{http://www.w3.org/DesignIssues/LinkedData.html}
+\item \url{spotlight.dbpedia.org}
+\item \url{http://webknox.com/p/linked-open-data-visualization}
+\end{itemize}
 \end{document}  
