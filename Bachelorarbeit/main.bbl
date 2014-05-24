@@ -1,0 +1,42 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{MLAH12}
+
+\bibitem[BLK{\etalchar{+}}09]{chr09}
+Christian Bizer, Jens Lehmann, Georgi Kobilarov, S\"oren Auer, Chirstian
+  Becker, Richard Cyganiak, and Sebastian Hellmann.
+\newblock {DBpedia} - a crystallization point fro the web of data.
+\newblock 2009.
+
+\bibitem[DMP13]{joch13}
+J.~Daiber, Jakob M., and Mendes P.N.
+\newblock Improving efficiency and accuracy in multilingual entity extraction.
+\newblock 2013.
+
+\bibitem[MC07]{rada07}
+Rada Mihalcea and Andreas Csomai.
+\newblock {Wikify!} {L}inking {D}ocuments to {E}ncyclopedic {K}nowledge.
+\newblock 2007.
+
+\bibitem[MLAH12]{moha12}
+Mohamed Morsey, Jens Lehmann, S\"oren Auer, and Sebastian Hellmann.
+\newblock {DBpedia} and the live extraction of structured data from
+  {W}ikipedia.
+\newblock 2012.
+
+\bibitem[MW08]{mil08}
+David Milne and Ian~H. Witten.
+\newblock Learning to link with {W}ikipedia.
+\newblock 2008.
+
+\bibitem[PJMC11]{mend11}
+Mendes P.N., Daiber J., Jakob M, and Bizer C.
+\newblock Evaluating {DBpedia Spotlight} for the {TAC-KBP} {E}ntity {L}inking
+  {T}ask.
+\newblock 2011.
+
+\bibitem[WST10]{wei10}
+Zhang Wei, Jian Su, and Chew~Lim Tan.
+\newblock Entity linking leveraging automaticly generated annotation.
+\newblock 2010.
+
+\end{thebibliography}
