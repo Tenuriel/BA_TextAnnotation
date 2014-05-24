@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  22 MAY 2014 03:20
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  24 MAY 2014 02:56
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -644,67 +644,6 @@ Package: natbib 2009/07/16 8.31 (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count130
 )
-(/usr/share/texmf-texlive/tex/latex/glossaries/base/glossaries.sty
-Package: glossaries 2009/09/23 v2.03 (NLCT)
-
-(/usr/share/texmf-texlive/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2008/08/13 v2.6a package option processing (HA)
-
-(/usr/share/texmf-texlive/tex/generic/xkeyval/xkeyval.tex
-\XKV@toks=\toks33
-\XKV@tempa@toks=\toks34
-\XKV@depth=\count131
-File: xkeyval.tex 2008/08/13 v2.6a key=value parser (HA)
-))
-(/usr/share/texmf-texlive/tex/latex/glossaries/base/mfirstuc.sty
-Package: mfirstuc 2008/12/22 v1.03 (NLCT)
-)
-(/usr/share/texmf-texlive/tex/latex/xfor/xfor.sty
-Package: xfor 2009/02/05 v1.05 (NLCT)
-)
-\gls@level=\count132
-\@gls@tmpb=\toks35
-\gls@tmplen=\skip66
-\istfile=\write3
-
-(/usr/share/texmf-texlive/tex/latex/glossaries/styles/glossary-hypernav.sty
-Package: glossary-hypernav 2007/07/04 v1.01 (NLCT)
-)
-(/usr/share/texmf-texlive/tex/latex/glossaries/styles/glossary-list.sty
-Package: glossary-list 2009/05/30 v2.01 (NLCT)
-\glslistdottedwidth=\skip67
-)
-(/usr/share/texmf-texlive/tex/latex/glossaries/styles/glossary-long.sty
-Package: glossary-long 2009/05/30 v2.01 (NLCT)
-\glsdescwidth=\skip68
-\glspagelistwidth=\skip69
-)
-(/usr/share/texmf-texlive/tex/latex/glossaries/styles/glossary-super.sty
-Package: glossary-super 2009/05/30 v2.01 (NLCT)
-
-(/usr/share/texmf-texlive/tex/latex/supertabular/supertabular.sty
-Package: supertabular 2004/02/20 v4.1e the supertabular environment
-\c@tracingst=\count133
-\ST@wd=\dimen146
-\ST@rightskip=\skip70
-\ST@leftskip=\skip71
-\ST@parfillskip=\skip72
-\ST@pageleft=\dimen147
-\ST@headht=\dimen148
-\ST@tailht=\dimen149
-\ST@pagesofar=\dimen150
-\ST@pboxht=\dimen151
-\ST@lineht=\dimen152
-\ST@stretchht=\dimen153
-\ST@prevht=\dimen154
-\ST@toadd=\dimen155
-\ST@dimen=\dimen156
-\ST@pbox=\box35
-))
-(/usr/share/texmf-texlive/tex/latex/glossaries/styles/glossary-tree.sty
-Package: glossary-tree 2009/01/14 v1.01 (NLCT)
-\glstreeindent=\skip73
-))
 (/usr/share/texmf-texlive/tex/generic/babel/babel.sty
 Package: babel 2008/07/06 v3.8l The Babel package
 
@@ -713,32 +652,32 @@ Language: ngermanb 2008/07/06 v2.6n new German support from the babel system
 
 (/usr/share/texmf-texlive/tex/generic/babel/babel.def
 File: babel.def 2008/07/06 v3.8l Babel common definitions
-\babel@savecnt=\count134
-\U@D=\dimen157
+\babel@savecnt=\count131
+\U@D=\dimen146
 )
 \l@naustrian = a dialect from \language\l@ngerman 
 Package babel Info: Making " an active character on input line 92.
 ))
-Package hyperref Info: Option `colorlinks' set `true' on input line 36.
+Package hyperref Info: Option `colorlinks' set `true' on input line 35.
  (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
@@ -748,23 +687,22 @@ Package caption Info: longtable package is loaded.
 Package: ltcaption 2008/03/28 v1.2 longtable captions (AR)
 )
 Package caption Info: rotating package is loaded.
-Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count135
-\scratchdimen=\dimen158
-\scratchbox=\box36
-\nofMPsegments=\count136
-\nofMParguments=\count137
-\everyMPshowfont=\toks36
-\MPscratchCnt=\count138
-\MPscratchDim=\dimen159
-\MPnumerator=\count139
-\everyMPtoPDFconversion=\toks37
+\scratchcounter=\count132
+\scratchdimen=\dimen147
+\scratchbox=\box35
+\nofMPsegments=\count133
+\nofMParguments=\count134
+\everyMPshowfont=\toks33
+\MPscratchCnt=\count135
+\MPscratchDim=\dimen148
+\MPnumerator=\count136
+\everyMPtoPDFconversion=\toks34
 )
-\c@lstlisting=\count140
+\c@lstlisting=\count137
  (/usr/share/texmf-texlive/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
@@ -773,7 +711,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-Package hyperref Info: Link coloring ON on input line 39.
+Package hyperref Info: Link coloring ON on input line 38.
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
@@ -781,21 +719,21 @@ Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 (/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
 Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
-\c@section@level=\count141
+\c@section@level=\count138
 )
-LaTeX Info: Redefining \ref on input line 39.
-LaTeX Info: Redefining \pageref on input line 39.
-\AtBeginShipoutBox=\box37
+LaTeX Info: Redefining \ref on input line 38.
+LaTeX Info: Redefining \pageref on input line 38.
+\AtBeginShipoutBox=\box36
 
 (/usr/share/texmf-texlive/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 80.
+LaTeX Font Info:    Try loading font information for U+msa on input line 79.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 80.
+LaTeX Font Info:    Try loading font information for U+msb on input line 79.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -819,8 +757,8 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
  Abbildungsverzeichnis
 ------------------------------------------------------------------------------
 (./main.lof)
-\tf@lof=\write4
-\openout4 = `main.lof'.
+\tf@lof=\write3
+\openout3 = `main.lof'.
 
  [3
 
@@ -834,8 +772,8 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 
 ])
-\tf@toc=\write5
-\openout5 = `main.toc'.
+\tf@toc=\write4
+\openout4 = `main.toc'.
 
  [5]
 Kapitel 1.
@@ -847,36 +785,36 @@ Kapitel 1.
 
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 191.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 189.
 
  (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 191.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 189.
  [2] [3]
 Kapitel 2.
 ------------------------------------------------------------------------------
  2 System\"ubersicht
 ------------------------------------------------------------------------------
-<./Pics/./system.png, id=192, 757.83125pt x 296.10625pt>
+<./Pics/./system.png, id=199, 757.83125pt x 296.10625pt>
 File: ./Pics/./system.png Graphic file (type png)
 
 <use ./Pics/./system.png>
-<./Pics/./GUI.png, id=193, 526.96875pt x 336.25626pt>
+<./Pics/./GUI.png, id=200, 526.96875pt x 336.25626pt>
 File: ./Pics/./GUI.png Graphic file (type png)
  <use ./Pics/./GUI.png>
 [4
 
  <./Pics/./system.png (PNG copy)>]
-<./Pics/./eeu.png, id=198, 346.29375pt x 195.73125pt>
+<./Pics/./eeu.png, id=205, 346.29375pt x 195.73125pt>
 File: ./Pics/./eeu.png Graphic file (type png)
  <use ./Pics/./eeu.png>
-<./Pics/./linking.png, id=199, 587.19376pt x 145.54375pt>
+<./Pics/./linking.png, id=206, 587.19376pt x 145.54375pt>
 File: ./Pics/./linking.png Graphic file (type png)
 
 <use ./Pics/./linking.png> [5 <./Pics/./GUI.png (PNG copy)> <./Pics/./eeu.png (
-PNG copy)>] <./Pics/./seq.png, id=204, 747.79375pt x 808.01875pt>
+PNG copy)>] <./Pics/./seq.png, id=211, 747.79375pt x 808.01875pt>
 File: ./Pics/./seq.png Graphic file (type png)
 
 <use ./Pics/./seq.png> [6 <./Pics/./linking.png (PNG copy)>] [7 <./Pics/./seq.p
@@ -885,25 +823,25 @@ Kapitel 3.
 ------------------------------------------------------------------------------
  3 Implementierung
 ------------------------------------------------------------------------------
-<./Pics/./guiCont.png, id=217, 386.44376pt x 205.76875pt>
+<./Pics/./guiCont.png, id=224, 386.44376pt x 205.76875pt>
 File: ./Pics/./guiCont.png Graphic file (type png)
 
 <use ./Pics/./guiCont.png>
-<./Pics/./eruImp.png, id=220, 486.81876pt x 336.25626pt>
+<./Pics/./eruImp.png, id=227, 486.81876pt x 336.25626pt>
 File: ./Pics/./eruImp.png Graphic file (type png)
 
 <use ./Pics/./eruImp.png> [8
 
 ]
-<./Pics/./entLinkImp.png, id=228, 627.34375pt x 416.55624pt>
+<./Pics/./entLinkImp.png, id=235, 627.34375pt x 416.55624pt>
 File: ./Pics/./entLinkImp.png Graphic file (type png)
 
 <use ./Pics/./entLinkImp.png> [9 <./Pics/./guiCont.png (PNG copy)> <./Pics/./er
 uImp.png (PNG copy)>] [10 <./Pics/./entLinkImp.png (PNG copy)>]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 316.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 315.
  [11]
-<./Pics/./ablauf.png, id=269, 647.41875pt x 496.85625pt>
+<./Pics/./ablauf.png, id=276, 647.41875pt x 496.85625pt>
 File: ./Pics/./ablauf.png Graphic file (type png)
 
 <use ./Pics/./ablauf.png> [12
@@ -915,88 +853,82 @@ Kapitel 4.
 ------------------------------------------------------------------------------
 [14
 
-] <./Pics/./lookupRes.png, id=302, 362.10281pt x 217.5628pt>
+] <./Pics/./lookupRes.png, id=309, 362.10281pt x 217.5628pt>
 File: ./Pics/./lookupRes.png Graphic file (type png)
 
 <use ./Pics/./lookupRes.png>
-<./Pics/./lookupTime.png, id=303, 362.10281pt x 217.5628pt>
+<./Pics/./lookupTime.png, id=310, 362.10281pt x 217.5628pt>
 File: ./Pics/./lookupTime.png Graphic file (type png)
 
 <use ./Pics/./lookupTime.png> [15
 
  <./Pics/./lookupRes.png (PNG copy)> <./Pics/./lookupTime.png (PNG copy)>]
-<./Pics/./zeitvergleich.png, id=308, 362.10281pt x 217.5628pt>
+<./Pics/./zeitvergleich.png, id=315, 362.10281pt x 217.5628pt>
 File: ./Pics/./zeitvergleich.png Graphic file (type png)
 
 <use ./Pics/./zeitvergleich.png> [16 <./Pics/./zeitvergleich.png (PNG copy)>]
-<./Pics/./tfPrecision.png, id=314, 347.04657pt x 217.5628pt>
+[17] <./Pics/./tfPrecision.png, id=327, 347.04657pt x 217.5628pt>
 File: ./Pics/./tfPrecision.png Graphic file (type png)
 
-<use ./Pics/./tfPrecision.png> [17] [18 <./Pics/./tfPrecision.png (PNG copy)>]
+<use ./Pics/./tfPrecision.png> [18 <./Pics/./tfPrecision.png (PNG copy)>]
+[19]
 Kapitel 5.
 ------------------------------------------------------------------------------
  5 Deployment und Erweiterung auf andere Sprachen
 ------------------------------------------------------------------------------
-<./Pics/util.jpg, id=331, 790.45313pt x 185.94469pt>
+<./Pics/util.jpg, id=343, 790.45313pt x 185.94469pt>
 File: ./Pics/util.jpg Graphic file (type jpg)
  <use ./Pics/util.jpg>
-[19
+[20
 
  <./Pics/util.jpg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 469.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 476.
 
  (/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 469.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 476.
 
-[20
+[21
 
-] [21] [22] [23]
+] [22] [23] [24]
 Kapitel 6.
 ------------------------------------------------------------------------------
  6 Zusammenfassung
 ------------------------------------------------------------------------------
-[24
+[25
 
 ]
 Kapitel 7.
 ------------------------------------------------------------------------------
  7 Ausblick
 ------------------------------------------------------------------------------
-\glo@main@file=\write6
-\openout6 = `main.glo'.
-
-Package glossaries Info: Writing glossary file main.glo on input line 538.
-No file main.gls.
-[25
-
-\openout3 = `main.ist'.
+[26
 
 ]
 Anhang A.
 ------------------------------------------------------------------------------
  A Evaluierungstabellen
 ------------------------------------------------------------------------------
-[26
+[27
 
 ]
 ------------------------------------------------------------------------------
  Literaturverzeichnis
 ------------------------------------------------------------------------------
-(./main.bbl) [27
+(./main.bbl) [28
 
 
-] [28] (./main.aux) ) 
+] [29] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 12179 strings out of 495021
- 166144 string characters out of 1181035
- 283781 words of memory out of 3000000
- 14935 multiletter control sequences out of 15000+50000
+ 10967 strings out of 495021
+ 147611 string characters out of 1181035
+ 252859 words of memory out of 3000000
+ 13759 multiletter control sequences out of 15000+50000
  15909 words of font info for 60 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 48i,12n,73p,1080b,1846s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,12n,45p,1047b,1846s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
 mbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
 /usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share
@@ -1014,9 +946,9 @@ fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-te
 xlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/fonts/
 type1/public/amsfonts/symbols/msam7.pfb>
-Output written on main.pdf (34 pages, 475196 bytes).
+Output written on main.pdf (35 pages, 481444 bytes).
 PDF statistics:
- 521 PDF objects out of 1000 (max. 8388607)
- 176 named destinations out of 1000 (max. 500000)
+ 538 PDF objects out of 1000 (max. 8388607)
+ 181 named destinations out of 1000 (max. 500000)
  71 words of extra memory for PDF output out of 10000 (max. 10000000)
 

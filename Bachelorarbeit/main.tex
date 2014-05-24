@@ -31,7 +31,6 @@
 \usepackage{url}
 \usepackage{listings}
 \usepackage{amsmath}
-\usepackage{glossaries}
 \usepackage[ngerman]{babel}
 \hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue - change to black if annoying
 \title{\ttitle} % Defines the thesis title - don't touch this
@@ -181,8 +180,7 @@ Date:\\
 \chead{\emph{Einleitung}}
 In der heutigen Zeit spielen Wissensdatenbanken wie Wikipedia\footnote{\url{wikipedia.org}} eine immer gr\"o\ss ere Rolle. Sie repr\"asentieren das gesammelte Wissen der Menschheit und stellen es zur freien Verf\"ugung. Eine wichtige Eigenschaft von Wikipedia ist die Reichhaltigkeit von eingebetteten Links in jedem Artikel, welche die wichtigsten Terme mit anderen Seiten verknüpfen und somit einem Benutzer einen schnellen Weg zu zus\"aztlichen Informationen zu gew\"ahren\citep{rada07}.\\
 W\"ahrend diese Links in Wikipedia, dank der massiven Anzahl an Beitragenden, manuell erstellt werden k\"onnen, ist f\"ur viele andere Dienste, wie zum Beispiel Web-Personensuche und Informationsextraktion, eine automatisierte L\"osung gew\"unscht. Die daf\"ur n\"otige Named-Entity-Disambiguierung ist Problematisch, da eine Entit\"at multiple Benennungen hat und diese unter Umst\"anden auch mit anderen Entit\"aten teilt \cite{wei10}.\\
-Die Aufgabe des Entity-Linkings ist es Entit\"aten aus einem Webtext mit dem \"Aquivalent aus einer Wissensdatenbank zu verbinden. 
-
+Die Aufgabe des Entity-Linkings ist es Entit\"aten aus einem Webtext mit dem \"Aquivalent aus einer Wissensdatenbank zu verbinden. Dies ist nicht zu verwechseln mit dem named entity recognition Prozess, der sich auf die Identifizierung von Dingen in einem Text und nicht auf die Suche nach der Referenz, die diese Entit\"at darstellt beschr\"ankt. Eine solche Disambiguierung kann zum Beispiel, wie in dieser Arbeit und \citep{mil08} vorstellt, mit der Hilfe von Anchors erfolgen.
 \section{Verwandte Arbeiten}
 \subsection{DBpedia}
 %\footnote{\url{dbpedia.org}}
@@ -197,7 +195,7 @@ Das DBpedia Projekt extrahiert strukturierte Informationen von Wikipedia und mac
 DBpedia Spotlight\footnote{\url{spotlight.dbpedia.org}} ist ein open source Projekt zur automatischen Annotation von Entit\"aten aus DBpedia\citep{joch13}. Urspr\"unglich nur f\"ur die englische Sprache entwickelt, ist es inzwischen um 9 weitere Sprachen erweitert worden. W\"ahrend viele semantische Annotationssysteme auf geringe Gruppen von Entit\"atstypen wie zum Beispiel Personen, Organisation oder Orte beschr\"ankt sind, versucht DBpedia Spotlight bis zu 320 verschiedene Klassen in der DBpedia Ontology zu annotieren\citep{mend11}. Um unterschiedlichen Anforderungen f\"ur verschiedene Anwendungsgebiete gerecht zu werden, ist es dem Benutzer m\"oglich die Suchdom\"anen, so wie die Fehlertoleranz anzupassen.
 
 \section{Konzeption}
-Das Ziel dieser Arbeit ist ein \"ahnliches, aber effizienteres Programm wie DBpedia Spotlight zu entwickeln. W\"ahrend die meisten Annotationsprogramme einen Graph f\"ur die Entit\"atenmenge aufbauen und diesen dann durchsuchen, wird in dem Index Based Entity Linker (IBEL) ein indexbasierter Ansatz verfolgt. Mit Hilfe des Anchor-Indexes der Semantic Computing Group Bielefeld und DBpedia-Datendumps wird ein Nachbarschafts-Anchor-Index erstellt, der jede Entit\"at mit den Anchors seiner DBpedia-Graphnachbarn verkn\"upft. \"Uber diesen Index kann dann jede Entit\"at sehr schnell und effizient mit ihren potentiellen DBpedia\"aquivalenten in Verbindung gebracht und dann \"uber die Nachbar-Anchor disambiguiert werden. Dazu werden alle weiteren Entit\"aten in der Textquelle mit den Nachbar-Anchors verglichen um den semantischen Kontext in die Suche mit einzubeziehen. Daraus resultiert dann ein Score, der zur Auswahl der verschiedenen Suchergebnisse dient.
+Das Ziel dieser Arbeit ist ein \"ahnliches, aber effizienteres Programm wie DBpedia Spotlight zu entwickeln. W\"ahrend die meisten Annotationsprogramme einen Graph f\"ur die Entit\"atenmenge aufbauen und diesen dann durchsuchen, wird in dem Index Based Entity Linker (IBEL) ein indexbasierter Ansatz verfolgt. Mit Hilfe des Anchor-Indexes der Semantic Computing Group Bielefeld\footnote{\url{http://www.sc.cit-ec.uni-bielefeld.de/}} und DBpedia-Datendumps wird ein Nachbarschafts-Anchor-Index erstellt, der jede Entit\"at mit den Anchors seiner DBpedia-Graphnachbarn verkn\"upft. \"Uber diesen Index kann dann jede Entit\"at sehr schnell und effizient mit ihren potentiellen DBpedia\"aquivalenten in Verbindung gebracht und dann \"uber die Nachbar-Anchor disambiguiert werden. Dazu werden alle weiteren Entit\"aten in der Textquelle mit den Nachbar-Anchors verglichen um den semantischen Kontext in die Suche mit einzubeziehen. Daraus resultiert dann ein Score, der zur Auswahl der verschiedenen Suchergebnisse dient.
 
 %-----------------------------------------------------------------------
 \chapter{System\"ubersicht}
@@ -278,6 +276,7 @@ Die Gui nimmt weiterhin die Eingaben des Benutzers entgegen, jedoch wird die Aus
 \end{figure}
 
 \section{Enitity-Recognition-Unit}
+\label{Kapitel 3.2}
 Um den vom Benutzer eingegeben Text untersuchen zu k\"onnen, benutzt IBEL den Stanford NER, einen von der Universit\"at Stanford entwickelten Named Entity Recognizer, der Wortsequenzen in einem Text kennzeichnet, bei denen es sich um Namen f\"ur Dinge handelt, wie zum Beispiel Personen oder Firmennamen \footnote{\url{http://nlp.stanford.edu/software/CRF-NER.shtml}}. 
 \begin{figure}[ht!]
 \centering
@@ -400,16 +399,20 @@ Um die einzelnen Operationen in einem zeitlichen Zusammenhang betrachten zu \"on
 
 Wie man in der Abbildung gut sehen kann, sind Titel- und Anchorsuche g\"unstige Operationen im Vergleich zu der tf-idf-Suche, wobei die Titelsuche fast doppelt so schnell ver\"auft wie die Anchorsuche. Im Idealfall sollten die zu linkenden Entit\"aten entweder ein Titel oder ein Anchor sein.
 
-\textbf{Anmerkung} : Bei der Abbildung handelt es sich nur um die ben\"otigte Zeit der verschiedenen Operationen. Da diese aber sequentiell Ablaufen, bedeutet dies, dass die Linking-Zeit der Summer der benutzten Operationen entspricht (z.B. betr\"agt die Zeit f\"ur Anchor-Linking Titel-Lookup + Anchor-Lookup).
+\textbf{Anmerkung} : Bei der Abbildung handelt es sich nur um die ben\"otigte Zeit der verschiedenen Operationen. Da diese aber sequentiell ablaufen, bedeutet dies, dass die Linking-Zeit der Summe der benutzten Operationen entspricht (z.B. betr\"agt die Zeit f\"ur Anchor-Linking Titel-Lookup + Anchor-Lookup).
 \subsection{Warmed Up}
-Zum Vergleich mit einem \grqq warmed up Index \grqq{} wurde die eine H\"alfte der Testtexte benutzt um Cashe-Eintr\"age anzulegen und die andere andere H\"alfte wurde dann normal annotiert. Das Ergebnis ist ein deutlicher Anstieg in Geschwindigkeit.
+Zum Vergleich mit einem \grqq warmed up Index \grqq{} wurde eine H\"alfte der Testtexte benutzt um Cashe-Eintr\"age anzulegen und die andere H\"alfte wurde dann normal annotiert. Das Ergebnis ist ein deutlicher Anstieg in Geschwindigkeit.
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=1]{./zeitvergleich.png}
-\caption[zeitvergleich]{zeitvergleich}
+\caption[Zeitvergleich warmed vs unarmed]{Zeitvergleich}
 \end{figure}
+
+Um diesen Effekt zu maximieren, sollten thematisch verwandte Texte sequentiell annotiert werden.
+
+
 \section{Genauigkeit}
-Nach der Betrachtung der Geschwindigkeit ist nun die Ergebnis-Qualit\"at der einzelnen Operationen interessant.
+Nach der Betrachtung der Geschwindigkeit ist nun die Ergebnis-Qualit\"at der einzelnen Operationen interessant. Dazu wurden die Ergebnisse des IBEL mit den Ergebnissen von DBpedia Spotlight vergleichen.
 \subsection{Titelsuche}
 Da die Titelsuche nur f\"ur exakte \"Ubereinstimmungen ein Ergebnis liefert, werden die Entit\"aten nahezu immer richtig verlinkt. Eine Fehlverlinkung tritt nur auf, wenn eine Entit\"at mit einem Titel \"ubereinstimmt, aber dieser im semantischen Kontext eine andere Bedeutung hat.\\
 Beispiel :\\
@@ -434,10 +437,14 @@ Der letzte Fall ist besonders von Interesse, da die tf-idf-Suche eine sehr teure
 
 
 \section{Semantikanalyse mit KORE}
-Das Max Planck Institut f\"ur Informatik\footnote{\url{http://www.mpi-inf.mpg.de/index\_d.php}} bietet von Hand gefertigte Datens\"atze zum Testen von Disambiguirungsalgorithmen. Diese Keyphrase Overlap Relatedness for Entity Dismabiguation (KORE)\footnote{\url{http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz}} Testdaten sind so erstellt, dass sie besonders schwer zu Disambiguieren sind. \\
-Da nahezu alle, vom Stanford-NER erkannten, Entit\"aten in diesen Texten, ihre Bedeutung nur \"uber den semantischen Kontext erhalten und dies genau die schw\"ache der Titel- und Anchorsuche sind, schneidet der Index Based Entity Linker (IBEL) schlecht ab.  Die Hauptproblematik ist, dass die Entit\"aten fast nie Anchor einer URI sind, noch der Titel zu einer indexierten Seite. Damit wird fast immer die tf-idf-Suche verwendet, welche den schw\"achsten Teil von IBEL darstellt.\\
-Als Fazit f\"ur die Semantikanalyse ergibt sich, dass IBEL zwar Anchor gut \"uber Kontextanalyse Disambiguiren kann, aber anchorlose Entit\"aten fast nie  
+Das Max Planck Institut f\"ur Informatik\footnote{\url{http://www.mpi-inf.mpg.de/index\_d.php}} bietet von Hand gefertigte Datens\"atze zum Testen von Disambiguirungsalgorithmen. Diese Keyphrase Overlap Relatedness for Entity Dismabiguation (KORE)\footnote{\url{http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz}} Testdaten sind so erstellt, dass sie besonders schwer zu disambiguieren sind. \\
+Da nahezu alle, vom Stanford-NER erkannten, Entit\"aten in diesen Texten, ihre Bedeutung nur \"uber den semantischen Kontext erhalten und dies genau die schw\"ache der Titel- und Anchorsuche sind, schneidet der Index Based Entity Linker (IBEL) schlecht ab.  Die Hauptproblematik ist, dass die Entit\"aten fast nie ein Anchor einer URI sind, noch der Titel zu einer indexierten Seite. Damit wird fast immer die tf-idf-Suche verwendet, welche den schw\"achsten Teil von IBEL darstellt.\\
+Als Fazit f\"ur die Semantikanalyse ergibt sich, dass IBEL zwar Anchor gut \"uber Kontextanalyse disambiguiren kann, aber anchorlose Entit\"aten fast nie  
 richtig verlinkt werden.
+
+\section{Vergleich mit DBpedia}
+Der Index Based Entity Linker (IBEL) liefert f\"ur alle getesteten Texte \"ahnlich gute Ergebnisse. Jedoch erkennt der Stanford Name and Entity Recognitioner nicht immer alle Entit\"aten die DBpedia Spotlight erkennt. Dar\"uber hinaus steht IBEL auch in der Semantikanaylse etwas zur\"uck. Zwar hat auch DBpedia Spotlight Probleme die KORE Datens\"atze richtig zu annotieren, aber es werden im Durchschnitt mehr Entit\"aten richtig verlinkt.
+
 
 %-------------------------------------------------------------------------
 \chapter{Deployment und Erweiterung auf andere Sprachen}
@@ -532,16 +539,18 @@ Es wird auch jede andere Implementation von Named-Entity-Regocnition unterst\"ut
 
 \chapter{Zusammenfassung}
 \chapter{Ausblick}
+Der Index Based Entity Linker bietet noch viel Platz f\"ur Optimierung und Erweiterung. Neben Erweiterungen um andere Sprachen, kann zum Beispiel die tf-idf-Suche verbessert werden, da sie den schw\"achsten Teil des Programms darstellt. Unter anderem k\"onnen folgende Vorschl\"age zu Verbesserung getestet werden :
+\begin{itemize}
+\item L\"angere und ausf\"uhrlichere Abstract-Texte.
+\item Wenn f\"ur eine Entit\"at kein Titel oder Anchor gefunden wird, anstellt der tf-idf-Suche einen \"Ahnlichkeitsableich mit anderen Anchors machen (bei der Anchor-Suche wird derzeit nur ein exakter Treffer verwendet).
+\item die tf-idf-Querygewichte in Abh\"anigkeit zu dem tf-idf-score dynamisch anpassen.
+\item Kombinationen der vorherigen Punkte.
+\end{itemize}
+Weiterhin sollte der Stanford-NER eventuell gegen einen anderen Name and Entity Recognitioner ausgetauscht werden, da dieser noch fehlerhafte Ergebnisse, wie zum Beispiel Adjektive, zur\"uckliefert. Durch den modularen Aufbau von IBEL ist ein solcher Austausch\footnote{siehe Kapitel \ref{Kapitel 3.2}} sehr einfach zu realisieren.
 
 
-\glossarystyle{altlistgroup}
-\makeglossaries
-\newglossaryentry{anchor}{
-name=anchor,
-description={Ein Webelement, das eine bestimmte URL mit einem Text auf einer Webseite verbindet.}}
-%\newglossaryentry{label}{setting}
 
-\printglossary
+
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
@@ -589,5 +598,6 @@ description={Ein Webelement, das eine bestimmte URL mit einem Text auf einer Web
 \item \url{http://www.w3.org/DesignIssues/LinkedData.html}
 \item \url{spotlight.dbpedia.org}
 \item \url{http://webknox.com/p/linked-open-data-visualization}
+\item \url{http://www.sc.cit-ec.uni-bielefeld.de/}
 \end{itemize}
 \end{document}  

@@ -1,23 +1,23 @@
 \select@language {ngerman}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces System\"ubersicht}}{4}{figure.caption.19}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces GUI}}{5}{figure.caption.21}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces EEnitity-Recognition-Unit}}{5}{figure.caption.23}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Linking Unit}}{6}{figure.caption.25}
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Programmablauf}}{7}{figure.caption.27}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces System\"ubersicht}}{4}{figure.caption.20}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces GUI}}{5}{figure.caption.22}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces EEnitity-Recognition-Unit}}{5}{figure.caption.24}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Linking Unit}}{6}{figure.caption.26}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Programmablauf}}{7}{figure.caption.28}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces GUI and Controller}}{9}{figure.caption.31}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Entity-Recognition-Unit Impl.}}{9}{figure.caption.34}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Entity Linking Unit}}{10}{figure.caption.37}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity Linking}}{12}{figure.caption.63}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces GUI and Controller}}{9}{figure.caption.32}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Entity-Recognition-Unit Impl.}}{9}{figure.caption.35}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Entity Linking Unit}}{10}{figure.caption.38}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity Linking}}{12}{figure.caption.64}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Average Lookup Results}}{15}{figure.caption.84}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Average Lookup Times}}{15}{figure.caption.85}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces zeitvergleich}}{16}{figure.caption.87}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Tf-Idf-Kandidaten}}{18}{figure.caption.93}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Average Lookup Results}}{15}{figure.caption.85}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Average Lookup Times}}{15}{figure.caption.86}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Zeitvergleich warmed vs unarmed}}{16}{figure.caption.88}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Tf-Idf-Kandidaten}}{18}{figure.caption.94}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Index Based Entity Linker Utility}}{19}{figure.caption.100}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Index Based Entity Linker Utility}}{20}{figure.caption.102}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
