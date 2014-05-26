@@ -29,18 +29,17 @@
 \contentsline {subsection}{\numberline {4.2.1}Titelsuche}{17}{subsection.90}
 \contentsline {subsection}{\numberline {4.2.2}Anchorsuche}{17}{subsection.92}
 \contentsline {subsection}{\numberline {4.2.3}Tf-Idf-Suche}{17}{subsection.93}
-\contentsline {section}{\numberline {4.3}Semantikanalyse mit KORE}{18}{section.95}
-\contentsline {section}{\numberline {4.4}Vergleich mit DBpedia}{19}{section.98}
-\contentsline {chapter}{\numberline {5}Deployment und Erweiterung auf andere Sprachen}{20}{chapter.99}
-\contentsline {section}{\numberline {5.1}Deployment}{20}{section.100}
-\contentsline {subsection}{\numberline {5.1.1}Generierung der Indexe mit Utility-1.0}{20}{subsection.101}
-\contentsline {subsection}{\numberline {5.1.2}Eigenst\"andige Generierung von Dateien}{22}{subsection.111}
-\contentsline {section}{\numberline {5.2}Erweiterung um andere Sprachen}{23}{section.126}
-\contentsline {subsection}{\numberline {5.2.1}Indexe}{23}{subsection.127}
-\contentsline {subsection}{\numberline {5.2.2}Entity Recognition}{23}{subsection.128}
-\contentsline {chapter}{\numberline {6}Zusammenfassung}{25}{chapter.132}
-\contentsline {chapter}{\numberline {7}Ausblick}{26}{chapter.133}
+\contentsline {section}{\numberline {4.3}Semantikanalyse mit KORE}{19}{section.95}
+\contentsline {section}{\numberline {4.4}Vergleich mit DBpedia}{20}{section.99}
+\contentsline {chapter}{\numberline {5}Deployment und Erweiterung auf andere Sprachen}{21}{chapter.100}
+\contentsline {section}{\numberline {5.1}Deployment}{21}{section.101}
+\contentsline {subsection}{\numberline {5.1.1}Generierung der Indexe mit Utility-1.0}{21}{subsection.102}
+\contentsline {subsection}{\numberline {5.1.2}Eigenst\"andige Generierung von Dateien}{23}{subsection.112}
+\contentsline {section}{\numberline {5.2}Erweiterung um andere Sprachen}{24}{section.127}
+\contentsline {subsection}{\numberline {5.2.1}Indexe}{24}{subsection.128}
+\contentsline {subsection}{\numberline {5.2.2}Entity Recognition}{25}{subsection.129}
+\contentsline {chapter}{\numberline {6}Zusammenfassung und Ausblick}{26}{chapter.133}
 \vspace {2em}
-\contentsline {chapter}{\numberline {A}Evaluierungstabellen}{27}{appendix.135}
+\contentsline {chapter}{\numberline {A}Evaluierungstabellen}{28}{appendix.135}
 \par 
-\contentsline {chapter}{Literaturverzeichnis}{28}{dummy.136}
+\contentsline {chapter}{Literaturverzeichnis}{29}{dummy.137}

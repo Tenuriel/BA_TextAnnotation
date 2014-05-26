@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  24 MAY 2014 02:56
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.3.28)  26 MAY 2014 05:00
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -797,24 +797,24 @@ Kapitel 2.
 ------------------------------------------------------------------------------
  2 System\"ubersicht
 ------------------------------------------------------------------------------
-<./Pics/./system.png, id=199, 757.83125pt x 296.10625pt>
+<./Pics/./system.png, id=197, 757.83125pt x 296.10625pt>
 File: ./Pics/./system.png Graphic file (type png)
 
 <use ./Pics/./system.png>
-<./Pics/./GUI.png, id=200, 526.96875pt x 336.25626pt>
+<./Pics/./GUI.png, id=198, 526.96875pt x 336.25626pt>
 File: ./Pics/./GUI.png Graphic file (type png)
  <use ./Pics/./GUI.png>
 [4
 
  <./Pics/./system.png (PNG copy)>]
-<./Pics/./eeu.png, id=205, 346.29375pt x 195.73125pt>
+<./Pics/./eeu.png, id=203, 346.29375pt x 195.73125pt>
 File: ./Pics/./eeu.png Graphic file (type png)
  <use ./Pics/./eeu.png>
-<./Pics/./linking.png, id=206, 587.19376pt x 145.54375pt>
+<./Pics/./linking.png, id=204, 587.19376pt x 145.54375pt>
 File: ./Pics/./linking.png Graphic file (type png)
 
 <use ./Pics/./linking.png> [5 <./Pics/./GUI.png (PNG copy)> <./Pics/./eeu.png (
-PNG copy)>] <./Pics/./seq.png, id=211, 747.79375pt x 808.01875pt>
+PNG copy)>] <./Pics/./seq.png, id=209, 747.79375pt x 808.01875pt>
 File: ./Pics/./seq.png Graphic file (type png)
 
 <use ./Pics/./seq.png> [6 <./Pics/./linking.png (PNG copy)>] [7 <./Pics/./seq.p
@@ -823,17 +823,17 @@ Kapitel 3.
 ------------------------------------------------------------------------------
  3 Implementierung
 ------------------------------------------------------------------------------
-<./Pics/./guiCont.png, id=224, 386.44376pt x 205.76875pt>
+<./Pics/./guiCont.png, id=222, 386.44376pt x 205.76875pt>
 File: ./Pics/./guiCont.png Graphic file (type png)
 
 <use ./Pics/./guiCont.png>
-<./Pics/./eruImp.png, id=227, 486.81876pt x 336.25626pt>
+<./Pics/./eruImp.png, id=225, 486.81876pt x 336.25626pt>
 File: ./Pics/./eruImp.png Graphic file (type png)
 
 <use ./Pics/./eruImp.png> [8
 
 ]
-<./Pics/./entLinkImp.png, id=235, 627.34375pt x 416.55624pt>
+<./Pics/./entLinkImp.png, id=233, 627.34375pt x 416.55624pt>
 File: ./Pics/./entLinkImp.png Graphic file (type png)
 
 <use ./Pics/./entLinkImp.png> [9 <./Pics/./guiCont.png (PNG copy)> <./Pics/./er
@@ -841,7 +841,7 @@ uImp.png (PNG copy)>] [10 <./Pics/./entLinkImp.png (PNG copy)>]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 315.
  [11]
-<./Pics/./ablauf.png, id=276, 647.41875pt x 496.85625pt>
+<./Pics/./ablauf.png, id=274, 647.41875pt x 496.85625pt>
 File: ./Pics/./ablauf.png Graphic file (type png)
 
 <use ./Pics/./ablauf.png> [12
@@ -853,82 +853,82 @@ Kapitel 4.
 ------------------------------------------------------------------------------
 [14
 
-] <./Pics/./lookupRes.png, id=309, 362.10281pt x 217.5628pt>
+] <./Pics/./lookupRes.png, id=307, 362.10281pt x 217.5628pt>
 File: ./Pics/./lookupRes.png Graphic file (type png)
 
 <use ./Pics/./lookupRes.png>
-<./Pics/./lookupTime.png, id=310, 362.10281pt x 217.5628pt>
+<./Pics/./lookupTime.png, id=308, 362.10281pt x 217.5628pt>
 File: ./Pics/./lookupTime.png Graphic file (type png)
 
 <use ./Pics/./lookupTime.png> [15
 
  <./Pics/./lookupRes.png (PNG copy)> <./Pics/./lookupTime.png (PNG copy)>]
-<./Pics/./zeitvergleich.png, id=315, 362.10281pt x 217.5628pt>
+<./Pics/./zeitvergleich.png, id=313, 362.10281pt x 217.5628pt>
 File: ./Pics/./zeitvergleich.png Graphic file (type png)
 
 <use ./Pics/./zeitvergleich.png> [16 <./Pics/./zeitvergleich.png (PNG copy)>]
-[17] <./Pics/./tfPrecision.png, id=327, 347.04657pt x 217.5628pt>
+[17] <./Pics/./tfPrecision.png, id=325, 347.04657pt x 217.5628pt>
 File: ./Pics/./tfPrecision.png Graphic file (type png)
 
 <use ./Pics/./tfPrecision.png> [18 <./Pics/./tfPrecision.png (PNG copy)>]
-[19]
+[19] [20
+
+]
 Kapitel 5.
 ------------------------------------------------------------------------------
  5 Deployment und Erweiterung auf andere Sprachen
 ------------------------------------------------------------------------------
-<./Pics/util.jpg, id=343, 790.45313pt x 185.94469pt>
+<./Pics/util.jpg, id=347, 790.45313pt x 185.94469pt>
 File: ./Pics/util.jpg Graphic file (type jpg)
  <use ./Pics/util.jpg>
-[20
+[21
 
  <./Pics/util.jpg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 476.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 505.
 
  (/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 476.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 505.
 
-[21
+[22
 
-] [22] [23] [24]
-Kapitel 6.
-------------------------------------------------------------------------------
- 6 Zusammenfassung
-------------------------------------------------------------------------------
-[25
+] [23] [24] [25
 
 ]
-Kapitel 7.
+Kapitel 6.
 ------------------------------------------------------------------------------
- 7 Ausblick
+ 6 Zusammenfassung und Ausblick
 ------------------------------------------------------------------------------
 [26
 
-]
+] [27]
 Anhang A.
 ------------------------------------------------------------------------------
  A Evaluierungstabellen
 ------------------------------------------------------------------------------
-[27
+<./Pics/eval.png, id=418, 685.05937pt x 569.87906pt>
+File: ./Pics/eval.png Graphic file (type png)
+ <use ./Pics/eval.png>
+[28
 
-]
+ <./Pics/eval.png (PNG copy)>]
 ------------------------------------------------------------------------------
  Literaturverzeichnis
 ------------------------------------------------------------------------------
-(./main.bbl) [28
+(./main.bbl) [29
 
 
-] [29] (./main.aux) ) 
+] [30] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 10967 strings out of 495021
- 147611 string characters out of 1181035
- 252859 words of memory out of 3000000
- 13759 multiletter control sequences out of 15000+50000
+ 10977 strings out of 495021
+ 147749 string characters out of 1181035
+ 252860 words of memory out of 3000000
+ 13766 multiletter control sequences out of 15000+50000
  15909 words of font info for 60 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 48i,12n,45p,1047b,1846s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,12n,45p,1050b,1846s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
 mbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
 /usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share
@@ -946,9 +946,9 @@ fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-te
 xlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/fonts/
 type1/public/amsfonts/symbols/msam7.pfb>
-Output written on main.pdf (35 pages, 481444 bytes).
+Output written on main.pdf (36 pages, 544788 bytes).
 PDF statistics:
- 538 PDF objects out of 1000 (max. 8388607)
- 181 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 545 PDF objects out of 1000 (max. 8388607)
+ 183 named destinations out of 1000 (max. 500000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 
