@@ -322,8 +322,10 @@ public class GraphHandler {
                         queryString += "anchorN:" + enti + " OR ";
                     }
                 }
-                if (!queryString.isEmpty()) {
+                if (queryString.length()>2) {
                     queryString = queryString.substring(0, queryString.length() - 3) + ")";
+                }else{
+                    queryString="";
                 }
                 //search for anchors
                 btime = System.nanoTime();
@@ -386,6 +388,7 @@ public class GraphHandler {
             for (String entity : entities) {
                 query = parser.parse("\"" + delimeterString(entity) + "\"");
                 docs = entitySearcher.search(query, 1);
+//                result.put(entity, null);
                 if (docs.totalHits == 1) {
                     result.put(entity, entitySearcher.doc(docs.scoreDocs[0].doc).get("entity"));
                 } else {
