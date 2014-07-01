@@ -9,8 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import model.EntityExtractor;
 import model.GraphHandler;
+import model.NER_Handler;
 import org.apache.lucene.queryparser.flexible.standard.QueryParserUtil;
 import view.GUI;
 
@@ -38,6 +42,10 @@ public class Controller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(!NER_Handler.error.isEmpty()){
+            JOptionPane.showMessageDialog(null, NER_Handler.error);
+            return;
+        }
         switch (e.getActionCommand()) {
             case "Toggle tf_idf use":
                 graph.tf_idf_useage = !graph.tf_idf_useage;
@@ -46,6 +54,9 @@ public class Controller implements ActionListener {
                 graph.output = !graph.output;
                 break;
             case "anotate":
+                if(!graph.indexLoaded){
+                    graph.initialize();
+                }
                 float bTime = System.nanoTime();
                 ArrayList<String> words = ner.searchEntities(gui.textInput.getText());
                 ArrayList<String> tmp = new ArrayList<>();

@@ -1,8 +1,0 @@
-\contentsline {chapter}{Declaration of Authorship}{i}{dummy.1}
-\vspace {1em}
-\contentsline {chapter}{Contents}{ii}{dummy.2}
-\contentsline {chapter}{List of Figures}{iii}{dummy.4}
-\contentsline {chapter}{Abbreviations}{iv}{dummy.6}
-\vspace {2em}
-\contentsline {chapter}{\numberline {A}Appendix Title Here}{1}{appendix.9}
-\vspace {2em}

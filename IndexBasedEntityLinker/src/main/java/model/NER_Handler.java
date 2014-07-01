@@ -8,6 +8,7 @@ import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +20,27 @@ public class NER_Handler implements EntityExtractor{
     /**
      * The path to the classifiers for the ner.
      */
-    public static final String CLASSIFIER_PATH="src/main/resources/classifiers/"+
+    public static final String CLASSIFIER_PATH="classifiers/"+
             "english.conll.4class.distsim.crf.ser.gz";
     /**
      * the classfier for the ner.
      */
     public static AbstractSequenceClassifier<CoreLabel> classifier;
+    public static String error="";
     /**
      * 
      */
     public NER_Handler(){
-        classifier= CRFClassifier.getClassifierNoExceptions(CLASSIFIER_PATH);
-       // classifier.
+        try{
+            // classifier.
+//            String tmp=this.getClass().getClassLoader().getResource).getPath();
+//            tmp=tmp.replace("file:/", "");
+            classifier= CRFClassifier.getClassifierNoExceptions(CLASSIFIER_PATH);
+        }catch(Exception ex){
+            error="error while loading classifier: "+ex.getMessage();
+            System.out.println(error);
+        }
+       
                 
     }
     /**

@@ -82,8 +82,17 @@ public class GraphHandler {
      * Indicates if the algorithmen should search for tfd_idf-candiates.
      */
     public boolean tf_idf_useage = true;
-
+    /**
+     * Indicates wether the index is loaded;
+     */
+    public boolean indexLoaded=false;
     public GraphHandler() {
+        initialize();
+    }
+    /**
+     * loads the index
+     */
+    public void initialize(){
         try {
             analyzer = new StandardAnalyzer(Version.LUCENE_46);
             entityReader = DirectoryReader.open(FSDirectory.open(new File("./Entity_Index")));
@@ -93,11 +102,12 @@ public class GraphHandler {
             abstractSearcher = new IndexSearcher(abstractReader);
             abstractSearcher.setSimilarity(new CustomSimilarity());
             parentQuery = new TermQuery(new Term("type", "Parent"));
+            indexLoaded=true;
         } catch (IOException ex) {
             System.out.println("Error while opening Readers:" + ex.getMessage());
+            indexLoaded=false;
         }
     }
-
     /**
      * Formates the string to a valid querystring. Mostly used for uri formating.
      *
